@@ -4,8 +4,8 @@ namespace App\Form;
 
 use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,7 +18,7 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('mail')
+            ->add('mail', null, array('label' => false))
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -31,6 +31,7 @@ class RegistrationFormType extends AbstractType
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+                'label' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
@@ -44,9 +45,9 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('nom_utilisateur')
-            ->add('prenom_utilisateur')
-            ->add('date_de_naissance', DateType::class)
+            ->add('nom_utilisateur', null, array('label' => false))
+            ->add('prenom_utilisateur', null, array('label' => false))
+            ->add('date_de_naissance', BirthdayType::class, array('label' => false))
         ;
     }
 
