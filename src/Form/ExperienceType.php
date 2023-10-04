@@ -12,9 +12,8 @@ class ExperienceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_xp')
-            ->add('des_xp')
-            ->add('niv_xp')
+            ->add('des_xp', null, ['label' => "duree d'experience : "])
+            ->add('niv_xp', null, ['label' => "Note attributaire experience : "])
         ;
     }
 

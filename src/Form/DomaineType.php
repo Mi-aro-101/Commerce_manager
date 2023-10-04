@@ -12,8 +12,7 @@ class DomaineType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_domaine')
-            ->add('des_domaine')
+            ->add('des_domaine', null, ['label' => 'Designation domaine : '])
         ;
     }
 

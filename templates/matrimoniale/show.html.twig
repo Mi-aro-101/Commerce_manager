@@ -2,19 +2,23 @@
 
 {% block title %}Matrimoniale{% endblock %}
 
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>Liste des sexes</h1>
+</div>
+
 {% block body %}
     <h1>Matrimoniale</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ matrimoniale.id }}</td>
-            </tr>
-            <tr>
-                <th>Id_matrimoniale</th>
-                <td>{{ matrimoniale.idMatrimoniale }}</td>
-            </tr>
+            
             <tr>
                 <th>Des_matrimoniale</th>
                 <td>{{ matrimoniale.desMatrimoniale }}</td>
@@ -28,3 +32,12 @@
 
     {{ include('matrimoniale/_delete_form.html.twig') }}
 {% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}
