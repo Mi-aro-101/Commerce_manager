@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Matrimoniale index{% endblock %}
+
+{% block body %}
+    <h1>Matrimoniale index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id_matrimoniale</th>
+                <th>Des_matrimoniale</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for matrimoniale in matrimoniales %}
+            <tr>
+                <td>{{ matrimoniale.id }}</td>
+                <td>{{ matrimoniale.idMatrimoniale }}</td>
+                <td>{{ matrimoniale.desMatrimoniale }}</td>
+                <td>
+                    <a href="{{ path('app_matrimoniale_show', {'id': matrimoniale.id}) }}">show</a>
+                    <a href="{{ path('app_matrimoniale_edit', {'id': matrimoniale.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_matrimoniale_new') }}">Create new</a>
+{% endblock %}

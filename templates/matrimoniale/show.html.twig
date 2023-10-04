@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Matrimoniale{% endblock %}
+
+{% block body %}
+    <h1>Matrimoniale</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ matrimoniale.id }}</td>
+            </tr>
+            <tr>
+                <th>Id_matrimoniale</th>
+                <td>{{ matrimoniale.idMatrimoniale }}</td>
+            </tr>
+            <tr>
+                <th>Des_matrimoniale</th>
+                <td>{{ matrimoniale.desMatrimoniale }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_matrimoniale_index') }}">back to list</a>
+
+    <a href="{{ path('app_matrimoniale_edit', {'id': matrimoniale.id}) }}">edit</a>
+
+    {{ include('matrimoniale/_delete_form.html.twig') }}
+{% endblock %}

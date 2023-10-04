@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Matrimoniale{% endblock %}
+
+{% block body %}
+    <h1>Edit Matrimoniale</h1>
+
+    {{ include('matrimoniale/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_matrimoniale_index') }}">back to list</a>
+
+    {{ include('matrimoniale/_delete_form.html.twig') }}
+{% endblock %}
