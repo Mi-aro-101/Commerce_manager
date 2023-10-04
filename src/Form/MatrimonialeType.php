@@ -12,8 +12,7 @@ class MatrimonialeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_matrimoniale')
-            ->add('des_matrimoniale')
+            ->add('des_matrimoniale',null, ['label' => 'Situation matrimoniale: '])
         ;
     }
 

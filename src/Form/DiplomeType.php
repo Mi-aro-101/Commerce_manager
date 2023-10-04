@@ -12,8 +12,8 @@ class DiplomeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('des_diplome')
-            ->add('niv_diplome')
+            ->add('des_diplome', null, array('label' => 'Designation_diplome : '))
+            ->add('niv_diplome', null, array('label' => 'Niveau equivalent : '))
         ;
     }
 

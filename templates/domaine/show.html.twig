@@ -1,6 +1,16 @@
-{% extends 'base.html.twig' %}
+{% include 'header_template.html.twig' %}
 
 {% block title %}Domaine{% endblock %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>Liste des domaines disponibles</h1>
+</div>
 
 {% block body %}
     <h1>Domaine</h1>
@@ -9,22 +19,27 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ domaine.id }}</td>
-            </tr>
-            <tr>
-                <th>Id_domaine</th>
-                <td>{{ domaine.idDomaine }}</td>
+                <td>{{ domaine.getId() }}</td>
             </tr>
             <tr>
                 <th>Des_domaine</th>
-                <td>{{ domaine.desDomaine }}</td>
+                <td>{{ domaine.getDesDomaine() }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_domaine_index') }}">back to list</a>
+    <a href="{{ path('app_domaine_index') }}"><button class="btn btn-info" > << Back to list</button></a>
 
-    <a href="{{ path('app_domaine_edit', {'id': domaine.id}) }}">edit</a>
+    <a href="{{ path('app_domaine_edit', {'id': domaine.getId()}) }}">edit</a>
 
     {{ include('domaine/_delete_form.html.twig') }}
 {% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

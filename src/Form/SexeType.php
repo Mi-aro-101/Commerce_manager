@@ -12,8 +12,9 @@ class SexeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_sexe')
-            ->add('des_sexe')
+            ->add('des_sexe',null,[
+                'label' => 'Designation sexe : '
+            ])
         ;
     }
 

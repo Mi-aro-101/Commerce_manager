@@ -9,10 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Domaine
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
+    #[ORM\GeneratedValue(strategy:"AUTO")]
     #[ORM\Column]
     private ?int $id_domaine = null;
 
@@ -21,19 +18,7 @@ class Domaine
 
     public function getId(): ?int
     {
-        return $this->id;
-    }
-
-    public function getIdDomaine(): ?int
-    {
         return $this->id_domaine;
-    }
-
-    public function setIdDomaine(int $id_domaine): static
-    {
-        $this->id_domaine = $id_domaine;
-
-        return $this;
     }
 
     public function getDesDomaine(): ?string

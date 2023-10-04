@@ -9,12 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Sexe
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy:"AUTO")]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column]
-    private ?int $id_sexe = null;
 
     #[ORM\Column(length: 10)]
     private ?string $des_sexe = null;
@@ -22,18 +19,6 @@ class Sexe
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdSexe(): ?int
-    {
-        return $this->id_sexe;
-    }
-
-    public function setIdSexe(int $id_sexe): static
-    {
-        $this->id_sexe = $id_sexe;
-
-        return $this;
     }
 
     public function getDesSexe(): ?string
@@ -44,7 +29,6 @@ class Sexe
     public function setDesSexe(string $des_sexe): static
     {
         $this->des_sexe = $des_sexe;
-
         return $this;
     }
 }

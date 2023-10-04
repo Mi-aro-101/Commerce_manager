@@ -1,28 +1,36 @@
-{% extends 'base.html.twig' %}
-
+{% include 'header_template.html.twig' %}
 {% block title %}Sexe index{% endblock %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>Liste des diplomes</h1>
+</div>
 
 {% block body %}
-    <h1>Sexe index</h1>
+   <center> <h1>Sexe index</h1> </center>
 
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Id_sexe</th>
                 <th>Des_sexe</th>
-                <th>actions</th>
+                <th colspan="2" style="text-align:center">Actions</th>
+                
             </tr>
         </thead>
         <tbody>
         {% for sexe in sexes %}
             <tr>
-                <td>{{ sexe.id }}</td>
-                <td>{{ sexe.idSexe }}</td>
                 <td>{{ sexe.desSexe }}</td>
+               <td>
+                    <a href="{{ path('app_sexe_show', {'id': sexe.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
+                </td>
                 <td>
-                    <a href="{{ path('app_sexe_show', {'id': sexe.id}) }}">show</a>
-                    <a href="{{ path('app_sexe_edit', {'id': sexe.id}) }}">edit</a>
+                    <a href="{{ path('app_sexe_edit', {'id': sexe.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +41,13 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_sexe_new') }}">Create new</a>
+    <a href="{{ path('app_sexe_new') }}"><button class="btn btn-info">Create new</button></a>
 {% endblock %}
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

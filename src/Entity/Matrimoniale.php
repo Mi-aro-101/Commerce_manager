@@ -9,10 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Matrimoniale
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
+    #[ORM\GeneratedValue(strategy:"AUTO")]
     #[ORM\Column]
     private ?int $id_matrimoniale = null;
 
@@ -21,19 +18,7 @@ class Matrimoniale
 
     public function getId(): ?int
     {
-        return $this->id;
-    }
-
-    public function getIdMatrimoniale(): ?int
-    {
         return $this->id_matrimoniale;
-    }
-
-    public function setIdMatrimoniale(int $id_matrimoniale): static
-    {
-        $this->id_matrimoniale = $id_matrimoniale;
-
-        return $this;
     }
 
     public function getDesMatrimoniale(): ?string

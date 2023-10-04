@@ -1,30 +1,38 @@
-{% extends 'base.html.twig' %}
+{% include 'header_template.html.twig' %}
 
-{% block title %}Experience index{% endblock %}
+{% block title %}Service index{% endblock %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>Liste des diplomes</h1>
+</div>
 
 {% block body %}
-    <h1>Experience index</h1>
+    <center><h1>Experience index</h1></center>
 
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Id_xp</th>
                 <th>Des_xp</th>
                 <th>Niv_xp</th>
-                <th>actions</th>
+                <th colspan="2" style="text-align:center">Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for experience in experiences %}
             <tr>
-                <td>{{ experience.id }}</td>
-                <td>{{ experience.idXp }}</td>
-                <td>{{ experience.desXp }}</td>
-                <td>{{ experience.nivXp }}</td>
+                <td>{{ experience.getDesXp() }}</td>
+                <td>{{ experience.getNivXp() }}</td>
                 <td>
-                    <a href="{{ path('app_experience_show', {'id': experience.id}) }}">show</a>
-                    <a href="{{ path('app_experience_edit', {'id': experience.id}) }}">edit</a>
+                    <a href="{{ path('app_experience_show', {'id': experience.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
+                </td>
+                <td>
+                    <a href="{{ path('app_experience_edit', {'id': experience.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +43,14 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_experience_new') }}">Create new</a>
+    <a href="{{ path('app_experience_new') }}"><button class="btn btn-info">Create new</button></a>
 {% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

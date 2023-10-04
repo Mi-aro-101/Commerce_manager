@@ -7,44 +7,44 @@
 <section class="content">
 <div class="container-fluid">
 <form>
-<div class="row">
-    {% block body %}
-        <div class="col-md-6">
-            <div class="card card-primary">
+    <div class="row">
+        {% block body %}
+            <div class="col-md-6">
+                <div class="card card-primary">
 
 
-                <div class="card-header">
-                    <h2 class="card-title">Requis pour une annonce</h2>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <center><h4>Domaine de service</h4></center>
-                            <div class="form-group">
-                            <label> Service </label>
-                                <select name="service" class="form-control">
-                                    {% for service in services %}
-                                        <option value="{{ service.getId() }}">{{ service.getDesService() }}</option>
-                                    {% endfor %}
-                                </select>
+                    <div class="card-header">
+                        <h2 class="card-title">Requis pour une annonce</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <center><h4>Domaine de service</h4></center>
+                                <div class="form-group">
+                                <label> Service </label>
+                                    <select name="service" class="form-control">
+                                        {% for service in services %}
+                                            <option value="{{ service.getId() }}">{{ service.getDesService() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <center><h4>CV requis</h4></center>
-                            <div class="form-group">
-                                <label> Houlou </label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <div class="col-sm-6">
+                                <center><h4>CV requis</h4></center>
+                                <div class="form-group">
+                                    <label> Houlou </label>
+                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                </div>
                             </div>
                         </div>
                     </div>
+                            
+
                 </div>
-                        
-
             </div>
-        </div>
-    {% endblock %}
+        {% endblock %}
 
-</div>
+    </div>
 </form>
 </div>
 </section>

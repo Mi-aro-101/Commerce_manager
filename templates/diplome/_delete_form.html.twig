@@ -1,4 +1,13 @@
-<form method="post" action="{{ path('app_diplome_delete', {'id_diplome': diplome.id_diplome}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ diplome.id_diplome) }}">
-    <button class="btn">Delete</button>
+
+{% block title %}Supprimer{% endblock %}
+
+<form method="post" action="{{ path('app_diplome_delete', {'id_diplome': diplome.getId()}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+            
+        </div>
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ diplome.getId()) }}">
+        <button class="btn">Delete</button>
+    </div>
 </form>
+
+
+

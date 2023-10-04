@@ -9,10 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Experience
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
+    #[ORM\GeneratedValue(strategy:"AUTO")]
     #[ORM\Column]
     private ?int $id_xp = null;
 
@@ -24,19 +21,7 @@ class Experience
 
     public function getId(): ?int
     {
-        return $this->id;
-    }
-
-    public function getIdXp(): ?int
-    {
         return $this->id_xp;
-    }
-
-    public function setIdXp(int $id_xp): static
-    {
-        $this->id_xp = $id_xp;
-
-        return $this;
     }
 
     public function getDesXp(): ?string

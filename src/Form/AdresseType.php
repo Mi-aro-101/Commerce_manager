@@ -12,9 +12,13 @@ class AdresseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_adresse')
-            ->add('des_adresse')
-            ->add('niv_adresse')
+            ->add('des_adresse', null, [
+                'label' => 'Designation adresse : ',
+                'attr' => [
+                    'max_length' => 30
+                ]
+            ])
+            ->add('niv_adresse', null, array('label' => 'Niveau equivalent : '))
         ;
     }
 

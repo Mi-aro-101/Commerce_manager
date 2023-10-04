@@ -1,28 +1,34 @@
-{% extends 'base.html.twig' %}
+{% include 'header_template.html.twig' %}
 
-{% block title %}Domaine index{% endblock %}
+{% block title %}Service index{% endblock %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
 
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>Liste des domaines disponibles</h1>
+</div>
 {% block body %}
-    <h1>Domaine index</h1>
 
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Id_domaine</th>
                 <th>Des_domaine</th>
-                <th>actions</th>
+                <th colspan="2" style="text-align:center">Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for domaine in domaines %}
             <tr>
-                <td>{{ domaine.id }}</td>
-                <td>{{ domaine.idDomaine }}</td>
-                <td>{{ domaine.desDomaine }}</td>
+                <td>{{ domaine.getDesDomaine() }}</td>
                 <td>
-                    <a href="{{ path('app_domaine_show', {'id': domaine.id}) }}">show</a>
-                    <a href="{{ path('app_domaine_edit', {'id': domaine.id}) }}">edit</a>
+                    <a href="{{ path('app_domaine_show', {'id': domaine.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
+                </td>
+                <td>
+                    <a href="{{ path('app_domaine_edit', {'id': domaine.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +39,14 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_domaine_new') }}">Create new</a>
+    <a href="{{ path('app_domaine_new') }}"><button class="btn btn-info">Create new</button></a>
 {% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

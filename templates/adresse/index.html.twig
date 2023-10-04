@@ -1,30 +1,36 @@
-{% extends 'base.html.twig' %}
+{% include 'header_template.html.twig' %}
 
-{% block title %}Adresse index{% endblock %}
+{% block title %}Service index{% endblock %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
 
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>Liste des adresses disponibles</h1>
+</div>
 {% block body %}
-    <h1>Adresse index</h1>
 
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Id_adresse</th>
                 <th>Des_adresse</th>
                 <th>Niv_adresse</th>
-                <th>actions</th>
+                <th colspan="2" style="text-align:center">Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for adresse in adresses %}
             <tr>
-                <td>{{ adresse.id }}</td>
-                <td>{{ adresse.idAdresse }}</td>
-                <td>{{ adresse.desAdresse }}</td>
-                <td>{{ adresse.nivAdresse }}</td>
+                <td>{{ adresse.getDesAdresse() }}</td>
+                <td>{{ adresse.getNivAdresse() }}</td>
                 <td>
-                    <a href="{{ path('app_adresse_show', {'id': adresse.id}) }}">show</a>
-                    <a href="{{ path('app_adresse_edit', {'id': adresse.id}) }}">edit</a>
+                    <a href="{{ path('app_adresse_show', {'id': adresse.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
+                </td>
+                <td>
+                    <a href="{{ path('app_adresse_edit', {'id': adresse.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +41,14 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_adresse_new') }}">Create new</a>
+    <a href="{{ path('app_adresse_new') }}"><button class="btn btn-info">Create new</button></a>
 {% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

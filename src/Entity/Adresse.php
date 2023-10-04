@@ -11,12 +11,9 @@ class Adresse
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column]
     private ?int $id_adresse = null;
 
-    #[ORM\Column(length: 15)]
+    #[ORM\Column(length: 40)]
     private ?string $des_adresse = null;
 
     #[ORM\Column]
@@ -24,19 +21,7 @@ class Adresse
 
     public function getId(): ?int
     {
-        return $this->id;
-    }
-
-    public function getIdAdresse(): ?int
-    {
         return $this->id_adresse;
-    }
-
-    public function setIdAdresse(int $id_adresse): static
-    {
-        $this->id_adresse = $id_adresse;
-
-        return $this;
     }
 
     public function getDesAdresse(): ?string

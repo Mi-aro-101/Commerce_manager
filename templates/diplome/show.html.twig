@@ -1,30 +1,48 @@
-{% extends 'base.html.twig' %}
+{% include 'header_template.html.twig' %}
 
 {% block title %}Diplome{% endblock %}
 
-{% block body %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>Service</h1>
+</div>
     <h1>Diplome</h1>
 
-    <table class="table">
+    <table class="table table-bordered">
         <tbody>
             <tr>
                 <th>Id_diplome</th>
-                <td>{{ diplome.idDiplome }}</td>
+                <td>{{ diplome.getId() }}</td>
             </tr>
             <tr>
                 <th>Des_diplome</th>
-                <td>{{ diplome.desDiplome }}</td>
+                <td>{{ diplome.getDesDiplome() }}</td>
             </tr>
             <tr>
                 <th>Niv_diplome</th>
-                <td>{{ diplome.nivDiplome }}</td>
+                <td>{{ diplome.getNivDiplome() }}</td>
             </tr>
         </tbody>
     </table>
 
     <a href="{{ path('app_diplome_index') }}">back to list</a>
 
-    <a href="{{ path('app_diplome_edit', {'id_diplome': diplome.id_diplome}) }}">edit</a>
+    <a href="{{ path('app_diplome_edit', {'id_diplome': diplome.getId()}) }}">edit</a>
 
     {{ include('diplome/_delete_form.html.twig') }}
 {% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}
