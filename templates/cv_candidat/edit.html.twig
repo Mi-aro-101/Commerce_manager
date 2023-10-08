@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CVCandidat{% endblock %}
+
+{% block body %}
+    <h1>Edit CVCandidat</h1>
+
+    {{ include('cv_candidat/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_c_v_candidat_index') }}">back to list</a>
+
+    {{ include('cv_candidat/_delete_form.html.twig') }}
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CVRequirementsRepository;
+use App\Entity\CVCandidat;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -67,6 +68,18 @@ class CVRequirements
 
     #[ORM\OneToMany(mappedBy: 'cvrequirements', targetEntity: CVCandidat::class)]
     private Collection $cVCandidats;
+
+    #[ORM\Column]
+    private ?int $coef_sexe = null;
+
+    #[ORM\Column]
+    private ?int $coef_nationalite = null;
+
+    #[ORM\Column]
+    private ?int $coef_matrimoniale = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date_fin = null;
 
     public function __construct()
     {
@@ -260,6 +273,54 @@ class CVRequirements
                 $cVCandidat->setCvrequirements(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCoefSexe(): ?int
+    {
+        return $this->coef_sexe;
+    }
+
+    public function setCoefSexe(int $coef_sexe): static
+    {
+        $this->coef_sexe = $coef_sexe;
+
+        return $this;
+    }
+
+    public function getCoefNationalite(): ?int
+    {
+        return $this->coef_nationalite;
+    }
+
+    public function setCoefNationalite(int $coef_nationalite): static
+    {
+        $this->coef_nationalite = $coef_nationalite;
+
+        return $this;
+    }
+
+    public function getCoefMatrimoniale(): ?int
+    {
+        return $this->coef_matrimoniale;
+    }
+
+    public function setCoefMatrimoniale(int $coef_matrimoniale): static
+    {
+        $this->coef_matrimoniale = $coef_matrimoniale;
+
+        return $this;
+    }
+
+    public function getDateFin(): ?\DateTimeInterface
+    {
+        return $this->date_fin;
+    }
+
+    public function setDateFin(\DateTimeInterface $date_fin): static
+    {
+        $this->date_fin = $date_fin;
 
         return $this;
     }

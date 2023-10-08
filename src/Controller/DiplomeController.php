@@ -71,7 +71,7 @@ class DiplomeController extends AbstractController
     #[Route('/{id_diplome}', name: 'app_diplome_delete', methods: ['POST'])]
     public function delete(Request $request, Diplome $diplome, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$diplome->getId_diplome(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$diplome->getId(), $request->request->get('_token'))) {
             $entityManager->remove($diplome);
             $entityManager->flush();
         }

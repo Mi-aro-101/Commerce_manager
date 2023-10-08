@@ -13,7 +13,7 @@ class Experience
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy:"AUTO")]
     #[ORM\Column]
-    private ?int $id_xp = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 30)]
     private ?string $des_xp = null;
@@ -35,7 +35,7 @@ class Experience
 
     public function getId(): ?int
     {
-        return $this->id_xp;
+        return $this->id;
     }
 
     public function getDesXp(): ?string

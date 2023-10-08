@@ -13,7 +13,7 @@ class Diplome
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy:"AUTO")]
     #[ORM\Column]
-    private ?int $id_diplome = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 30)]
     private ?string $des_diplome = null;
@@ -35,7 +35,7 @@ class Diplome
 
     public function getId(): ?int
     {
-        return $this->id_diplome;
+        return $this->id;
     }
 
     public function getDesDiplome(): ?string

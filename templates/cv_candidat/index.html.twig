@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CVCandidat index{% endblock %}
+
+{% block body %}
+    <h1>CVCandidat index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date_depot</th>
+                <th>Date_reponse</th>
+                <th>Statue</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for c_v_candidat in c_v_candidats %}
+            <tr>
+                <td>{{ c_v_candidat.id }}</td>
+                <td>{{ c_v_candidat.dateDepot ? c_v_candidat.dateDepot|date('Y-m-d') : '' }}</td>
+                <td>{{ c_v_candidat.dateReponse ? c_v_candidat.dateReponse|date('Y-m-d') : '' }}</td>
+                <td>{{ c_v_candidat.statue }}</td>
+                <td>
+                    <a href="{{ path('app_c_v_candidat_show', {'id': c_v_candidat.id}) }}">show</a>
+                    <a href="{{ path('app_c_v_candidat_edit', {'id': c_v_candidat.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_c_v_candidat_new') }}">Create new</a>
+{% endblock %}

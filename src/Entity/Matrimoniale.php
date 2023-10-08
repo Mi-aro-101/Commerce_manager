@@ -13,7 +13,7 @@ class Matrimoniale
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy:"AUTO")]
     #[ORM\Column]
-    private ?int $id_matrimoniale = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 20)]
     private ?string $des_matrimoniale = null;
@@ -32,7 +32,7 @@ class Matrimoniale
 
     public function getId(): ?int
     {
-        return $this->id_matrimoniale;
+        return $this->id;
     }
 
     public function getDesMatrimoniale(): ?string

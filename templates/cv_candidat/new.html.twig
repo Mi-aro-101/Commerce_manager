@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CVCandidat{% endblock %}
+
+{% block body %}
+    <h1>Create new CVCandidat</h1>
+
+    {{ include('cv_candidat/_form.html.twig') }}
+
+    <a href="{{ path('app_c_v_candidat_index') }}">back to list</a>
+{% endblock %}

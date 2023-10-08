@@ -1,28 +1,33 @@
-{% extends 'base.html.twig' %}
+{% include 'header_template.html.twig' %}
 
 {% block title %}Nationalite index{% endblock %}
 
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>Liste des diplomes</h1>
+</div>
 {% block body %}
     <h1>Nationalite index</h1>
 
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Id_nationalite</th>
                 <th>Des_nationalite</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for nationalite in nationalites %}
             <tr>
-                <td>{{ nationalite.id }}</td>
-                <td>{{ nationalite.idNationalite }}</td>
-                <td>{{ nationalite.desNationalite }}</td>
+                <td>{{ nationalite.getDesNationalite() }}</td>
                 <td>
-                    <a href="{{ path('app_nationalite_show', {'id': nationalite.id}) }}">show</a>
-                    <a href="{{ path('app_nationalite_edit', {'id': nationalite.id}) }}">edit</a>
+                    <a href="{{ path('app_nationalite_show', {'id': nationalite.getId()}) }}">show</a>
+                    <a href="{{ path('app_nationalite_edit', {'id': nationalite.getId()}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +38,13 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_nationalite_new') }}">Create new</a>
+    <a href="{{ path('app_nationalite_new') }}"><button class="btn btn-info">Create new</button></a>
 {% endblock %}
+</div>table-bordered
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

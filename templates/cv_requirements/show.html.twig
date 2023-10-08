@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CVRequirements{% endblock %}
+
+{% block body %}
+    <h1>CVRequirements</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ c_v_requirement.id }}</td>
+            </tr>
+            <tr>
+                <th>Date_envoie</th>
+                <td>{{ c_v_requirement.dateEnvoie ? c_v_requirement.dateEnvoie|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Poste_description</th>
+                <td>{{ c_v_requirement.posteDescription }}</td>
+            </tr>
+            <tr>
+                <th>Coef_diplome</th>
+                <td>{{ c_v_requirement.coefDiplome }}</td>
+            </tr>
+            <tr>
+                <th>Coef_xp</th>
+                <td>{{ c_v_requirement.coefXp }}</td>
+            </tr>
+            <tr>
+                <th>Coef_adresse</th>
+                <td>{{ c_v_requirement.coefAdresse }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_c_v_requirements_index') }}">back to list</a>
+
+    <a href="{{ path('app_c_v_requirements_edit', {'id': c_v_requirement.id}) }}">edit</a>
+
+    {{ include('cv_requirements/_delete_form.html.twig') }}
+{% endblock %}

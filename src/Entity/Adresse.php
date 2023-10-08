@@ -13,7 +13,7 @@ class Adresse
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id_adresse = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 40)]
     private ?string $des_adresse = null;
@@ -35,7 +35,7 @@ class Adresse
 
     public function getId(): ?int
     {
-        return $this->id_adresse;
+        return $this->id;
     }
 
     public function getDesAdresse(): ?string
