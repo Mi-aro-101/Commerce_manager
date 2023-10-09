@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ReponseSection{% endblock %}
+
+{% block body %}
+    <h1>ReponseSection</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ reponse_section.id }}</td>
+            </tr>
+            <tr>
+                <th>Des_reponse</th>
+                <td>{{ reponse_section.desReponse }}</td>
+            </tr>
+            <tr>
+                <th>Is_true</th>
+                <td>{{ reponse_section.isTrue ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reponse_section_index') }}">back to list</a>
+
+    <a href="{{ path('app_reponse_section_edit', {'id': reponse_section.id}) }}">edit</a>
+
+    {{ include('reponse_section/_delete_form.html.twig') }}
+{% endblock %}

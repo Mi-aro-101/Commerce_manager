@@ -1,0 +1,18 @@
+{# {{ form_start(form) }}
+    {# {{ form_widget(form) }} #}
+     {# {% for reponse in form.reponseSections %}
+                {{ form_row(reponse.des_reponse) }}
+                {{ form_row(reponse.is_true) }}
+    {% endfor %} #}
+    {# <button class="btn">{{ button_label|default('Save') }}</button> #}
+{# {{ form_end(form) }} #}
+
+    {{ form_start(form) }}
+
+    {# {% for sectionKey, sectionForm in form.sections %} #}
+        {# {{ form_row(sectionForm.des_question) }} #}
+            {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
+
