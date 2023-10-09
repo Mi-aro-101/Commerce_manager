@@ -7,12 +7,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ServiceRepository;
 use App\Repository\DiplomeRepository;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Repository\DomaineRepository;
 
 #[Route('/annonce')]
 class AnnonceController extends AbstractController
 {
     #[Route('/', name: 'app_annonce')]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function index(): Response
     {
         return $this->render('annonce/index.html.twig', [
@@ -21,6 +23,7 @@ class AnnonceController extends AbstractController
     }
 
     #[Route('/nouvelle', name: 'app_annonce_new')]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function nouvelle(ServiceRepository $serviceRepository, DiplomeRepository $diplomeRepository,DomaineRepository $domaineRepository): Response
     {
         return $this->render('annonce/nouvelle_annonce.html.twig', [

@@ -10,11 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/adresse')]
 class AdresseController extends AbstractController
 {
     #[Route('/', name: 'app_adresse_index', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function index(AdresseRepository $adresseRepository): Response
     {
         return $this->render('adresse/index.html.twig', [
@@ -23,6 +25,7 @@ class AdresseController extends AbstractController
     }
 
     #[Route('/new', name: 'app_adresse_new', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $adresse = new Adresse();
@@ -43,6 +46,7 @@ class AdresseController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_adresse_show', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function show(Adresse $adresse): Response
     {
         return $this->render('adresse/show.html.twig', [
@@ -51,6 +55,7 @@ class AdresseController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_adresse_edit', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function edit(Request $request, Adresse $adresse, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(AdresseType::class, $adresse);
@@ -69,6 +74,7 @@ class AdresseController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_adresse_delete', methods: ['POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function delete(Request $request, Adresse $adresse, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$adresse->getId(), $request->request->get('_token'))) {

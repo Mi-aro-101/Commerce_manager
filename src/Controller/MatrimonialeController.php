@@ -10,11 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/matrimoniale')]
 class MatrimonialeController extends AbstractController
 {
     #[Route('/', name: 'app_matrimoniale_index', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function index(MatrimonialeRepository $matrimonialeRepository): Response
     {
         return $this->render('matrimoniale/index.html.twig', [
@@ -23,6 +25,7 @@ class MatrimonialeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_matrimoniale_new', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $matrimoniale = new Matrimoniale();
@@ -43,6 +46,7 @@ class MatrimonialeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_matrimoniale_show', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function show(Matrimoniale $matrimoniale): Response
     {
         return $this->render('matrimoniale/show.html.twig', [
@@ -51,6 +55,7 @@ class MatrimonialeController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_matrimoniale_edit', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function edit(Request $request, Matrimoniale $matrimoniale, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(MatrimonialeType::class, $matrimoniale);
@@ -69,6 +74,7 @@ class MatrimonialeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_matrimoniale_delete', methods: ['POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function delete(Request $request, Matrimoniale $matrimoniale, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$matrimoniale->getId(), $request->request->get('_token'))) {

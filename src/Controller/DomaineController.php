@@ -10,11 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/domaine')]
 class DomaineController extends AbstractController
 {
     #[Route('/', name: 'app_domaine_index', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function index(DomaineRepository $domaineRepository): Response
     {
         return $this->render('domaine/index.html.twig', [
@@ -23,6 +25,7 @@ class DomaineController extends AbstractController
     }
 
     #[Route('/new', name: 'app_domaine_new', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $domaine = new Domaine();
@@ -43,6 +46,7 @@ class DomaineController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_domaine_show', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function show(Domaine $domaine): Response
     {
         return $this->render('domaine/show.html.twig', [
@@ -51,6 +55,7 @@ class DomaineController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_domaine_edit', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function edit(Request $request, Domaine $domaine, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(DomaineType::class, $domaine);
@@ -69,6 +74,7 @@ class DomaineController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_domaine_delete', methods: ['POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function delete(Request $request, Domaine $domaine, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$domaine->getId(), $request->request->get('_token'))) {

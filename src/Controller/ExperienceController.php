@@ -10,11 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/experience')]
 class ExperienceController extends AbstractController
 {
     #[Route('/', name: 'app_experience_index', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function index(ExperienceRepository $experienceRepository): Response
     {
         return $this->render('experience/index.html.twig', [
@@ -23,6 +25,7 @@ class ExperienceController extends AbstractController
     }
 
     #[Route('/new', name: 'app_experience_new', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $experience = new Experience();
@@ -43,6 +46,7 @@ class ExperienceController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_experience_show', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function show(Experience $experience): Response
     {
         return $this->render('experience/show.html.twig', [
@@ -51,6 +55,7 @@ class ExperienceController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_experience_edit', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function edit(Request $request, Experience $experience, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ExperienceType::class, $experience);
@@ -69,6 +74,7 @@ class ExperienceController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_experience_delete', methods: ['POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function delete(Request $request, Experience $experience, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$experience->getId(), $request->request->get('_token'))) {
