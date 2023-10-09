@@ -12,7 +12,6 @@ class NationaliteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_nationalite')
             ->add('des_nationalite')
         ;
     }

@@ -13,7 +13,7 @@ class Service
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy:"AUTO")]
     #[ORM\Column]
-    private ?int $id_service = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 50)]
     private ?string $des_service = null;
@@ -28,7 +28,7 @@ class Service
 
     public function getId(): ?int
     {
-        return $this->id_service;
+        return $this->id;
     }
 
     public function getDesService(): ?string

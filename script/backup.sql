@@ -361,7 +361,7 @@ ALTER TABLE ONLY public.messenger_messages ALTER COLUMN id SET DEFAULT nextval('
 -- Data for Name: adresse; Type: TABLE DATA; Schema: public; Owner: liantsiky
 --
 
-COPY public.adresse (id_adresse, des_adresse, niv_adresse) FROM stdin;
+COPY public.adresse (id, des_adresse, niv_adresse) FROM stdin;
 2	Entre 10 et 15 km	4
 3	Entre 5 et 10 km	7
 4	Moins de 5 km	10
@@ -373,7 +373,7 @@ COPY public.adresse (id_adresse, des_adresse, niv_adresse) FROM stdin;
 -- Data for Name: diplome; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.diplome (id_diplome, des_diplome, niv_diplome) FROM stdin;
+COPY public.diplome (id, des_diplome, niv_diplome) FROM stdin;
 1	BEPC	2
 2	BACC	3
 3	Licence	5
@@ -406,7 +406,7 @@ DoctrineMigrations\\Version20231004131343	2023-10-04 13:13:57	7
 -- Data for Name: domaine; Type: TABLE DATA; Schema: public; Owner: liantsiky
 --
 
-COPY public.domaine (id_domaine, des_domaine) FROM stdin;
+COPY public.domaine (id, des_domaine) FROM stdin;
 1	Securite-gardiennage
 2	Informatique-reseautage
 3	Informatique-web
@@ -417,7 +417,7 @@ COPY public.domaine (id_domaine, des_domaine) FROM stdin;
 -- Data for Name: experience; Type: TABLE DATA; Schema: public; Owner: liantsiky
 --
 
-COPY public.experience (id_xp, des_xp, niv_xp) FROM stdin;
+COPY public.experience (id, des_xp, niv_xp) FROM stdin;
 1	moins de 3ans	2
 2	3 à  5 ans	5
 3	5 ans  et plus	10
@@ -428,9 +428,10 @@ COPY public.experience (id_xp, des_xp, niv_xp) FROM stdin;
 -- Data for Name: matrimoniale; Type: TABLE DATA; Schema: public; Owner: liantsiky
 --
 
-COPY public.matrimoniale (id_matrimoniale, des_matrimoniale) FROM stdin;
+COPY public.matrimoniale (id, des_matrimoniale) FROM stdin;
 1	Celibataire
 2	Marié(e)
+\.
 3	Divorcé(e)
 4	Veuf(ve)
 5	Concubin(e)
@@ -458,7 +459,7 @@ COPY public.nationalite (id, des_nationalite) FROM stdin;
 -- Data for Name: service; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.service (id_service, des_service) FROM stdin;
+COPY public.service (id, des_service) FROM stdin;
 1	Securite
 2	Informatique
 \.
@@ -478,7 +479,7 @@ COPY public.sexe (id, des_sexe) FROM stdin;
 -- Data for Name: utilisateur; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.utilisateur (id_utilisateur, mail, roles, mot_de_passe, nom_utilisateur, prenom_utilisateur, date_de_naissance) FROM stdin;
+COPY public.utilisateur (id, mail, roles, mot_de_passe, nom_utilisateur, prenom_utilisateur, date_de_naissance) FROM stdin;
 1	fitia@gmail.com	[]	$2y$13$nNhuE6kDUakyiNuFYLFmL.PnyzdbN227NXesGacetdh78SY4tVKSe	RAKOTO	Fitia	2018-01-01
 \.
 

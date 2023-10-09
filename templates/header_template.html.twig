@@ -275,7 +275,6 @@
             </ul>
           </li>
 
-
           <li class="nav-item">
             <a href="{{ path('app_matrimoniale_index') }}" class="nav-link">
               <ion-icon name="id-card-sharp"></ion-icon>
@@ -294,6 +293,55 @@
               <li class="nav-item">
                 <a href="{{ path('app_matrimoniale_index') }}" class="nav-link">
                   <ion-icon name="eye-sharp"></ion-icon>
+                  <p>Voir</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ path('app_c_v_requirements_index') }}" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>
+                CV requis
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ path('app_c_v_requirements_new') }}" class="nav-link">
+                  <i class="nav-icon fas fa-edit"></i>
+                  <p>Creer</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ path('app_c_v_requirements_index') }}" class="nav-link">
+                  <i class="nav-icon fas fa-file"></i>
+                  <p>Voir</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+          <li class="nav-item">
+            <a href="{{ path('app_nationalite_index') }}" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>
+                Nationalite
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ path('app_nationalite_new') }}" class="nav-link">
+                  <i class="nav-icon fas fa-edit"></i>
+                  <p>Creer</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ path('app_c_v_requirements_index') }}" class="nav-link">
+                  <i class="nav-icon fas fa-file"></i>
                   <p>Voir</p>
                 </a>
               </li>

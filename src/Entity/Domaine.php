@@ -13,7 +13,7 @@ class Domaine
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy:"AUTO")]
     #[ORM\Column]
-    private ?int $id_domaine = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 30)]
     private ?string $des_domaine = null;
@@ -32,7 +32,7 @@ class Domaine
 
     public function getId(): ?int
     {
-        return $this->id_domaine;
+        return $this->id;
     }
 
     public function getDesDomaine(): ?string

@@ -1,30 +1,46 @@
-{% extends 'base.html.twig' %}
+{% include 'header_template.html.twig' %}
 
 {% block title %}Nationalite{% endblock %}
 
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>Service</h1>
+</div>
+    
 {% block body %}
     <h1>Nationalite</h1>
 
-    <table class="table">
+    <table class="table table-bordered">
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ nationalite.id }}</td>
-            </tr>
-            <tr>
-                <th>Id_nationalite</th>
-                <td>{{ nationalite.idNationalite }}</td>
+                <td>{{ nationalite.getId() }}</td>
             </tr>
             <tr>
                 <th>Des_nationalite</th>
-                <td>{{ nationalite.desNationalite }}</td>
+                <td>{{ nationalite.getDesNationalite() }}</td>
             </tr>
         </tbody>
     </table>
 
     <a href="{{ path('app_nationalite_index') }}">back to list</a>
 
-    <a href="{{ path('app_nationalite_edit', {'id': nationalite.id}) }}">edit</a>
+    <a href="{{ path('app_nationalite_edit', {'id': nationalite.getId()}) }}">edit</a>
 
     {{ include('nationalite/_delete_form.html.twig') }}
 {% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}
