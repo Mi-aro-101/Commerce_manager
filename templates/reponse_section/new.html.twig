@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ReponseSection{% endblock %}
+
+{% block body %}
+    <h1>Create new ReponseSection</h1>
+
+    {{ include('reponse_section/_form.html.twig') }}
+
+    <a href="{{ path('app_reponse_section_index') }}">back to list</a>
+{% endblock %}

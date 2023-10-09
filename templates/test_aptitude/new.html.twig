@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New TestAptitude{% endblock %}
+
+{% block body %}
+    <h1>Create new TestAptitude</h1>
+
+    {# {{ include('test_aptitude/_form.html.twig') }} #}
+
+    {{ form_start(form) }}
+            <div class="section-form">
+            <ul class="tags' data-index="{{ form.sections|length >0 ? form.sections|last.vars.name +1 :0 }}"
+             data-prototype="{{ form_widget(form.sections.vars.prototype)|e('html_attr')  }}" >
+        {# {% for section in form.sections %} #}
+            {# {{ form_widget(section.getDesQuestions()) }} #}
+            {# {{ form_row(section.des_question) }}
+            {{ form_row(section.coef_section) }} #}
+            {# {% for reponse in section.reponseSections %}
+                {{ form_row(reponse.des_reponse) }}
+                {{ form_row(reponse.is_true) }}
+            {% endfor %} #}
+        {# {% endfor %} #}
+            </ul>
+            </div>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_test_aptitude_index') }}">back to list</a>
+{% endblock %}
