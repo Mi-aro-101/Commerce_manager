@@ -81,6 +81,9 @@ class CVRequirements
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_fin = null;
 
+    #[ORM\OneToOne(mappedBy: 'cv_requirements', cascade: ['persist', 'remove'])]
+    private ?TestAptitude $testAptitude = null;
+
     public function __construct()
     {
         $this->cVCandidats = new ArrayCollection();
@@ -321,6 +324,23 @@ class CVRequirements
     public function setDateFin(\DateTimeInterface $date_fin): static
     {
         $this->date_fin = $date_fin;
+
+        return $this;
+    }
+
+    public function getTestAptitude(): ?TestAptitude
+    {
+        return $this->testAptitude;
+    }
+
+    public function setTestAptitude(TestAptitude $testAptitude): static
+    {
+        // set the owning side of the relation if necessary
+        if ($testAptitude->getCvRequirements() !== $this) {
+            $testAptitude->setCvRequirements($this);
+        }
+
+        $this->testAptitude = $testAptitude;
 
         return $this;
     }
