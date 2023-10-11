@@ -480,7 +480,7 @@ COPY public.sexe (id, des_sexe) FROM stdin;
 --
 
 COPY public.utilisateur (id, mail, roles, mot_de_passe, nom_utilisateur, prenom_utilisateur, date_de_naissance) FROM stdin;
-1	fitia@gmail.com	[]	$2y$13$nNhuE6kDUakyiNuFYLFmL.PnyzdbN227NXesGacetdh78SY4tVKSe	RAKOTO	Fitia	2018-01-01
+2	fitahiana@gmail.com	[]	$2y$13$nNhuE6kDUakyiNuFYLFmL.PnyzdbN227NXesGacetdh78SY4tVKSe	RAKOTO	Fitahiana	2018-01-01
 \.
 
 

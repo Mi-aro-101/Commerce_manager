@@ -117,14 +117,14 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
+              {# <li class="nav-item">
                 <a href="{{ path('app_annonce_new') }}" class="nav-link {{ app.request.get('_route') == 'app_annonce_new' ? 'active' }}">
                   <i class="nav-icon fas fa-edit"></i>
                   <p>Creer</p>
                 </a>
-              </li>
+              </li> #}
               <li class="nav-item">
-                <a href="{{ path('app_annonce') }}" class="nav-link {{ app.request.get('_route') == 'app_annonce' ? 'active' }}">
+                <a href="{{ path('app_c_v_candidat_liste') }}" class="nav-link {{ app.request.get('_route') == 'app_annonce' ? 'active' }}">
                   <i class="nav-icon fas fa-file"></i>
                   <p>Voir</p>
                 </a>

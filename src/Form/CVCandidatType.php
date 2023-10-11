@@ -5,9 +5,17 @@ namespace App\Form;
 use App\Entity\CVCandidat;
 use App\Entity\CVRequirements;
 use App\Entity\Utilisateur;
-use Doctrine\DBAL\Types\DateType;
+use App\Entity\Domaine;
+use App\Entity\Diplome;
+use App\Entity\Experience;
+use App\Entity\Matrimoniale;
+use App\Entity\Nationalite;
+use App\Entity\Sexe;
+use App\Entity\Adresse;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+Use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,13 +27,10 @@ class CVCandidatType extends AbstractType
             ->add('date_depot',DateType::class,array('label' => false))
             ->add('date_reponse',DateType::class,array('label' => false))
             ->add('statue',null,array())
-            ->add('cvrequirements',EntityType::class,[
-                'class' => CVRequirements::class,
-                'choice_label' => 'id'
-            ])
-            ->add('utilisateur',EntityType::class,[
-                'class' => Utilisateur::class
-            ])
+            // ->add('cvrequirements',HiddenType::class,[])
+            // ->add('utilisateur',EntityType::class,[
+            //     'class' => Utilisateur::class
+            // ])
             ->add('domaine',EntityType::class, [
                 'class' => Domaine::class,
                 'choice_label' => 'des_domaine'

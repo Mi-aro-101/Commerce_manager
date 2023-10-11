@@ -1,0 +1,50 @@
+{% include 'header_client_template.html.twig' %}
+
+{% block title %}Liste des annonce disponible{% endblock %}
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>Liste d'annonce</h1>
+</div>
+{% block body %}
+     <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Date fin</th> 
+                <th>Poste_description</th>
+                <th>Diplome</th>
+                <th>Experience</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cv in c_v_disponibles %}
+            <tr>
+                {# <td> {{ cv.getDateFin() }} </td>  #}
+                <td> Je sais pas afficher la date </td> 
+                <td>{{ cv.getPosteDescription() }}</td>
+                <td>{{ cv.diplome.getDesDiplome() }}</td>
+                <td>{{ cv.experience.getDesXp() }}</td>
+                <td>
+                    <a href="{{ path('app_c_v_candidat_new', {'id': cv.id}) }}">show</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+     </table>
+{% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_client_template.html.twig' %}
