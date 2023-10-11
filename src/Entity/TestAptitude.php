@@ -19,7 +19,7 @@ class TestAptitude
     #[ORM\JoinColumn(nullable: false)]
     private ?CVRequirements $cv_requirements = null;
 
-    #[ORM\OneToMany(mappedBy: 'test_aptitude', targetEntity: Section::class)]
+    #[ORM\OneToMany(mappedBy: 'test_aptitude', targetEntity: Section::class, cascade:["persist", "remove"])]
     private Collection $sections;
 
     public function __construct()

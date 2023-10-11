@@ -1,28 +1,87 @@
-{% extends 'base.html.twig' %}
+{{ form_start(form) }}
 
-{% block title %}New TestAptitude{% endblock %}
-
-{% block body %}
-    <h1>Create new TestAptitude</h1>
-
-    {# {{ include('test_aptitude/_form.html.twig') }} #}
-
-    {{ form_start(form) }}
-            <div class="section-form">
-            <ul class="tags' data-index="{{ form.sections|length >0 ? form.sections|last.vars.name +1 :0 }}"
-             data-prototype="{{ form_widget(form.sections.vars.prototype)|e('html_attr')  }}" >
-        {# {% for section in form.sections %} #}
-            {# {{ form_widget(section.getDesQuestions()) }} #}
-            {# {{ form_row(section.des_question) }}
-            {{ form_row(section.coef_section) }} #}
-            {# {% for reponse in section.reponseSections %}
+{# <ul id="sections"
+    {# data-index="{{ form.sections|length > 0 ? form.sections|last.vars.des_question+1 : 0 }}"
+    data-prototype="{{ form_row(form.sections.vars.prototype.des_question)|e('html_attr') }}
+                    {{ form_row(form.sections.vars.prototype.coef_section)|e('html_attr')}}">
+        <li>
+        {% for sectionForm in form.sections %}
+            <ul class="response-sections"
+                {# data-index=""#}
+                {# data-prototype="
+                    {{ form_widget(sectionForm.reponseSections.vars.prototype)|e('html_attr') }}">
+            </ul>
+        </li>
+        {% endfor %} #}
+{# </ul>  #}
+<div id="sections">
+    {% for section in form.sections %}
+            {{ form_row(section.des_question) }}
+            {{ form_row(section.coef_section) }}
+            {% for reponse in section.reponseSections %}
+            <div class="reponse-sections">
                 {{ form_row(reponse.des_reponse) }}
                 {{ form_row(reponse.is_true) }}
-            {% endfor %} #}
-        {# {% endfor %} #}
-            </ul>
             </div>
-    {{ form_end(form) }}
+            {% endfor %}
+    {% endfor %}
+</div>
 
-    <a href="{{ path('app_test_aptitude_index') }}">back to list</a>
-{% endblock %}
+<input type="hidden" name="{{ field_name(form.cv_requirements) }}" value="{{ cv_requirements.getId() }}" />
+
+<button type="button" id="add-section">Add Section</button>
+<button type="submit" id="save-section">Save</button>
+
+{{ form_end(form) }}
+
+<script src="{{ asset('dist/js/jquery.js') }}"></script>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const addButton = document.getElementById('add-section');
+
+    addButton.addEventListener('click', function() {
+        const sectionsContainer = document.getElementById('sections');
+        const sectionIndex = sectionsContainer.children.length;
+        const newSection = document.createElement('div');
+        newSection.classList.add('section-form');
+        newSection.innerHTML = `
+            <label for="test_aptitude_sections_${sectionIndex}_des_question" class="required">Des question</label>
+            <textarea id="test_aptitude_sections_${sectionIndex}_des_question" name="test_aptitude[sections][${sectionIndex}][des_question]" required="required"></textarea>
+            <label for="test_aptitude_sections_${sectionIndex}_coef_section" class="required">Coef section</label>
+            <input type="number" id="test_aptitude_sections_${sectionIndex}_coef_section" name="test_aptitude[sections][${sectionIndex}][coef_section]" required="required">
+            <ul class="response-sections"></ul>
+        `;
+
+        sectionsContainer.appendChild(newSection);
+
+        // Add response section button and handler
+        const addResponseButton = document.createElement('button');
+        addResponseButton.type = 'button';
+        addResponseButton.classList.add('add-response');
+        addResponseButton.textContent = 'Add a Response Section';
+        newSection.appendChild(addResponseButton);
+
+        addResponseButton.addEventListener('click', function() {
+            const responseSectionsContainer = newSection.querySelector('.response-sections');
+            const responseSectionIndex = responseSectionsContainer.children.length;
+            const newResponseSection = document.createElement('li');
+            newResponseSection.innerHTML = `
+                <div id="test_aptitude_sections_${sectionIndex}_reponseSections_${responseSectionIndex}">
+                    <label for="test_aptitude_sections_${sectionIndex}_reponseSections_${responseSectionIndex}_des_reponse" class="required">Reponse</label>
+                    <textarea id="test_aptitude_sections_${sectionIndex}_reponseSections_${responseSectionIndex}_des_reponse" name="test_aptitude[sections][${sectionIndex}][reponseSections][${responseSectionIndex}][des_reponse]" required="required"></textarea>
+                    <label for="test_aptitude_sections_${sectionIndex}_reponseSections_${responseSectionIndex}_is_true" class="required">Is true</label>
+                    <input type="radio" id="test_aptitude_sections_${sectionIndex}_reponseSections_${responseSectionIndex}_is_true" name="test_aptitude[sections][${sectionIndex}][reponseSections][${responseSectionIndex}][is_true]" required="required" value="1">
+                </div>
+            `;
+
+            responseSectionsContainer.appendChild(newResponseSection);
+        });
+    });
+});
+
+
+
+
+
+</script>

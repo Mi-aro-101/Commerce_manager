@@ -5,9 +5,8 @@ namespace App\Form;
 use App\Entity\Section;
 use App\Entity\TestAptitude;
 use App\Form\SectionType;
-use Doctrine\ORM\Mapping\Entity;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,13 +16,16 @@ class TestAptitudeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('cv_requirements', HiddenType::class, [
+                'mapped' => false
+            ])
             ->add('sections', CollectionType::class, [
                 'entry_type' => SectionType::class,
-                'entry_options' => ['label' => false],
-                'allow_add' => true,
-                'by_reference' => false
-            ]) 
-            // ->add('sections', null, [])
+                'allow_add'    => true,
+                'allow_delete' => true, 
+                'by_reference' => false,// this will call get/set of your entity
+                'prototype' => true, // is needed coz there will be 2 prototypes 
+            ])
         ;
     }
 
