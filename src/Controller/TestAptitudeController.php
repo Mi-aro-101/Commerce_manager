@@ -10,6 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\ReponseSection;
+use App\Entity\Section;
+use App\Repository\CVRequirementsRepository;
 
 #[Route('/test/aptitude')]
 class TestAptitudeController extends AbstractController
@@ -23,13 +26,30 @@ class TestAptitudeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_test_aptitude_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function new(Request $request, EntityManagerInterface $entityManager,CVRequirementsRepository $cVRequirementsRepository): Response
+    {   
+        $id = $_GET['id'];
+        $cVRequirements = $cVRequirementsRepository->find($id);
         $testAptitude = new TestAptitude();
+
+        $section = new Section();
+        $section->setDesQuestion("Etes-vous gay ?");    
+        $section->setCoefSection(4);
+        $sectionreponse1 = new ReponseSection();
+        $sectionreponse1->setDesReponse("Oui");
+        $sectionreponse1->setIsTrue("true");
+        $sectionreponse2 = new ReponseSection();
+        $sectionreponse2->setDesReponse("Oui un peu");
+        $sectionreponse2->setIsTrue("false");
+        $section->addReponseSection($sectionreponse1);
+        $section->addReponseSection($sectionreponse2);
+
+        $testAptitude->addSection($section);
         $form = $this->createForm(TestAptitudeType::class, $testAptitude);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $testAptitude->setCvRequirements($cVRequirements);
             $entityManager->persist($testAptitude);
             $entityManager->flush();
 
@@ -37,6 +57,7 @@ class TestAptitudeController extends AbstractController
         }
 
         return $this->render('test_aptitude/new.html.twig', [
+            'cv_requirements' => $cVRequirements,
             'test_aptitude' => $testAptitude,
             'form' => $form ->createView(),
         ]);

@@ -7,6 +7,7 @@ use App\Form\ReponseSectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,13 +17,14 @@ class SectionType extends AbstractType
     {
         $builder
             ->add('des_question',TextareaType::class,[])
-            ->add('coef_section',TextareaType::class,[])
+            ->add('coef_section',null,[])
             ->add('reponseSections',CollectionType::class, [
                 'entry_type' => ReponseSectionType::class,
-                'allow_add' => true,
-                'by_reference' => false
+                'allow_add'    => true,
+                'allow_delete' => true, 
+                'by_reference' => false,// this will call get/set of your entity
+                'prototype' => true, // is needed coz there will be 2 prototypes 
             ])
-            // ->add('reponseSections',null,[])
         ;
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ReponseSection;
 use App\Entity\Section;
 use App\Form\SectionType;
 use App\Repository\SectionRepository;

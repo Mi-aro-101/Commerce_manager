@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\ReponseSection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,7 +18,9 @@ class ReponseSectionType extends AbstractType
             ->add('des_reponse',TextareaType::class,[
                 'label' => 'Reponse'
             ])
-            ->add('is_true',RadioType::class,[])
+            ->add('is_true',RadioType::class,[
+                
+            ])
         ;
     }
 

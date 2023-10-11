@@ -6,6 +6,7 @@ use App\Repository\SectionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\TestAptitude;
 
 #[ORM\Entity(repositoryClass: SectionRepository::class)]
 class Section
@@ -15,7 +16,7 @@ class Section
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sections')]
+    #[ORM\ManyToOne(inversedBy: 'sections', targetEntity: TestAptitude::class, cascade:["persist", "remove"])]
     #[ORM\JoinColumn(nullable: false)]
     private ?TestAptitude $test_aptitude = null;
 
@@ -25,7 +26,7 @@ class Section
     #[ORM\Column]
     private ?int $coef_section = null;
 
-    #[ORM\OneToMany(mappedBy: 'section', targetEntity: ReponseSection::class)]
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: ReponseSection::class, cascade:["persist", "remove"])]
     private Collection $reponseSections;
 
     public function __construct()

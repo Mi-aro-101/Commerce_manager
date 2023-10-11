@@ -11,11 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Nationalite
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy:"AUTO")]
+    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(length: 50)]
     private ?string $des_nationalite = null;
 
     #[ORM\OneToMany(mappedBy: 'nationalite', targetEntity: CVRequirements::class)]
@@ -23,6 +23,9 @@ class Nationalite
 
     #[ORM\OneToMany(mappedBy: 'Nationalite', targetEntity: CVCandidat::class)]
     private Collection $cVCandidats;
+
+    #[ORM\Column(length: 2)]
+    private ?string $code_nationalite = null;
 
     public function __construct()
     {
@@ -103,6 +106,18 @@ class Nationalite
                 $cVCandidat->setNationalite(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCodeNationalite(): ?string
+    {
+        return $this->code_nationalite;
+    }
+
+    public function setCodeNationalite(string $code_nationalite): static
+    {
+        $this->code_nationalite = $code_nationalite;
 
         return $this;
     }
