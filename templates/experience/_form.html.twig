@@ -6,16 +6,42 @@
 <div class="container-fluid">
 <div class="row">
 <div class="col-md-">
-<div class="card">
+<div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title"> Service </h3>
+        </div>
+        <div class="card-body">
 
-{% block body %}
+            {% block body %}
 
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <center><button class="btn btn-primary">{{ button_label|default('Save') }}</button></center>
-{{ form_end(form) }}
+            {{ form_start(form) }}
 
-{% endblock  %}
+            <div class="row">
+
+                <div class="form-group">
+                    <label> Designation Experience </label>
+                    <input type="text" class="form-control" name="{{ field_name(form.des_xp) }}">
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="form-group">
+                    <label> Note attributaire </label>
+                    <input type="text" class="form-control" name="{{ field_name(form.niv_xp) }}">
+                </div>
+
+            </div>
+
+            <div class="row">
+                <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+            </div>
+
+                {{ form_end(form) }}
+
+                {% endblock %}
+        </div>
 
 </div>
 </div>
