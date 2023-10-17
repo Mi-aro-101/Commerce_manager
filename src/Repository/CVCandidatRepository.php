@@ -21,20 +21,20 @@ class CVCandidatRepository extends ServiceEntityRepository
         parent::__construct($registry, CVCandidat::class);
     }
 
-//    /**
-//     * @return CVCandidat[] Returns an array of CVCandidat objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return CVCandidat[] Returns an array of CVCandidat objects
+    */
+   public function findByCvRequirements($value): array
+   {
+       return $this->createQueryBuilder('c')
+           ->andWhere('c.cvrequirements = :val')
+           ->setParameter('val', $value)
+           ->orderBy('c.id', 'ASC')
+        //    ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?CVCandidat
 //    {

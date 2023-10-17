@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -39,6 +41,16 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_de_naissance = null;
 
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: CVCandidat::class)]
+    private Collection $cVCandidats;
+
+    public function __construct()
+    {
+        $this->cVCandidats = new ArrayCollection();
+    }
+
+    #[ORM\ManyToMany(targetEntity: CVCandidat::class, mappedBy: 'utilisateur')]
+   
     public function getId(): ?int
     {
         return $this->id;
@@ -144,4 +156,35 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, CVCandidat>
+     */
+    public function getCVCandidats(): Collection
+    {
+        return $this->cVCandidats;
+    }
+
+    public function addCVCandidat(CVCandidat $cVCandidat): static
+    {
+        if (!$this->cVCandidats->contains($cVCandidat)) {
+            $this->cVCandidats->add($cVCandidat);
+            $cVCandidat->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCVCandidat(CVCandidat $cVCandidat): static
+    {
+        if ($this->cVCandidats->removeElement($cVCandidat)) {
+            // set the owning side to null (unless already changed)
+            if ($cVCandidat->getUtilisateur() === $this) {
+                $cVCandidat->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
