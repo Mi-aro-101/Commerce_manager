@@ -19,13 +19,7 @@ class ReponseSectionType extends AbstractType
             ->add('des_reponse',TextareaType::class,[
                 'label' => 'Reponse'
             ])
-            ->add('is_true',ChoiceType::class,[
-                'label' => 'est vrai',
-                'choices' => [
-                    'Oui' => true,
-                    'Non' => false
-                ]
-            ])
+            ->add('is_true',null,[])
         ;
     }
 
