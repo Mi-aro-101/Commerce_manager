@@ -18,14 +18,12 @@ class CVCandidat
     #[ORM\JoinColumn(nullable: false)]
     private ?CVRequirements $cvrequirements = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Utilisateur $utilisateur = null;
+    
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_depot = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable:true)]
     private ?\DateTimeInterface $date_reponse = null;
 
     #[ORM\Column]
@@ -59,6 +57,10 @@ class CVCandidat
     #[ORM\JoinColumn(nullable: false)]
     private ?Matrimoniale $Matrimoniale = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cVCandidats')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Utilisateur $utilisateur = null;
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -76,17 +78,6 @@ class CVCandidat
         return $this;
     }
 
-    public function getUtilisateur(): ?Utilisateur
-    {
-        return $this->utilisateur;
-    }
-
-    public function setUtilisateur(Utilisateur $utilisateur): static
-    {
-        $this->utilisateur = $utilisateur;
-
-        return $this;
-    }
 
     public function getDateDepot(): ?\DateTimeInterface
     {
@@ -207,4 +198,17 @@ class CVCandidat
 
         return $this;
     }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): static
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
 }

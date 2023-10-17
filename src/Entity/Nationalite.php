@@ -24,7 +24,7 @@ class Nationalite
     #[ORM\OneToMany(mappedBy: 'Nationalite', targetEntity: CVCandidat::class)]
     private Collection $cVCandidats;
 
-    #[ORM\Column(length: 2)]
+    #[ORM\Column(length: 2, nullable:true)]
     private ?string $code_nationalite = null;
 
     public function __construct()

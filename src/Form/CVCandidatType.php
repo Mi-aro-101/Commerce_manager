@@ -15,7 +15,7 @@ use App\Entity\Adresse;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-Use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,8 +25,8 @@ class CVCandidatType extends AbstractType
     {
         $builder
             ->add('date_depot',DateType::class,array('label' => false))
-            ->add('date_reponse',DateType::class,array('label' => false))
-            ->add('statue',null,array())
+            // ->add('date_reponse',DateType::class,array('label' => false))
+            // ->add('statue',HiddenType::class,array())
             // ->add('cvrequirements',HiddenType::class,[])
             // ->add('utilisateur',EntityType::class,[
             //     'class' => Utilisateur::class

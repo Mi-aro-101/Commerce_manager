@@ -43,13 +43,14 @@ class CVCandidatController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $cVCandidat->setStatue(5);
+            // $cVCandidat->setDateReponse(null);
             $cVCandidat->setCvrequirements($cVrequirements);
             $cVCandidat->setUtilisateur($user);
             $entityManager->persist($cVCandidat);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_c_v_candidat_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_c_v_candidat_liste', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('cv_candidat/new.html.twig', [
