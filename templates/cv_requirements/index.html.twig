@@ -62,10 +62,9 @@
                 </td>
                 <td>
                     <a href="{{ path('app_test_aptitude_new', {'id': c_v_requirement.id}) }}">create a Test_aptitude</a>
-                    <a href="{{ path('app_c_v_requirements_liste_candidat_cv', {'id': c_v_requirement.id}) }}">Liste candidature</a>
                 </td>
                 <td>
-                    {# <a href="{{ path('app_c_v_requirements_liste_candidat_cv', {'id': c_v_requirement.id}) }}">Voir cv candidats</a> #}
+                    <a href="{{ path('app_c_v_requirements_liste_candidat_cv', {'id': c_v_requirement.id}) }}">Liste candidature</a>
                 </td>
             </tr>
         {% else %}
