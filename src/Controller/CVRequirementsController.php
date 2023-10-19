@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\CvCandidatNote;
 use App\Entity\CVRequirements;
 use App\Form\CVRequirementsType;
 use App\Repository\AdresseRepository;
+use App\Repository\CvCandidatNoteRepository;
 use App\Repository\CVCandidatRepository;
 use App\Repository\CVRequirementsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,14 +26,12 @@ use App\Repository\SexeRepository;
 class CVRequirementsController extends AbstractController
 {
     #[Route('/liste_candidat_cv', name: 'app_c_v_requirements_liste_candidat_cv', methods: ['GET'])]
-    public function liste_candidat_cv(CVRequirementsRepository $cVRequirementsRepository,CVCandidatRepository $cVCandidatRepository): Response
+    public function liste_candidat_cv(CVRequirementsRepository $cVRequirementsRepository,CVCandidatRepository $cVCandidatRepository, CvCandidatNoteRepository $cvCandidatNoteRepository): Response
     {
         $id = $_GET['id'];
-        $cvCandidats = $cVCandidatRepository->findByCvRequirements($id);
-        $cvRequirement = $cVRequirementsRepository->find($id);
+        $cvCandidats = $cvCandidatNoteRepository->findByCvRequirements($id);
         return $this->render('cv_requirements/liste_candidats_cv.html.twig', [
             'cvCandidats' => $cvCandidats,
-            'cvRequirement' => $cvRequirement,
         ]);
     }
 

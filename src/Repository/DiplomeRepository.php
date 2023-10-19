@@ -24,10 +24,10 @@ class DiplomeRepository extends ServiceEntityRepository
 //    /**
 //     * @return Diplome[] Returns an array of Diplome objects
 //     */
-//    public function findByExampleField($value): array
+//    public function findById($value): array
 //    {
 //        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
+//            ->andWhere('d.id = :val')
 //            ->setParameter('val', $value)
 //            ->orderBy('d.id', 'ASC')
 //            ->setMaxResults(10)

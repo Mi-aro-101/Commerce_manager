@@ -2,12 +2,19 @@
 namespace App\Controller;
 
 use App\Entity\CVCandidat;
+use App\Entity\CvCandidatNote;
 use App\Form\CVCandidatType;
+use App\Repository\AdresseRepository;
+use App\Repository\CvCandidatNoteRepository;
 use App\Repository\CVCandidatRepository;
 use App\Repository\CVRequirementsRepository;
 use App\Repository\TestAptitudeRepository;
+use App\Repository\DiplomeRepository;
+use App\Repository\ExperienceRepository;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Float_;
+use PhpParser\Node\Expr\Cast\Double;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,7 +41,7 @@ class CVCandidatController extends AbstractController
     }
 
     #[Route('/new', name: 'app_c_v_candidat_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,CVRequirementsRepository $cVRequirementsRepository,UtilisateurRepository $utilisateurRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,CVRequirementsRepository $cVRequirementsRepository,UtilisateurRepository $utilisateurRepository, DiplomeRepository $diplomeRepository, ExperienceRepository $experienceRepository, AdresseRepository $adresseRepository): Response
     {
         $id = $_GET['id'];
         $cVrequirements = $cVRequirementsRepository->find($id);
@@ -49,7 +56,14 @@ class CVCandidatController extends AbstractController
             // $cVCandidat->setDateReponse(null);
             $cVCandidat->setCvrequirements($cVrequirements);
             $cVCandidat->setUtilisateur($user);
+            $note = $this->setUpNotes($cVCandidat, $cVrequirements, $diplomeRepository, $experienceRepository, $adresseRepository);
+            $cvCandidatNote = new CvCandidatNote();
+            $cvCandidatNote->setUtilisateur($user);
+            $cvCandidatNote->setCvrequirements($cVrequirements);
+            $cvCandidatNote->setNote($note);
+
             $entityManager->persist($cVCandidat);
+            $entityManager->persist($cvCandidatNote);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_c_v_candidat_liste', [], Response::HTTP_SEE_OTHER);
@@ -59,6 +73,34 @@ class CVCandidatController extends AbstractController
             'cv_requirements' => $cVrequirements,
             'formcv' => $form,
         ]);
+    }
+
+    public function setUpNotes($request, $cvRequirements, $diplomeRepository, $experienceRepository, $adresseRepository) : Float {
+        $note = 0.0;
+
+        echo $request->getSexe()->getDesSexe();
+        $sexeNote = $this->getNote($request->getSexe()->getId(), $cvRequirements->getSexe()->getId());
+        $sexeNote *= $cvRequirements->getCoefSexe();
+        $matrimonialeNote = $this->getNote($request->getMatrimoniale()->getId(), $cvRequirements->getMatrimoniale()->getId());
+        $matrimonialeNote *= $cvRequirements->getCoefMatrimoniale();
+        $nationaliteNote = $this->getNote($request->getNationalite()->getId(), $cvRequirements->getNationalite()->getId());
+        $nationaliteNote *= $cvRequirements->getCoefNationalite();
+
+        $diplomeValue = ( $request->getDiplome()->getNivDiplome() ) * $cvRequirements->getCoefDiplome();
+        $experienceValue = ( $request->getExperience()->getNivXp() ) * $cvRequirements->getCoefXp();
+        $adresseValue = ( $request->getAdresse()->getNivAdresse() ) * $cvRequirements->getCoefAdresse();
+
+        $note1 = $nationaliteNote+$matrimonialeNote+$sexeNote+$diplomeValue+$experienceValue+$adresseValue;
+
+        return $note1;
+    }
+
+    public function getNote($var1, $var2) : int {
+        $val=1;
+        if($var1 == $var2){
+            $val=2;
+        }
+        return $val;
     }
 
     // #[Route('/new', name: 'app_c_v_candidat_new', methods: ['GET', 'POST'])]

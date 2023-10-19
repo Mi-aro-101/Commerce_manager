@@ -26,8 +26,7 @@
         <tbody>
         {% for cv in c_v_disponibles %}
             <tr>
-                {# <td> {{ cv.getDateFin() }} </td>  #}
-                <td> Je sais pas afficher la date </td> 
+                <td>{{ cv.getDateFin()|date('Y-m-d') }}</td> 
                 <td>{{ cv.getPosteDescription() }}</td>
                 <td>{{ cv.diplome.getDesDiplome() }}</td>
                 <td>{{ cv.experience.getDesXp() }}</td>
