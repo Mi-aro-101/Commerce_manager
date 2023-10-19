@@ -5,6 +5,7 @@ use App\Entity\CVCandidat;
 use App\Form\CVCandidatType;
 use App\Repository\CVCandidatRepository;
 use App\Repository\CVRequirementsRepository;
+use App\Repository\TestAptitudeRepository;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/c/v/candidat')]
 class CVCandidatController extends AbstractController
 {
+    
     #[Route('/liste', name: 'app_c_v_candidat_liste', methods: ['GET', 'POST'])]
     public function liste_annonce(Request $request, EntityManagerInterface $entityManager,CVRequirementsRepository $cVRequirementsRepository): Response
     {

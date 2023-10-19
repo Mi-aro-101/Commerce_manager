@@ -22,9 +22,13 @@ class TestAptitude
     #[ORM\OneToMany(mappedBy: 'test_aptitude', targetEntity: Section::class, cascade:["persist", "remove"])]
     private Collection $sections;
 
+    #[ORM\OneToMany(mappedBy: 'test_aptitude', targetEntity: TestResultat::class)]
+    private Collection $testResultats;
+
     public function __construct()
     {
         $this->sections = new ArrayCollection();
+        $this->testResultats = new ArrayCollection();
     }
 
 
@@ -69,6 +73,36 @@ class TestAptitude
             // set the owning side to null (unless already changed)
             if ($section->getTestAptitude() === $this) {
                 $section->setTestAptitude(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TestResultat>
+     */
+    public function getTestResultats(): Collection
+    {
+        return $this->testResultats;
+    }
+
+    public function addTestResultat(TestResultat $testResultat): static
+    {
+        if (!$this->testResultats->contains($testResultat)) {
+            $this->testResultats->add($testResultat);
+            $testResultat->setTestAptitude($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTestResultat(TestResultat $testResultat): static
+    {
+        if ($this->testResultats->removeElement($testResultat)) {
+            // set the owning side to null (unless already changed)
+            if ($testResultat->getTestAptitude() === $this) {
+                $testResultat->setTestAptitude(null);
             }
         }
 
