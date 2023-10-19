@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CvCandidatNote index{% endblock %}
+
+{% block body %}
+    <h1>CvCandidatNote index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Note</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cv_candidat_note in cv_candidat_notes %}
+            <tr>
+                <td>{{ cv_candidat_note.id }}</td>
+                <td>{{ cv_candidat_note.Note }}</td>
+                <td>
+                    <a href="{{ path('app_cv_candidat_note_show', {'id': cv_candidat_note.id}) }}">show</a>
+                    <a href="{{ path('app_cv_candidat_note_edit', {'id': cv_candidat_note.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cv_candidat_note_new') }}">Create new</a>
+{% endblock %}
