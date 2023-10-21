@@ -122,7 +122,7 @@ class Section
     {
         if (!$this->sectionReponses->contains($sectionReponse)) {
             $this->sectionReponses->add($sectionReponse);
-            $sectionReponse->setSection($this);
+            // $sectionReponse->setSection($this);
         }
 
         return $this;
@@ -132,9 +132,9 @@ class Section
     {
         if ($this->sectionReponses->removeElement($sectionReponse)) {
             // set the owning side to null (unless already changed)
-            if ($sectionReponse->getSection() === $this) {
-                $sectionReponse->setSection(null);
-            }
+            // if ($sectionReponse->getSection() === $this) {
+            //     $sectionReponse->setSection(null);
+            // }
         }
 
         return $this;

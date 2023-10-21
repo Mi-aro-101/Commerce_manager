@@ -26,12 +26,13 @@ use App\Repository\SexeRepository;
 class CVRequirementsController extends AbstractController
 {
     #[Route('/liste_candidat_cv', name: 'app_c_v_requirements_liste_candidat_cv', methods: ['GET'])]
-    public function liste_candidat_cv(CVRequirementsRepository $cVRequirementsRepository,CVCandidatRepository $cVCandidatRepository, CvCandidatNoteRepository $cvCandidatNoteRepository): Response
+    public function liste_candidat_cv( CvCandidatNoteRepository $cvCandidatNoteRepository): Response
     {
         $id = $_GET['id'];
         $cvCandidats = $cvCandidatNoteRepository->findByCvRequirements($id);
+
         return $this->render('cv_requirements/liste_candidats_cv.html.twig', [
-            'cvCandidats' => $cvCandidats,
+            'cvCandidats' => $cvCandidats
         ]);
     }
 
