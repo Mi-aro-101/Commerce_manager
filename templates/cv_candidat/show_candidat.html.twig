@@ -1,0 +1,168 @@
+{% include 'header_template.html.twig' %}
+{# {% block title %}Liste candidature pour le pose de {{ cvRequirement.getPosteDescription() }} {% endblock %} #}
+
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+
+        <div class="col-sm-6">
+            <h1>Domaine : <strong>{{ cvCandidat.getDomaine().getDesDomaine() }}</strong></h1>
+          </div><br>
+<div class="row">
+
+
+          <div class="col-6">
+            <div class="card card-row card-default">
+
+              <div class="card-header bg-info">
+                <h3 class="card-title">
+                  Information <strong>personnelle</strong>
+                </h3>
+              </div>
+
+              <div class="card-body">
+                <div class="card-info card-outline">
+                  <div class="card-header">
+                      <h5 class="card-title">Nom et prenom</h5>
+                  </div>
+                  <div class="card-body">
+                    <h5><strong>{{ cvCandidat.getUtilisateur().getNomUtilisateur() }} {{ cvCandidat.getUtilisateur().getPrenomUtilisateur() }}</strong></h5>
+                  </div>
+                </div>
+
+                <div class="card-info card-outline">
+                  <div class="card-header">
+                      <h5 class="card-title">Sexe</h5>
+                  </div>
+                  <div class="card-body">
+                    <h5><strong>{{ cvCandidat.getSexe().getDesSexe() }}</strong></h5>
+                  </div>
+                </div>
+
+                <div class="card-info card-outline">
+                  <div class="card-header">
+                      <h5 class="card-title">Nationalite</h5>
+                  </div>
+                  <div class="card-body">
+                    <h5><strong>{{ cvCandidat.getNationalite().getDesNationalite() }}</strong></h5>
+                  </div>
+                </div>
+
+                <div class="card-info card-outline">
+                  <div class="card-header">
+                      <h5 class="card-title">Situation matrimoniale</h5>
+                  </div>
+                  <div class="card-body">
+                    <h5><strong>{{ cvCandidat.getMatrimoniale().getDesMatrimoniale() }}</strong></h5>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-6">
+
+            <div class="card card-row card-primary">
+
+              <div class="card-header bg-primary">
+                <h3 class="card-title">
+                  Information <strong>professionnelle</strong>
+                </h3>
+              </div>
+
+              <div class="card-body">
+                <div class="card-primary card-outline">
+                  <div class="card-header">
+                      <h5 class="card-title">Diplome</h5>
+                  </div>
+                  <div class="card-body">
+                    <h5><strong>{{ cvCandidat.getDiplome().getDesDiplome() }}</strong></h5>
+                  </div>
+                </div>
+
+                <div class="card-primary card-outline">
+                  <div class="card-header">
+                      <h5 class="card-title">Experience dans le domaine</h5>
+                  </div>
+                  <div class="card-body">
+                    <h5><strong>{{ cvCandidat.getExperience().getDesXp() }}</strong></h5>
+                  </div>
+                </div>
+
+                <div class="card-primary card-outline">
+                  <div class="card-header">
+                      <h5 class="card-title">Situation par rapport au lieu de travail</h5>
+                  </div>
+                  <div class="card-body">
+                    <h5><strong>{{ cvCandidat.getAdresse().getDesAdresse() }}</strong></h5>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-12">
+          <center> <button type="button" class="btn btn-block btn-success btn-lg">Approuver et fournir le test d'aptitude</button> </center>
+          </div>
+            {# <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Detail du candidat <strong>{{ cvCandidat.getUtilisateur().getNomUtilisateur() }} {{ cvCandidat.getUtilisateur().getPrenomUtilisateur() }}</strong></h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Utilisateur</th>
+                      <th>Diplome</th>
+                      <th>Experience</th>
+                      <th>Sexe</th>
+                      <th>Nationalite</th>
+                      <th>Adresse</th>
+                      <th>Situation matrimoniale</th>
+                      <th>Date de depot</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ cvCandidat.getUtilisateur().getNomUtilisateur() }} {{ cvCandidat.getUtilisateur().getPrenomUtilisateur() }}</td>
+                      <td>{{ cvCandidat.getDiplome().getDesDiplome() }}</td>
+                      <td>{{ cvCandidat.getExperience().getDesXp() }}</td>
+                      <td>{{ cvCandidat.getSexe().getDesSexe() }}</td>
+                      <td>{{ cvCandidat.getNationalite().getDesNationalite() }}</td>
+                      <td>{{ cvCandidat.getAdresse().getDesAdresse() }}</td>
+                      <td>{{ cvCandidat.getMatrimoniale().getDesMatrimoniale() }}</td>
+                      <td>{{ cvCandidat.getDateDepot()|date('Y-m-d') }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div> #}
+            <!-- /.card -->
+
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

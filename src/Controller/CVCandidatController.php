@@ -157,4 +157,15 @@ class CVCandidatController extends AbstractController
 
         return $this->redirectToRoute('app_c_v_candidat_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/voircvcandidat/{idcandidat}', name:'app_c_v_candidat_by_candidat', methods:['GET'])]
+    public function viewCvCandidat(Request $request, int $idcandidat ,CVCandidatRepository $cVCandidatRepository): Response
+    {
+        $cVCandidat = $cVCandidatRepository->findOneByCandidat($idcandidat);
+
+        return $this->render('cv_candidat/show_candidat.html.twig', [
+            'cvCandidat' => $cVCandidat
+        ]);
+    }
+
 }
