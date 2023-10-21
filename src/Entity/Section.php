@@ -106,4 +106,33 @@ class Section
         return $this;
     }
 
+    /**
+     * @return Collection<int, SectionReponse>
+     */
+    public function getSectionReponses(): Collection
+    {
+        return $this->sectionReponses;
+    }
+
+    public function addSectionReponse(SectionReponse $sectionReponse): static
+    {
+        if (!$this->sectionReponses->contains($sectionReponse)) {
+            $this->sectionReponses->add($sectionReponse);
+            // $sectionReponse->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSectionReponse(SectionReponse $sectionReponse): static
+    {
+        if ($this->sectionReponses->removeElement($sectionReponse)) {
+            // set the owning side to null (unless already changed)
+            // if ($sectionReponse->getSection() === $this) {
+            //     $sectionReponse->setSection(null);
+            // }
+        }
+
+        return $this;
+    }
 }

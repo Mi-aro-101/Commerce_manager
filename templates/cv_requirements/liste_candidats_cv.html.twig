@@ -40,8 +40,7 @@
                     <tr>
                       <td>{{ cv_candidat.getUtilisateur().getNomUtilisateur() }}</td>
                       <td>{{ cv_candidat.getNote() }}</td>
-                      <td><a href="{{ path('app_c_v_candidat_by_candidat', {'idcandidat': cv_candidat.getUtilisateur().getId()}) }}">Consulter CV</a></td>
-                      <td><a href=""> Accepter </a></td>
+                      <td><a href="{{ path('app_c_v_candidat_by_candidat', {'idcandidat': cv_candidat.getUtilisateur().getId()}) }}"><button type="button" class="btn btn-block btn-outline-info btn-sm">Consulter CV</button></a></td>
                     </tr>
                    {% endfor %}
                   </tbody>

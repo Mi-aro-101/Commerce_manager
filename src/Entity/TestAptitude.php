@@ -75,5 +75,34 @@ class TestAptitude
         return $this;
     }
 
+    /**
+     * @return Collection<int, TestResultat>
+     */
+    public function getTestResultats(): Collection
+    {
+        return $this->testResultats;
+    }
+
+    public function addTestResultat(TestResultat $testResultat): static
+    {
+        if (!$this->testResultats->contains($testResultat)) {
+            $this->testResultats->add($testResultat);
+            // $testResultat->setTestAptitude($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTestResultat(TestResultat $testResultat): static
+    {
+        if ($this->testResultats->removeElement($testResultat)) {
+            // set the owning side to null (unless already changed)
+            // if ($testResultat->getTestAptitude() === $this) {
+            //     $testResultat->setTestAptitude(null);
+            // }
+        }
+
+        return $this;
+    }
     
 }
