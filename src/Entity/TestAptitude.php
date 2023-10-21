@@ -91,7 +91,7 @@ class TestAptitude
     {
         if (!$this->testResultats->contains($testResultat)) {
             $this->testResultats->add($testResultat);
-            $testResultat->setTestAptitude($this);
+            // $testResultat->setTestAptitude($this);
         }
 
         return $this;
@@ -101,9 +101,9 @@ class TestAptitude
     {
         if ($this->testResultats->removeElement($testResultat)) {
             // set the owning side to null (unless already changed)
-            if ($testResultat->getTestAptitude() === $this) {
-                $testResultat->setTestAptitude(null);
-            }
+            // if ($testResultat->getTestAptitude() === $this) {
+            //     $testResultat->setTestAptitude(null);
+            // }
         }
 
         return $this;
