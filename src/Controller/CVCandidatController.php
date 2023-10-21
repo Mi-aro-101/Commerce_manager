@@ -8,7 +8,6 @@ use App\Repository\AdresseRepository;
 use App\Repository\CvCandidatNoteRepository;
 use App\Repository\CVCandidatRepository;
 use App\Repository\CVRequirementsRepository;
-use App\Repository\TestAptitudeRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\ExperienceRepository;
 use App\Repository\UtilisateurRepository;
@@ -23,7 +22,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/c/v/candidat')]
 class CVCandidatController extends AbstractController
 {
-    
     #[Route('/liste', name: 'app_c_v_candidat_liste', methods: ['GET', 'POST'])]
     public function liste_annonce(Request $request, EntityManagerInterface $entityManager,CVRequirementsRepository $cVRequirementsRepository): Response
     {
