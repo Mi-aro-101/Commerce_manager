@@ -29,13 +29,9 @@ class Section
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: ReponseSection::class, cascade:["persist", "remove"])]
     private Collection $reponseSections;
 
-    #[ORM\OneToMany(mappedBy: 'section', targetEntity: SectionReponse::class)]
-    private Collection $sectionReponses;
-
     public function __construct()
     {
         $this->reponseSections = new ArrayCollection();
-        $this->sectionReponses = new ArrayCollection();
     }
 
 
@@ -104,36 +100,6 @@ class Section
             // set the owning side to null (unless already changed)
             if ($reponseSection->getSection() === $this) {
                 $reponseSection->setSection(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, SectionReponse>
-     */
-    public function getSectionReponses(): Collection
-    {
-        return $this->sectionReponses;
-    }
-
-    public function addSectionReponse(SectionReponse $sectionReponse): static
-    {
-        if (!$this->sectionReponses->contains($sectionReponse)) {
-            $this->sectionReponses->add($sectionReponse);
-            $sectionReponse->setSection($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSectionReponse(SectionReponse $sectionReponse): static
-    {
-        if ($this->sectionReponses->removeElement($sectionReponse)) {
-            // set the owning side to null (unless already changed)
-            if ($sectionReponse->getSection() === $this) {
-                $sectionReponse->setSection(null);
             }
         }
 
