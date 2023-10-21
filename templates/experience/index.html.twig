@@ -6,7 +6,7 @@
 <section class="content">
 <div class="container-fluid">
 <div class="row">
-<div class="col-md-">
+<div class="col-md-9">
 <div class="card">
 <div class="card-header">
     <h1>Liste des diplomes</h1>
@@ -27,11 +27,11 @@
         {% for experience in experiences %}
             <tr>
                 <td>{{ experience.getDesXp() }}</td>
-                <td>{{ experience.getNivXp() }}</td>
-                <td>
+                <td style="text-align:right">{{ experience.getNivXp() }}</td>
+                <td style="text-align:center">
                     <a href="{{ path('app_experience_show', {'id': experience.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
                 </td>
-                <td>
+                <td style="text-align:center">
                     <a href="{{ path('app_experience_edit', {'id': experience.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
                 </td>
             </tr>

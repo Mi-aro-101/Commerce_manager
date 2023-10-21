@@ -6,7 +6,7 @@
 <section class="content">
 <div class="container-fluid">
 <div class="row">
-<div class="col-md-">
+<div class="col-md-9">
 <div class="card">
 <div class="card-header">
     <h1>Liste des adresses disponibles</h1>
@@ -25,11 +25,11 @@
         {% for adresse in adresses %}
             <tr>
                 <td>{{ adresse.getDesAdresse() }}</td>
-                <td>{{ adresse.getNivAdresse() }}</td>
-                <td>
+                <td style="text-align:right">{{ adresse.getNivAdresse() }}</td>
+                <td style="text-align:center">
                     <a href="{{ path('app_adresse_show', {'id': adresse.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
                 </td>
-                <td>
+                <td style="text-align:center">
                     <a href="{{ path('app_adresse_edit', {'id': adresse.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
                 </td>
             </tr>
