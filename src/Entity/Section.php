@@ -29,13 +29,9 @@ class Section
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: ReponseSection::class, cascade:["persist", "remove"])]
     private Collection $reponseSections;
 
-    #[ORM\OneToMany(mappedBy: 'section', targetEntity: SectionReponse::class)]
-    private Collection $sectionReponses;
-
     public function __construct()
     {
         $this->reponseSections = new ArrayCollection();
-        $this->sectionReponses = new ArrayCollection();
     }
 
 
@@ -139,5 +135,4 @@ class Section
 
         return $this;
     }
-
 }

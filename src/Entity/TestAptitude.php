@@ -22,13 +22,9 @@ class TestAptitude
     #[ORM\OneToMany(mappedBy: 'test_aptitude', targetEntity: Section::class, cascade:["persist", "remove"])]
     private Collection $sections;
 
-    #[ORM\OneToMany(mappedBy: 'test_aptitude', targetEntity: TestResultat::class)]
-    private Collection $testResultats;
-
     public function __construct()
     {
         $this->sections = new ArrayCollection();
-        $this->testResultats = new ArrayCollection();
     }
 
 
@@ -108,6 +104,5 @@ class TestAptitude
 
         return $this;
     }
-
     
 }
