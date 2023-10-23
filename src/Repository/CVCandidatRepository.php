@@ -30,19 +30,18 @@ class CVCandidatRepository extends ServiceEntityRepository
            ->andWhere('c.cvrequirements = :val')
            ->setParameter('val', $value)
            ->orderBy('c.id', 'ASC')
-        //    ->setMaxResults(10)
            ->getQuery()
            ->getResult()
        ;
    }
 
-//    public function findOneBySomeField($value): ?CVCandidat
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+   public function findOneByCandidat($value): ?CVCandidat
+   {
+       return $this->createQueryBuilder('c')
+           ->andWhere('c.utilisateur = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
 }

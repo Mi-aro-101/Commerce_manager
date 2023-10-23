@@ -36,13 +36,13 @@ class TestAptitudeRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-   public function findOneByCvRequirements($value): ?TestAptitude
-   {
-       return $this->createQueryBuilder('t')
-           ->andWhere('t.cv_requirements = :val')
-           ->setParameter('val', $value)
-           ->getQuery()
-           ->getOneOrNullResult()
-       ;
-   }
+//    public function findOneBySomeField($value): ?TestAptitude
+//    {
+//        return $this->createQueryBuilder('t')
+//            ->andWhere('t.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->getQuery()
+//            ->getOneOrNullResult()
+//        ;
+//    }
 }

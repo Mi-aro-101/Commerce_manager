@@ -15,7 +15,7 @@ class TestResultat
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+  
     #[ORM\ManyToOne(inversedBy: 'testResultats')]
     #[ORM\JoinColumn(nullable: false)]
     private ?TestAptitude $test_aptitude = null;
@@ -45,6 +45,7 @@ class TestResultat
     {
         return $this->id;
     }
+
 
     public function getTestAptitude(): ?TestAptitude
     {
@@ -135,4 +136,5 @@ class TestResultat
 
         return $this;
     }
+
 }
