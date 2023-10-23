@@ -8,7 +8,7 @@
 <section class="content">
 <div class="container-fluid">
 <div class="row">
-<div class="col-md-">
+<div class="col-md-9">
 <div class="card">
 <div class="card-header">
     <h1>Liste des situations matrimoniales</h1>
@@ -31,9 +31,9 @@
             <tr>
 
                 <td>{{ matrimoniale.desMatrimoniale }}</td>
-                <td>
+                <td style="text-align:center">
                     <a href="{{ path('app_matrimoniale_show', {'id': matrimoniale.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
-                </td>
+                </td style="text-align:center">
                 <td>
                     <a href="{{ path('app_matrimoniale_edit', {'id': matrimoniale.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
                 </td>

@@ -8,10 +8,10 @@ use App\Repository\AdresseRepository;
 use App\Repository\CvCandidatNoteRepository;
 use App\Repository\CVCandidatRepository;
 use App\Repository\CVRequirementsRepository;
-use App\Repository\TestAptitudeRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\ExperienceRepository;
 use App\Repository\UtilisateurRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\Float_;
 use PhpParser\Node\Expr\Cast\Double;
@@ -23,7 +23,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/c/v/candidat')]
 class CVCandidatController extends AbstractController
 {
-    
     #[Route('/liste', name: 'app_c_v_candidat_liste', methods: ['GET', 'POST'])]
     public function liste_annonce(Request $request, EntityManagerInterface $entityManager,CVRequirementsRepository $cVRequirementsRepository): Response
     {
@@ -53,7 +52,6 @@ class CVCandidatController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $cVCandidat->setStatue(5);
-            // $cVCandidat->setDateReponse(null);
             $cVCandidat->setCvrequirements($cVrequirements);
             $cVCandidat->setUtilisateur($user);
             $note = $this->setUpNotes($cVCandidat, $cVrequirements, $diplomeRepository, $experienceRepository, $adresseRepository);
@@ -159,4 +157,39 @@ class CVCandidatController extends AbstractController
 
         return $this->redirectToRoute('app_c_v_candidat_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/voircvcandidat/{idcandidat}', name:'app_c_v_candidat_by_candidat', methods:['GET'])]
+    public function viewCvCandidat(Request $request, int $idcandidat ,CVCandidatRepository $cVCandidatRepository): Response
+    {
+        $cVCandidat = $cVCandidatRepository->findOneByCandidat($idcandidat);
+        $validButton = '<h4 style="color:green"> Ce CV a deja ete accepte </h4>';
+
+        #<a href="/c/v/candidat/acceptercv/x"> <button type="button" class="btn btn-block btn-success btn-lg">Approuver et fournir le test d'aptitude</button> </a>
+
+        if($cVCandidat->getStatue() == 5){
+            $validButton = '<a href="/c/v/candidat/acceptercv/'.$cVCandidat->getId().'"> <button type="button" class="btn btn-block btn-success btn-lg">Approuver et fournir le test d'.'aptitude</button> </a>';
+        };
+
+        return $this->render('cv_candidat/show_candidat.html.twig', [
+            'cvCandidat' => $cVCandidat,
+            'validButton' => $validButton
+        ]);
+    }
+
+    #[Route('/acceptercv/{id}', name:'app_acceptercv_by_id', methods:['GET', 'POST'])]
+    public function accepterCv(Request $request, int $id, EntityManagerInterface $entityManager) : Response
+    {
+        $cvCandidatAccepted = $entityManager->getRepository(CVCandidat::class)->find($id);
+        $cvCandidatAccepted->setStatue(10);
+        $datereponse = new DateTime(date('Y-m-d'));
+        $cvCandidatAccepted->setDateReponse($datereponse);
+
+        $entityManager->flush();
+
+        return $this->render('cv_candidat/show_candidat.html.twig', [
+            'cvCandidat' => $cvCandidatAccepted,
+            'validButton' => '<h4 style="color:green> Ce CV a deja ete acceptee</h4>'
+        ]);
+    }
+
 }

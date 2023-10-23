@@ -44,13 +44,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: CVCandidat::class)]
     private Collection $cVCandidats;
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: TestResultat::class)]
-    private Collection $testResultats;
-
     public function __construct()
     {
         $this->cVCandidats = new ArrayCollection();
-        $this->testResultats = new ArrayCollection();
     }
 
     #[ORM\ManyToMany(targetEntity: CVCandidat::class, mappedBy: 'utilisateur')]
@@ -185,36 +181,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($cVCandidat->getUtilisateur() === $this) {
                 $cVCandidat->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, TestResultat>
-     */
-    public function getTestResultats(): Collection
-    {
-        return $this->testResultats;
-    }
-
-    public function addTestResultat(TestResultat $testResultat): static
-    {
-        if (!$this->testResultats->contains($testResultat)) {
-            $this->testResultats->add($testResultat);
-            $testResultat->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTestResultat(TestResultat $testResultat): static
-    {
-        if ($this->testResultats->removeElement($testResultat)) {
-            // set the owning side to null (unless already changed)
-            if ($testResultat->getUtilisateur() === $this) {
-                $testResultat->setUtilisateur(null);
             }
         }
 
