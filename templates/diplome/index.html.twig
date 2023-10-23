@@ -6,13 +6,12 @@
 <section class="content">
 <div class="container-fluid">
 <div class="row">
-<div class="col-md-">
+<div class="col-md-9">
 <div class="card">
 <div class="card-header">
     <h1>Liste des diplomes</h1>
 </div>
 {% block body %}
-
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -25,11 +24,11 @@
         {% for diplome in diplomes %}
             <tr>
                 <td>{{ diplome.getDesDiplome() }}</td>
-                <td>{{ diplome.getNivDiplome() }}</td>
-                <td>
+                <td style="text-align:right">{{ diplome.getNivDiplome() }}</td>
+                <td style="text-align:center">
                     <a href="{{ path('app_diplome_show', {'id_diplome': diplome.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
                 </td>
-                <td>
+                <td style="text-align:center">
                     <a href="{{ path('app_diplome_edit', {'id_diplome': diplome.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
                 </td>
             </tr>

@@ -32,7 +32,11 @@
                 <td>{{ cv.experience.getDesXp() }}</td>
                 <td>
                     <a href="{{ path('app_c_v_candidat_new', {'id': cv.id}) }}">show</a>
-                    <a href="{{ path('app_c_v_candidat_test', {'id': cv.id}) }}">test-aptidude</a>
+
+                    <a href="{{ path('app_test_resultat_new', {'id': cv.id}) }}">test-aptidude</a>
+
+                    {# <a href="{{ path('app_c_v_candidat_test', {'id': cv.id}) }}">test-aptidude</a> #}
+
                 </td>
             </tr>
         {% endfor %}

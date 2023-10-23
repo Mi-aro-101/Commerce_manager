@@ -24,10 +24,10 @@
         {% for domaine in domaines %}
             <tr>
                 <td>{{ domaine.getDesDomaine() }}</td>
-                <td>
+                <td style="text-align:center">
                     <a href="{{ path('app_domaine_show', {'id': domaine.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
                 </td>
-                <td>
+                <td style="text-align:center">
                     <a href="{{ path('app_domaine_edit', {'id': domaine.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
                 </td>
             </tr>

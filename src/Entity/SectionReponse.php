@@ -13,6 +13,7 @@ class SectionReponse
     #[ORM\Column]
     private ?int $id = null;
 
+
     #[ORM\ManyToOne(inversedBy: 'sectionReponses')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Section $section = null;
@@ -25,10 +26,13 @@ class SectionReponse
     #[ORM\JoinColumn(nullable: false)]
     private ?TestResultat $test_resultat = null;
 
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
 
     public function getSection(): ?Section
     {
@@ -65,4 +69,5 @@ class SectionReponse
 
         return $this;
     }
+
 }

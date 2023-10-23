@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\TestAptitude;
+use App\Entity\TestResultat;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<TestAptitude>
+ * @extends ServiceEntityRepository<TestResultat>
  *
- * @method TestAptitude|null find($id, $lockMode = null, $lockVersion = null)
- * @method TestAptitude|null findOneBy(array $criteria, array $orderBy = null)
- * @method TestAptitude[]    findAll()
- * @method TestAptitude[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method TestResultat|null find($id, $lockMode = null, $lockVersion = null)
+ * @method TestResultat|null findOneBy(array $criteria, array $orderBy = null)
+ * @method TestResultat[]    findAll()
+ * @method TestResultat[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TestAptitudeRepository extends ServiceEntityRepository
+class TestResultatRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TestAptitude::class);
+        parent::__construct($registry, TestResultat::class);
     }
 
 //    /**
-//     * @return TestAptitude[] Returns an array of TestAptitude objects
+//     * @return TestResultat[] Returns an array of TestResultat objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class TestAptitudeRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?TestAptitude
+//    public function findOneBySomeField($value): ?TestResultat
 //    {
 //        return $this->createQueryBuilder('t')
 //            ->andWhere('t.exampleField = :val')
