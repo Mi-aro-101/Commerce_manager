@@ -29,9 +29,13 @@ class Section
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: ReponseSection::class, cascade:["persist", "remove"])]
     private Collection $reponseSections;
 
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: SectionReponse::class)]
+    private Collection $sectionReponses;
+
     public function __construct()
     {
         $this->reponseSections = new ArrayCollection();
+        $this->sectionReponses = new ArrayCollection();
     }
 
 
@@ -105,7 +109,7 @@ class Section
 
         return $this;
     }
-
+    
     /**
      * @return Collection<int, SectionReponse>
      */
@@ -118,7 +122,7 @@ class Section
     {
         if (!$this->sectionReponses->contains($sectionReponse)) {
             $this->sectionReponses->add($sectionReponse);
-            // $sectionReponse->setSection($this);
+            $sectionReponse->setSection($this);
         }
 
         return $this;
@@ -128,9 +132,9 @@ class Section
     {
         if ($this->sectionReponses->removeElement($sectionReponse)) {
             // set the owning side to null (unless already changed)
-            // if ($sectionReponse->getSection() === $this) {
-            //     $sectionReponse->setSection(null);
-            // }
+            if ($sectionReponse->getSection() === $this) {
+                $sectionReponse->setSection(null);
+            }
         }
 
         return $this;

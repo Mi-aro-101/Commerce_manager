@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\TestResultat;
 use App\Form\TestResultatType;
 use App\Repository\CVRequirementsRepository;
+use App\Repository\ReponseSectionRepository;
+use App\Repository\SectionRepository;
 use App\Repository\TestAptitudeRepository;
 use App\Repository\TestResultatRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\SectionReponse;
 
 #[Route('/test/resultat')]
 class TestResultatController extends AbstractController
@@ -37,26 +40,49 @@ class TestResultatController extends AbstractController
     }
 
     #[Route('/new', name: 'app_test_resultat_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,CVRequirementsRepository $cVRequirementsRepository,TestAptitudeRepository $testAptitudeRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, CVRequirementsRepository $cVRequirementsRepository, TestAptitudeRepository $testAptitudeRepository, SectionRepository $sectionRepository, ReponseSectionRepository $reponseSectionRepository): Response
     {
         $testResultat = new TestResultat();
         $id = $_GET['id'];
         $cVrequirements = $cVRequirementsRepository->find($id);
         $testAptitude = $testAptitudeRepository -> findOneByCvRequirements($cVrequirements);
         $testResultat ->setTestAptitude($testAptitude);
+        $user = $this->getUser();
+        
+        $sections = $sectionRepository->findBytestAptitude($testAptitude->getId());
+
         $form = $this->createForm(TestResultatType::class, $testResultat);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $testResultat->setStatut(5);
+            $testResultat->setTestAptitude($testAptitude);
+            $testResultat->setUtilisateur($user);
+
+            $data = $request->request->all();
+            foreach($data['sectionReponses'] as $reponseId){
+                $reponse = $reponseSectionRepository->find((int)$reponseId);
+
+                echo $reponse->getDesReponse();
+                
+                $sectionRep = new SectionReponse();
+                $sectionRep->setTestResultat($testResultat);
+                $sectionRep->setReponse($reponse);
+
+                $testResultat->addSectionReponse($sectionRep);
+            }
+
             $entityManager->persist($testResultat);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_test_resultat_index', [], Response::HTTP_SEE_OTHER);
+            // return $this->redirectToRoute('app_test_resultat_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('test_resultat/new.html.twig', [
             'test_resultat' => $testResultat,
             'form' => $form,
+            'sections' => $sections,
         ]);
     }
 

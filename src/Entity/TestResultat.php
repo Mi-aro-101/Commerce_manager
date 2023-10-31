@@ -15,10 +15,6 @@ class TestResultat
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-  
-    #[ORM\ManyToOne(inversedBy: 'testResultats')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?TestAptitude $test_aptitude = null;
 
     #[ORM\ManyToOne(inversedBy: 'testResultats')]
     #[ORM\JoinColumn(nullable: false)]
@@ -33,8 +29,12 @@ class TestResultat
     #[ORM\Column]
     private ?int $statut = null;
 
-    #[ORM\OneToMany(mappedBy: 'test_resultat', targetEntity: SectionReponse::class)]
+    #[ORM\OneToMany(mappedBy: 'test_resultat', targetEntity: SectionReponse::class, cascade: ['persist'])]
     private Collection $sectionReponses;
+
+    #[ORM\ManyToOne(inversedBy: 'testResultats')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TestAptitude $test_aptitude = null;
 
     public function __construct()
     {
@@ -44,19 +44,6 @@ class TestResultat
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-
-    public function getTestAptitude(): ?TestAptitude
-    {
-        return $this->test_aptitude;
-    }
-
-    public function setTestAptitude(?TestAptitude $test_aptitude): static
-    {
-        $this->test_aptitude = $test_aptitude;
-
-        return $this;
     }
 
     public function getUtilisateur(): ?Utilisateur
@@ -133,6 +120,18 @@ class TestResultat
                 $sectionReponse->setTestResultat(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTestAptitude(): ?TestAptitude
+    {
+        return $this->test_aptitude;
+    }
+
+    public function setTestAptitude(?TestAptitude $test_aptitude): static
+    {
+        $this->test_aptitude = $test_aptitude;
 
         return $this;
     }

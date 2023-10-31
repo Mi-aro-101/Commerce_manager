@@ -14,36 +14,23 @@ class SectionReponse
     private ?int $id = null;
 
 
-    #[ORM\ManyToOne(inversedBy: 'sectionReponses')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Section $section = null;
-
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?ReponseSection $reponse = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sectionReponses')]
+    #[ORM\ManyToOne(inversedBy: 'sectionReponses', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?TestResultat $test_resultat = null;
+
+    // #[ORM\ManyToOne(inversedBy: 'sectionReponses', targetEntity: Section::class)]
+    // #[ORM\JoinColumn(nullable: false)]
+    // private ?Section $section = null;
 
 
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-
-    public function getSection(): ?Section
-    {
-        return $this->section;
-    }
-
-    public function setSection(?Section $section): static
-    {
-        $this->section = $section;
-
-        return $this;
     }
 
     public function getReponse(): ?ReponseSection
@@ -69,5 +56,17 @@ class SectionReponse
 
         return $this;
     }
+
+    // public function getSection(): ?Section
+    // {
+    //     return $this->section;
+    // }
+
+    // public function setSection(?Section $section): static
+    // {
+    //     $this->section = $section;
+
+    //     return $this;
+    // }
 
 }

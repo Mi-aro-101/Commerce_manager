@@ -6,6 +6,7 @@ use App\Repository\TestAptitudeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\TestResultat;
 
 #[ORM\Entity(repositoryClass: TestAptitudeRepository::class)]
 class TestAptitude
@@ -22,9 +23,13 @@ class TestAptitude
     #[ORM\OneToMany(mappedBy: 'test_aptitude', targetEntity: Section::class, cascade:["persist", "remove"])]
     private Collection $sections;
 
+    #[ORM\OneToMany(mappedBy: 'test_aptitude', targetEntity: TestResultat::class)]
+    private Collection $testResultats;
+
     public function __construct()
     {
         $this->sections = new ArrayCollection();
+        $this->testResultats = new ArrayCollection();
     }
 
 
@@ -87,7 +92,7 @@ class TestAptitude
     {
         if (!$this->testResultats->contains($testResultat)) {
             $this->testResultats->add($testResultat);
-            // $testResultat->setTestAptitude($this);
+            $testResultat->setTestAptitude($this);
         }
 
         return $this;
@@ -97,12 +102,12 @@ class TestAptitude
     {
         if ($this->testResultats->removeElement($testResultat)) {
             // set the owning side to null (unless already changed)
-            // if ($testResultat->getTestAptitude() === $this) {
-            //     $testResultat->setTestAptitude(null);
-            // }
+            if ($testResultat->getTestAptitude() === $this) {
+                $testResultat->setTestAptitude(null);
+            }
         }
 
         return $this;
     }
-    
+
 }
