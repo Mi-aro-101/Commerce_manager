@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\SectionReponse;
+use App\Entity\TestCandidatNote;
+use PHPUnit\Framework\TestResult;
 
 #[Route('/test/resultat')]
 class TestResultatController extends AbstractController
@@ -61,22 +63,15 @@ class TestResultatController extends AbstractController
             $testResultat->setUtilisateur($user);
 
             $data = $request->request->all();
-            foreach($data['sectionReponses'] as $reponseId){
-                $reponse = $reponseSectionRepository->find((int)$reponseId);
-
-                echo $reponse->getDesReponse();
-                
-                $sectionRep = new SectionReponse();
-                $sectionRep->setTestResultat($testResultat);
-                $sectionRep->setReponse($reponse);
-
-                $testResultat->addSectionReponse($sectionRep);
-            }
+            $reponses = $data['sectionReponses'];
+            $this->assignSectionReponse($reponses, $reponseSectionRepository, $testResultat);
+            $testCandidatNote = $this->setTestCandidatNote($sections, $reponses, $reponseSectionRepository, $testResultat);
 
             $entityManager->persist($testResultat);
+            $entityManager->persist($testCandidatNote);
             $entityManager->flush();
 
-            // return $this->redirectToRoute('app_test_resultat_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_test_resultat_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('test_resultat/new.html.twig', [
@@ -84,6 +79,77 @@ class TestResultatController extends AbstractController
             'form' => $form,
             'sections' => $sections,
         ]);
+    }
+
+    /**
+     * This function is responsible for inserting each section reponse to TestResultat
+     * @param $request is to get the value from form
+     * @param $reponseSectionRepository to get the reponseSectionRepository by it's id and give it to the new sectionReponse
+     * @param $name $testResultat for the ManyToOne field in sectionReponse
+     * @return void
+     */
+    public function assignSectionReponse($reponses, $reponseSectionRepository, TestResultat $testResultats)
+    {
+        foreach($reponses as $reponseId){
+            $reponse = $reponseSectionRepository->find((int)$reponseId);
+
+            $sectionRep = new SectionReponse();
+            $sectionRep->setReponse($reponse);
+
+            $testResultats->addSectionReponse($sectionRep);
+        }
+    }
+
+    /**
+     * Set the testCandidatNote to flush to the database
+     */
+    public function setTestCandidatNote($sections, $reponses, $reponseSectionRepository, TestResultat $testResultat)
+    {
+        $Note = (int)$this->calculTestNote($sections, $reponses, $reponseSectionRepository);
+        $testCandidatNote = new TestCandidatNote();
+        $testCandidatNote->setTestResultat($testResultat);
+        $testCandidatNote->setNote($Note);
+
+        return $testCandidatNote;
+    }
+
+    /**
+     * @return the note of this test
+     */
+    public function calculTestNote($sections, $reponses, $reponseSectionRepository) : int
+    {
+        $Notes = array();
+
+        $i = 0;
+        foreach($reponses as $reponse){
+            $sectionid = strval($sections[$i]->getId());
+            $true = $reponseSectionRepository->findBy(
+                [
+                    'section' => $sectionid,
+                    'is_true' => 't'
+                ]
+            );
+            $Notes[] = $this->getAttPoints($reponse, $true[0]) * $sections[$i]->getCoefSection();
+            $i++;
+        }
+
+        return array_sum($Notes);
+    }
+
+    /**
+     * Check whether this reponse is true and match the true response in the database or not
+     * @return int 1 if false // 2 if true
+     */
+    public function getAttPoints($reponse, $true) : int
+    {
+        $result = 1;
+        $true = $true->getId();
+
+        if($reponse == $true){
+            $result = 2;
+        }
+
+        return $result;
     }
 
     #[Route('/{id}', name: 'app_test_resultat_show', methods: ['GET'])]

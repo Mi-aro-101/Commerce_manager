@@ -36,13 +36,14 @@ class ReponseSectionRepository extends ServiceEntityRepository
        ;
    }
 
-//    public function findOneBySomeField($value): ?ReponseSection
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+   public function findReponseTrueBySection($section): ?ReponseSection
+   {
+        $truth = 't';
+       return $this->createQueryBuilder('r')
+           ->andWhere('r.section = :val')
+           ->setParameter('val', $section)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
 }
