@@ -36,8 +36,12 @@ class TestResultat
     #[ORM\JoinColumn(nullable: false)]
     private ?TestAptitude $test_aptitude = null;
 
+    #[ORM\OneToMany(mappedBy: 'testResultat', targetEntity: TestCandidatNote::class)]
+    private Collection $testCandidatNotes;
+
     public function __construct()
     {
+        $this->testCandidatNotes = new ArrayCollection();
         $this->sectionReponses = new ArrayCollection();
     }
 
@@ -136,4 +140,33 @@ class TestResultat
         return $this;
     }
 
+    /**
+     * @return Collection<int, TestCandidatNote>
+     */
+    public function getTestCandidatNotes(): Collection
+    {
+        return $this->testCandidatNotes;
+    }
+
+    public function addTestCandidatNote(TestCandidatNote $testCandidatNote): static
+    {
+        if (!$this->testCandidatNotes->contains($testCandidatNote)) {
+            $this->testCandidatNotes->add($testCandidatNote);
+            $testCandidatNote->setTestResultat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTestCandidatNote(TestCandidatNote $testCandidatNote): static
+    {
+        if ($this->testCandidatNotes->removeElement($testCandidatNote)) {
+            // set the owning side to null (unless already changed)
+            if ($testCandidatNote->getTestResultat() === $this) {
+                $testCandidatNote->setTestResultat(null);
+            }
+        }
+
+        return $this;
+    }
 }
