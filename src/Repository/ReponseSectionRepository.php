@@ -21,20 +21,20 @@ class ReponseSectionRepository extends ServiceEntityRepository
         parent::__construct($registry, ReponseSection::class);
     }
 
-//    /**
-//     * @return ReponseSection[] Returns an array of ReponseSection objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return ReponseSection[] Returns an array of ReponseSection objects
+    */
+   public function findBySection($value): array
+   {
+       return $this->createQueryBuilder('r')
+           ->andWhere('r.section = :val')
+           ->setParameter('val', $value)
+           ->orderBy('r.id', '')
+           ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?ReponseSection
 //    {
