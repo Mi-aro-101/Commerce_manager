@@ -7,7 +7,7 @@
 <section class="content">
 <div class="container-fluid">
 <div class="row">
-<div class="col-md-">
+<div class="col-md-12">
 <div class="card">
 <div class="card-header">
     <h1>Liste d'annonce</h1>
@@ -16,14 +16,15 @@
      <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Date fin</th> 
+                <th>Date fin de depot</th> 
                 <th>Poste_description</th>
-                <th>Diplome</th>
-                <th>Experience</th>
-                <th>Action</th>
+                <th>Diplome requis</th>
+                <th>Experience minimum</th>
+                <th colspan="2" style="text-align:center">Action</th>
             </tr>
         </thead>
         <tbody>
+        {% set i = 0 %}
         {% for cv in c_v_disponibles %}
             <tr>
                 <td>{{ cv.getDateFin()|date('Y-m-d') }}</td> 
@@ -31,14 +32,14 @@
                 <td>{{ cv.diplome.getDesDiplome() }}</td>
                 <td>{{ cv.experience.getDesXp() }}</td>
                 <td>
-                    <a href="{{ path('app_c_v_candidat_new', {'id': cv.id}) }}">show</a>
-
-                    <a href="{{ path('app_test_resultat_new', {'id': cv.id}) }}">test-aptidude</a>
-
-                    {# <a href="{{ path('app_c_v_candidat_test', {'id': cv.id}) }}">test-aptidude</a> #}
-
+                    <a href="{{ path('app_c_v_candidat_new', {'id': cv.id}) }}">Envoyer mon cv</a>
+                </td>
+                <td>
+                    {# <a href="{{ path('app_test_resultat_new', {'id': cv.id}) }}">test-aptidude</a> #}
+                    {{ links[i] | raw }}
                 </td>
             </tr>
+            {% set i = i+1 %}
         {% endfor %}
         </tbody>
      </table>

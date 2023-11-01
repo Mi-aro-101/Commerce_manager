@@ -71,50 +71,6 @@
 <script src="{{ asset('dist/js/jquery.js') }}"></script>
 <script>
 
-    {# document.addEventListener('DOMContentLoaded', function() {
-    const addButton = document.getElementById('add-section');
-
-    addButton.addEventListener('click', function() {
-        const sectionsContainer = document.getElementById('sections');
-        const sectionIndex = sectionsContainer.children.length;
-        const newSection = document.createElement('div');
-        newSection.classList.add('section-form');
-        newSection.innerHTML = `
-            <label for="test_aptitude_sections_${sectionIndex}_des_question" class="required">Des question</label>
-            <textarea id="test_aptitude_sections_${sectionIndex}_des_question" name="test_aptitude[sections][${sectionIndex}][des_question]" required="required"></textarea>
-            <label for="test_aptitude_sections_${sectionIndex}_coef_section" class="required">Coef section</label>
-            <input type="number" id="test_aptitude_sections_${sectionIndex}_coef_section" name="test_aptitude[sections][${sectionIndex}][coef_section]" required="required">
-            <ul class="response-sections"></ul>
-        `;
-
-        sectionsContainer.appendChild(newSection);
-
-        // Add response section button and handler
-        const addResponseButton = document.createElement('button');
-        addResponseButton.type = 'button';
-        addResponseButton.classList.add('add-response');
-        addResponseButton.textContent = 'Add a Response Section';
-        newSection.appendChild(addResponseButton);
-
-        addResponseButton.addEventListener('click', function() {
-            const responseSectionsContainer = newSection.querySelector('.response-sections');
-            const responseSectionIndex = responseSectionsContainer.children.length;
-            const newResponseSection = document.createElement('li');
-            newResponseSection.innerHTML = `
-                <div id="test_aptitude_sections_${sectionIndex}_reponseSections_${responseSectionIndex}">
-                    <label for="test_aptitude_sections_${sectionIndex}_reponseSections_${responseSectionIndex}_des_reponse" class="required">Reponse</label>
-                    <textarea id="test_aptitude_sections_${sectionIndex}_reponseSections_${responseSectionIndex}_des_reponse" name="test_aptitude[sections][${sectionIndex}][reponseSections][${responseSectionIndex}][des_reponse]" required="required"></textarea>
-                    <label for="test_aptitude_sections_${sectionIndex}_reponseSections_${responseSectionIndex}_is_true" class="required">Is true</label>
-                    <input type="radio" id="test_aptitude_sections_${sectionIndex}_reponseSections_${responseSectionIndex}_is_true" name="test_aptitude[sections][${sectionIndex}][reponseSections][${responseSectionIndex}][is_true]" required="required" value="1">
-                </div>
-            `;
-
-            responseSectionsContainer.appendChild(newResponseSection);
-        });
-    });
-}); #}
-
-
 document.addEventListener('DOMContentLoaded', function() {
     const addButton = document.getElementById('add-section');
 

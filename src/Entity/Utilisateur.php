@@ -44,6 +44,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: CVCandidat::class)]
     private Collection $cVCandidats;
 
+    #[ORM\ManyToOne(inversedBy: 'utilisateur')]
+    private ?CvCandidatNote $cvCandidatNote = null;
+
     public function __construct()
     {
         $this->cVCandidats = new ArrayCollection();
@@ -183,6 +186,18 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
                 $cVCandidat->setUtilisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCvCandidatNote(): ?CvCandidatNote
+    {
+        return $this->cvCandidatNote;
+    }
+
+    public function setCvCandidatNote(?CvCandidatNote $cvCandidatNote): static
+    {
+        $this->cvCandidatNote = $cvCandidatNote;
 
         return $this;
     }

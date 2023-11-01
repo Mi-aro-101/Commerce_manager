@@ -21,18 +21,6 @@ use PHPUnit\Framework\TestResult;
 #[Route('/test/resultat')]
 class TestResultatController extends AbstractController
 {
-
-    // #[Route('/test', name: 'app_c_v_candidat_test', methods: ['GET', 'POST'])]
-    // public function test(Request $request, EntityManagerInterface $entityManager,CVRequirementsRepository $cVRequirementsRepository,TestAptitudeRepository $testAptitudeRepository): Response
-    // {
-    //     $id = $_GET['id'];
-    //     $cVrequirements = $cVRequirementsRepository->find($id);
-    //     $test = $testAptitudeRepository -> findOneByCvRequirements($cVrequirements);
-    //     return $this->render('cv_candidat/T\test_aptidute.html.twig', [
-    //         'test' => $test ,
-    //     ]);
-    // }
-    
     #[Route('/', name: 'app_test_resultat_index', methods: ['GET'])]
     public function index(TestResultatRepository $testResultatRepository): Response
     {
@@ -50,7 +38,7 @@ class TestResultatController extends AbstractController
         $testAptitude = $testAptitudeRepository -> findOneByCvRequirements($cVrequirements);
         $testResultat ->setTestAptitude($testAptitude);
         $user = $this->getUser();
-        
+
         $sections = $sectionRepository->findBytestAptitude($testAptitude->getId());
 
         $form = $this->createForm(TestResultatType::class, $testResultat);
@@ -114,7 +102,7 @@ class TestResultatController extends AbstractController
     }
 
     /**
-     * @return the note of this test
+     * @return the note of this test of this user
      */
     public function calculTestNote($sections, $reponses, $reponseSectionRepository) : int
     {
