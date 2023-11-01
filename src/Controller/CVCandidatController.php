@@ -24,11 +24,69 @@ use Symfony\Component\Routing\Annotation\Route;
 class CVCandidatController extends AbstractController
 {
     #[Route('/liste', name: 'app_c_v_candidat_liste', methods: ['GET', 'POST'])]
-    public function liste_annonce(Request $request, EntityManagerInterface $entityManager,CVRequirementsRepository $cVRequirementsRepository): Response
+    public function liste_annonce(Request $request, EntityManagerInterface $entityManager,CVRequirementsRepository $cVRequirementsRepository, CVCandidatRepository $cVCandidatRepository): Response
     {
+
+        $cvrequirements = $cVRequirementsRepository->findAll();
+        $links = $this->assignLinks($cvrequirements, $cVCandidatRepository, $this->getUser());
+
         return $this->render('cv_candidat/liste_annonce.html.twig', [
-            'c_v_disponibles' => $cVRequirementsRepository->findAll()
+            'c_v_disponibles' => $cvrequirements,
+            'links' => $links
         ]);
+    }
+
+    /**
+     * @return array of proper link to each candidat cv status
+     * if they are taken then the link to test is displayed if not nothing is displayed
+     */
+    public function assignLinks($cvrequirements, $cVCandidatRepository, $user): array
+    {
+        $links = array();
+
+        $i = 0;
+        foreach($cvrequirements as $cvrequirement){
+            $cvcandidat = $this->getCvCandidat($cvrequirement, $user);
+            $links[$i] = $this->getProperLink($cvcandidat, $cvrequirement);
+
+            $i++;
+        }
+
+        return $links;
+    }
+
+    /**
+     * @return cvcandidat that match the user and cvrequiremets given in parameter
+     */
+    public function getCvCandidat($cvrequirement, $user) : ?CVCandidat
+    {
+        $result = null;
+
+        foreach($cvrequirement->getCVCandidats() as $cvcandidat){
+            if($cvcandidat->getUtilisateur()->getId() == $user->getId()){
+                $result =  $cvcandidat;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get the proper link to display in the test aptitude field depending on status of your cv
+     */
+    public function getProperLink($cv, $cvrequirement): string
+    {
+        $link = "Test d'aptitude non accessible";
+        if($cv == null){
+            $link == "Test d'aptitude non accessible";
+        }
+
+        else if($cv->getStatue() == 10){
+            $link = '<a href="/test/resultat/new?id='.$cvrequirement->getId().'">Passer le test aptitude</a>';
+        }
+
+        return $link;
     }
 
     #[Route('/', name: 'app_c_v_candidat_index', methods: ['GET'])]
@@ -100,26 +158,6 @@ class CVCandidatController extends AbstractController
         }
         return $val;
     }
-
-    // #[Route('/new', name: 'app_c_v_candidat_new', methods: ['GET', 'POST'])]
-    // public function new(Request $request, EntityManagerInterface $entityManager): Response
-    // {
-    //     $cVCandidat = new CVCandidat();
-    //     $form = $this->createForm(CVCandidatType::class, $cVCandidat);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager->persist($cVCandidat);
-    //         $entityManager->flush();
-
-    //         return $this->redirectToRoute('app_c_v_candidat_index', [], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->render('cv_candidat/new.html.twig', [
-    //         'c_v_candidat' => $cVCandidat,
-    //         'form' => $form,
-    //     ]);
-    // }
 
     #[Route('/{id}', name: 'app_c_v_candidat_show', methods: ['GET'])]
     public function show(CVCandidat $cVCandidat): Response

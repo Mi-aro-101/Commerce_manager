@@ -1,15 +1,5 @@
 {{ form_start(form) }}
-    {# {{ form_widget(form) }} #}
-
-    <p> {{ form_row(form.date_envoie) }} </p>
-
-    {% for section in sections %}
-        <label> {{ section.getDesQuestion() }} </label>
-        {% for value, reponse in  section.getReponseSections() %}
-            <p>{{ reponse.getDesReponse() }}<input type="radio" value="{{ reponse.getId() }}" name="sectionReponses[{{ section.getId() }}]"></p>
-        {% endfor %}
-    {% endfor %}
-
+    {{ form_widget(form) }}
 
     <button class="btn">{{ button_label|default('Save') }}</button>
 
