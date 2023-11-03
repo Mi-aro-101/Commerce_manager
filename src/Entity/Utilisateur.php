@@ -47,6 +47,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'utilisateur')]
     private ?CvCandidatNote $cvCandidatNote = null;
 
+    #[ORM\OneToOne(mappedBy: 'utilisateur', cascade: ['persist', 'remove'])]
+    private ?Employe $employe = null;
+
     public function __construct()
     {
         $this->cVCandidats = new ArrayCollection();
@@ -198,6 +201,23 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCvCandidatNote(?CvCandidatNote $cvCandidatNote): static
     {
         $this->cvCandidatNote = $cvCandidatNote;
+
+        return $this;
+    }
+
+    public function getEmploye(): ?Employe
+    {
+        return $this->employe;
+    }
+
+    public function setEmploye(Employe $employe): static
+    {
+        // set the owning side of the relation if necessary
+        if ($employe->getUtilisateur() !== $this) {
+            $employe->setUtilisateur($this);
+        }
+
+        $this->employe = $employe;
 
         return $this;
     }
