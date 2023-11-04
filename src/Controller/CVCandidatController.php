@@ -14,7 +14,7 @@ use App\Repository\UtilisateurRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\Float_;
-use PhpParser\Node\Expr\Cast\Double;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -197,6 +197,7 @@ class CVCandidatController extends AbstractController
     }
 
     #[Route('/voircvcandidat/{idcandidat}', name:'app_c_v_candidat_by_candidat', methods:['GET'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function viewCvCandidat(Request $request, int $idcandidat ,CVCandidatRepository $cVCandidatRepository): Response
     {
         $cVCandidat = $cVCandidatRepository->findOneByCandidat($idcandidat);
@@ -215,6 +216,7 @@ class CVCandidatController extends AbstractController
     }
 
     #[Route('/acceptercv/{id}', name:'app_acceptercv_by_id', methods:['GET', 'POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function accepterCv(Request $request, int $id, EntityManagerInterface $entityManager) : Response
     {
         $cvCandidatAccepted = $entityManager->getRepository(CVCandidat::class)->find($id);

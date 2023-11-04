@@ -2,28 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\Employe;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Conge;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EmployeType extends AbstractType
+class CongeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('date_embauche')
-            ->add('cnaps')
-            ->add('osti')
-            ->add('salaire')
+            ->add('date_debut')
+            ->add('date_fin')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Employe::class,
+            'data_class' => Conge::class,
         ]);
     }
 }

@@ -21,6 +21,8 @@ use App\Repository\ExperienceRepository;
 use App\Repository\MatrimonialeRepository;
 use App\Repository\NationaliteRepository;
 use App\Repository\SexeRepository;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 
 #[Route('/c/v/requirements')]
 class CVRequirementsController extends AbstractController
@@ -48,6 +50,7 @@ class CVRequirementsController extends AbstractController
     }
 
     #[Route('/new', name: 'app_c_v_requirements_new', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function new(Request $request, EntityManagerInterface $entityManager,ServiceRepository $serviceRepository, DiplomeRepository $diplomeRepository,DomaineRepository $domaineRepository,ExperienceRepository $experienceRepository,AdresseRepository $adresseRepository,SexeRepository $sexeRepository,NationaliteRepository $nationaliteRepository,MatrimonialeRepository $matrimonialeRepository): Response
     {
         $cVRequirement = new CVRequirements();

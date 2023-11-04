@@ -1,0 +1,72 @@
+{% include 'header_template.html.twig' %}
+
+{% block title %}Demande de conges{% endblock %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-12">
+<div class="card">
+<div class="card-header">
+    <center><h1 style="font-family: Times New Roman">Liste des demandes de conges</h1></center>
+</div>
+
+{% block body %}
+<div class="card-body">
+<div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4>
+<div class="row">
+<div class="col-sm-12">
+
+    <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+        <thead>
+            <tr>
+                <th>Nom et prenom(s)</th>
+                <th>Date de debut de conge</th>
+                <th>Date de fin de conge</th>
+                <th>Conge restant</th>
+                <th colspan="2" style="text-align:center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set i = 0 %}
+        {% for conge in conges %}
+            <tr>
+                <td>{{ conge.getEmploye().getUtilisateur().getNomUtilisateur() }} {{ conge.getEmploye().getUtilisateur().getPrenomUtilisateur() }}</td>
+                <td>{{ conge.getDateDebut()|date('Y-m-d') }}</td>
+                <td>{{ conge.getDateFin()|date('Y-m-d') }}</td>
+                <td>{{ restes[i] }} jours</td>
+                <td>
+                    <a href="{{ path('app_conge_accepter', { 'idconge': conge.getId() }) }}">
+                        <button type="button" class="btn btn-block bg-gradient-success"><ion-icon name="checkmark-sharp"></ion-icon></button>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('app_conge_refuser', { 'idconge': conge.getId() }) }}">
+                        <button type="button" class="btn btn-block bg-gradient-danger"><ion-icon name="close-sharp"></ion-icon></button>
+                    </a>
+                </td>
+            </tr>
+            {% set i = i+1 %}
+        {% else %}
+            <tr>
+                <td colspan="6" style="text-align:center">Il n'y a pas de demande de conge actuellement</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

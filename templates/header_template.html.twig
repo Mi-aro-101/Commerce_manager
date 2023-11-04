@@ -62,7 +62,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ path('app_logout')  }}" role="button">
-          <ion-icon name="log-out-sharp" size="large" style="color: red"></ion-icon>
+          <ion-icon name="power-sharp" size="large" style="color: red"></ion-icon>
         </a>
       </li>
     </ul>
@@ -345,6 +345,31 @@
               </li>
             </ul>
           </li>
+
+          <li class="nav-item">
+            <a href="{{ path('app_employe_index') }}" class="nav-link">
+              <ion-icon name="people-sharp"></ion-icon>
+              <p>
+                Employes
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ path('app_employe_index') }}" class="nav-link">
+                  <ion-icon name="eye-sharp"></ion-icon>
+                  <p>Voir</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ path('app_conge_all_employes') }}" class="nav-link">
+                  <ion-icon name="cafe-sharp"></ion-icon>
+                  <p>Demandes de conges</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
 
       <!-- /.sidebar-menu -->
     </div>

@@ -1,50 +1,43 @@
-{% include 'header_template.html.twig' %}
+{% include 'header_client_template.html.twig' %}
 
-{% block title %}Employes{% endblock %}
+{% block title %}Mes employes{% endblock %}
 <div class="content-wrapper" style="min-height: 1302.4px;">
 
 <section class="content">
 <div class="container-fluid">
 <div class="row">
-<div class="col-md-9">
+<div class="col-md-12">
 <div class="card">
 <div class="card-header">
-    <center><h1 style="font-family: Times New Roman">Liste des employes</h1></center>
+    <center><h1 style="font-family: Times New Roman">Liste des mes employes</h1></center>
 </div>
 
 {% block body %}
+<div class="card-body">
+<div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4>
+<div class="row">
+<div class="col-sm-12">
 
-    <table class="table table-bordered">
+    <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
         <thead>
             <tr>
                 <th>Nom et prenom(s)</th>
                 <th>Date_embauche</th>
-                <th>Superieur</th>
                 <th>Cnaps</th>
                 <th>Osti</th>
-                <th colspan="2" style="text-align:center">actions</th>
             </tr>
         </thead>
         <tbody>
-        {% set i = 0 %}
         {% for employe in employes %}
             <tr>
                 <td>{{ employe.getUtilisateur().getNomUtilisateur() }} {{ employe.getUtilisateur().getPrenomUtilisateur() }}</td>
                 <td>{{ employe.dateEmbauche ? employe.dateEmbauche|date('Y-m-d') : '' }}</td>
-                <td>{{ managers[i] }}</td>
                 <td>{{ employe.cnaps ? 'Oui' : 'Non' }}</td>
                 <td>{{ employe.osti ? 'Oui' : 'Non' }}</td>
-                <td>
-                    <a href="{{ path('app_employe_show', {'id': employe.id}) }}">show</a>
-                </td>
-                <td>
-                    <a href="{{ path('app_employe_edit', {'id': employe.id}) }}">edit</a>
-                </td>
             </tr>
-            {% set i = i+1 %}
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">Vous n'avez pas d'employe actuellement</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -56,7 +49,11 @@
 </div>
 </div>
 </div>
+</div>
+</div>
+</div>
+</div>
 </section>
 </div>
 
-{% include 'footer_template.html.twig' %}
+{% include 'footer_client_template.html.twig' %}

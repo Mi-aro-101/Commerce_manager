@@ -39,9 +39,13 @@ class Employe
     #[ORM\ManyToMany(targetEntity: HistoriqueSalaire::class, mappedBy: 'employe')]
     private Collection $historiqueSalaires;
 
+    #[ORM\OneToMany(mappedBy: 'employe', targetEntity: Conge::class)]
+    private Collection $conges;
+
     public function __construct()
     {
         $this->historiqueSalaires = new ArrayCollection();
+        $this->conges = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,5 +150,46 @@ class Employe
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Conge>
+     */
+    public function getConges(): Collection
+    {
+        return $this->conges;
+    }
+
+    public function addConge(Conge $conge): static
+    {
+        if (!$this->conges->contains($conge)) {
+            $this->conges->add($conge);
+            $conge->setEmploye($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConge(Conge $conge): static
+    {
+        if ($this->conges->removeElement($conge)) {
+            // set the owning side to null (unless already changed)
+            if ($conge->getEmploye() === $this) {
+                $conge->setEmploye(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getManagerProperyvalue(): string
+    {
+        $result = "Pas de superieur";
+
+        if($this->getSuperieur() != null){
+            $result = $this->getSuperieur()->getUtilisateur()->getNomUtilisateur()." ".$this->getSuperieur()->getUtilisateur()->getPrenomUtilisateur();
+        }
+
+        return $result;
     }
 }
