@@ -1,4 +1,12 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
+    <p> Superieur : 
+        <select name="superieur">
+        <option value="">None</option>
+        {% for employe in employes %}
+            <option value={{ employe.getId() }}>{{ employe.getUtilisateur().getNomUtilisateur() }} {{ employe.getUtilisateur().getPrenomUtilisateur() }}</option>
+        {% endfor %}
+        </select>
+     </p>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

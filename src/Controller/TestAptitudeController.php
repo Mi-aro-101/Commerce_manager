@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\ReponseSection;
 use App\Entity\Section;
 use App\Repository\CVRequirementsRepository;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 
 #[Route('/test/aptitude')]
 class TestAptitudeController extends AbstractController
@@ -26,6 +28,7 @@ class TestAptitudeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_test_aptitude_new', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function new(Request $request, EntityManagerInterface $entityManager,CVRequirementsRepository $cVRequirementsRepository): Response
     {   
         $id = $_GET['id'];
