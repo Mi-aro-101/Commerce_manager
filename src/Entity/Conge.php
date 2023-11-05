@@ -84,9 +84,12 @@ class Conge
     {
         $embauche = $this->getEmploye()->getDateEmbauche();
         $duree =  date_diff($this->getDateFin(), $embauche);
-        $monthdiff = $duree->y * 12 + $duree->m;
 
-        $reste = 2.5 * $monthdiff;
+        $monthdiff = ($this->getDateFin()->format('m')) - ($embauche->format('m'));
+
+        $monthdiff2 = $duree->y * 12 + $monthdiff;
+
+        $reste = 2.5 * $monthdiff2;
 
         return $reste;
     }
@@ -94,6 +97,6 @@ class Conge
     public function getDureeEnJour() : float
     {
         $daylength = $this->getDateFin()->diff($this->getDateDebut());
-        return $daylength->days;
+        return $daylength->days + 1;
     }
 }
