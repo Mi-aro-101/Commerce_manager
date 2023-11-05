@@ -37,7 +37,7 @@
                 <td>{{ conge.getDateFin()|date('Y-m-d') }}</td>
                 <td>{{ restes[i] }} jours</td>
                 <td>
-                    <a href="{{ path('app_conge_accepter', { 'idconge': conge.getId() }) }}">
+                    <a href="{{ path('app_conge_accepter_rh', { 'idconge': conge.getId() }) }}">
                         <button type="button" class="btn btn-block bg-gradient-success"><ion-icon name="checkmark-sharp"></ion-icon></button>
                     </a>
                 </td>
