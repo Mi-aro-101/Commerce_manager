@@ -225,7 +225,7 @@ class CongeController extends AbstractController
 
         $entityManager->flush();
 
-        return $this->redirectToRoute('employe_conge', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_conge_all_employes', [], Response::HTTP_SEE_OTHER);
     }
 
     /**

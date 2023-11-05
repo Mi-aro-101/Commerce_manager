@@ -97,6 +97,7 @@ class Conge
     public function getDureeEnJour() : float
     {
         $daylength = $this->getDateFin()->diff($this->getDateDebut());
-        return $daylength->days + 1;
+        $result =  $daylength->days;
+        return $result + 1;
     }
 }

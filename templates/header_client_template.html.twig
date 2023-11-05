@@ -184,6 +184,36 @@
                   <p>Demandes de conge</p>
                 </a>
               </li>
+               <li class="nav-item">
+                <a href="{{ path('app_heure_suplementaire_employe') }}" class="nav-link">
+                  <ion-icon name="time-sharp"></ion-icon>
+                  <p>Demandes d'heure sup</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ path('app_heure_suplementaire_new') }}" class="nav-link">
+             <ion-icon name="alarm-sharp"></ion-icon>
+              <p>
+                Heure Suplementaire
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ path('app_heure_suplementaire_new') }}" class="nav-link">
+                  <ion-icon name="hourglass-sharp"></ion-icon>
+                  <p>Demander heure sup</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ path('app_heure_suplementaire_employe') }}" class="nav-link">
+                  <ion-icon name="eye-sharp"></ion-icon>
+                  <p>Voir les demandes</p>
+                </a>
+              </li>
             </ul>
           </li>
 

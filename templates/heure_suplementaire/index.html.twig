@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HeureSuplementaire index{% endblock %}
+
+{% block body %}
+    <h1>HeureSuplementaire index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Duree</th>
+                <th>Statut</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for heure_suplementaire in heure_suplementaires %}
+            <tr>
+                <td>{{ heure_suplementaire.id }}</td>
+                <td>{{ heure_suplementaire.date ? heure_suplementaire.date|date('Y-m-d') : '' }}</td>
+                <td>{{ heure_suplementaire.duree ? heure_suplementaire.duree|date('H:i:s') : '' }}</td>
+                <td>{{ heure_suplementaire.statut }}</td>
+                <td>
+                    <a href="{{ path('app_heure_suplementaire_show', {'id': heure_suplementaire.id}) }}">show</a>
+                    <a href="{{ path('app_heure_suplementaire_edit', {'id': heure_suplementaire.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_heure_suplementaire_new') }}">Create new</a>
+{% endblock %}
