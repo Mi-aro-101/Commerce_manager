@@ -42,10 +42,14 @@ class Employe
     #[ORM\OneToMany(mappedBy: 'employe', targetEntity: Conge::class)]
     private Collection $conges;
 
+    #[ORM\OneToMany(mappedBy: 'employe', targetEntity: HeureSuplementaire::class)]
+    private Collection $heuresuplementaire;
+
     public function __construct()
     {
         $this->historiqueSalaires = new ArrayCollection();
         $this->conges = new ArrayCollection();
+        $this->heuresuplementaire = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -191,5 +195,35 @@ class Employe
         }
 
         return $result;
+    }
+
+    /**
+     * @return Collection<int, HeureSuplementaire>
+     */
+    public function getHeuresuplementaire(): Collection
+    {
+        return $this->heuresuplementaire;
+    }
+
+    public function addHeuresuplementaire(HeureSuplementaire $heuresuplementaire): static
+    {
+        if (!$this->heuresuplementaire->contains($heuresuplementaire)) {
+            $this->heuresuplementaire->add($heuresuplementaire);
+            $heuresuplementaire->setEmploye($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHeuresuplementaire(HeureSuplementaire $heuresuplementaire): static
+    {
+        if ($this->heuresuplementaire->removeElement($heuresuplementaire)) {
+            // set the owning side to null (unless already changed)
+            if ($heuresuplementaire->getEmploye() === $this) {
+                $heuresuplementaire->setEmploye(null);
+            }
+        }
+
+        return $this;
     }
 }
