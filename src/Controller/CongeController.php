@@ -173,6 +173,20 @@ class CongeController extends AbstractController
     }
 
     /**
+     * Accepter conge (niveau 3)
+     */
+    #[Route('/rh/accepter/{idconge}', name: 'app_conge_accepter_rh', methods: ['GET', 'POST'])]
+    public function accepter2(int $idconge, CongeRepository $congeRepository, EntityManagerInterface $entityManager)
+    {
+        $conge = $congeRepository->find($idconge);
+        $conge->setStatut(10);
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('employe_conge', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
      * display all demandes de conge accepter par superieur
      */
     #[Route('/all/employes', name: 'app_conge_all_employes')]
