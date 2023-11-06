@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Utilisateur;
 
 #[ORM\Entity(repositoryClass: EmployeRepository::class)]
 class Employe
@@ -42,8 +43,74 @@ class Employe
     #[ORM\OneToMany(mappedBy: 'employe', targetEntity: Conge::class)]
     private Collection $conges;
 
+
+    #[ORM\Column]
+    private ?int $statut = null;
+
+    #[ORM\ManyToOne(inversedBy: 'employes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Service $service = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $poste = null;
+
+    /**
+     * Function that give the data of the fiche de paie 
+     * of one employe
+     * @return array of data
+     */
+    public function getFichePaie(){
+        $data = [
+            'name' => $this->getUtilisateur()->getNomUtilisateur(),
+            'firstname' => $this->getUtilisateur()->getPrenomUtilisateur(),
+            'fonction' => $this->getPoste(),
+            'embauche' => $this->getDateEmbauche(),
+            'salaire' => $this->getSalaire(),
+            'journalier' => ($this->getSalaire())/30,
+            'horaire' => ($this->getSalaire())/173.33,
+            'indice' => $this->getIndice(),
+            'trente' => $this->getIndice()/1.3,
+            'quarante' => $this->getIndice()/1.4,
+            'cinquante' => $this->getIndice()/1.5,
+            'cent' => $this->getIndice()/2.0,
+            'nuit' => $this->getIndice()/0.3,
+            'cnaps' => $this->getCnaps(),
+            'osti' => $this->getOsti()
+        ];
+        return $data;
+    }
+
+    /**
+     * Return la somme a payer pour le cnaps selon le salaire
+     */
+    public function getCnaps(){
+        $cnaps = ($this->getSalaire())/100;
+        if($this->getSalaire()>(250000*8)){
+            $cnaps = (250000*8)/100;
+        }
+        return $cnaps;
+    }
+
+    /**
+     * Return la somme a payer pour la retenue sanitaire selon le salaire
+     */
+    public function getOsti(){
+        $cnaps = ($this->getSalaire())/100;
+    
+        return $cnaps;
+    }
+
+    /**
+     * indice de majoration
+     * @return int indice de majoration
+     */
+    public function getIndice(){
+        return (($this->getSalaire())/173.33)/1.334;
+    }
+
     #[ORM\OneToMany(mappedBy: 'employe', targetEntity: HeureSuplementaire::class)]
     private Collection $heuresuplementaire;
+
 
     public function __construct()
     {
@@ -197,6 +264,16 @@ class Employe
         return $result;
     }
 
+
+    public function getStatut(): ?int
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(int $statut): static
+    {
+        $this->statut = $statut;
+
     /**
      * @return Collection<int, HeureSuplementaire>
      */
@@ -212,8 +289,35 @@ class Employe
             $heuresuplementaire->setEmploye($this);
         }
 
+
         return $this;
     }
+
+
+    public function getService(): ?Service
+    {
+        return $this->service;
+    }
+
+    public function setService(?Service $service): static
+    {
+        $this->service = $service;
+
+        return $this;
+    }
+
+    public function getPoste(): ?string
+    {
+        return $this->poste;
+    }
+
+    public function setPoste(string $poste): static
+    {
+        $this->poste = $poste;
+
+        return $this;
+    }
+
 
     public function removeHeuresuplementaire(HeureSuplementaire $heuresuplementaire): static
     {
@@ -226,4 +330,5 @@ class Employe
 
         return $this;
     }
+
 }

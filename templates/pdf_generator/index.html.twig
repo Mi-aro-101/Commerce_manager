@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Resume</title>
+</head>
+<body>
+    <div style="display: block;width: 700px;">
+        <div style= "width: 250px;" >
+            Nom: {{name}}
+            </br>
+            Prenom: {{firstname}}
+            </br>
+            Fonction: {{fonction}}
+            </br>
+            Date d'embauche: {{embauche ? embauche|date('Y-m-d'): '' }}
+            </br>                                                               
+    </div>
+    <div>
+        <table width="100%" border="1">
+            <tr>
+                <td width="45%">Designation</td>
+                <td>Nombre</td>
+                <td width="20%">Taux</td>
+                <td width="20%">Montant</td>
+            </tr>
+           <tr>
+               <td>Salaire du ... au ...</td> 
+               <td>1 mois</td> 
+               <td> {{journalier}} </td> 
+               <td> {{salaire}} </td> 
+           </tr>  
+           <tr>
+               <td>Absences déductibles</td> 
+               <td></td> 
+               <td> {{journalier}} </td> 
+               <td> </td> 
+           </tr>
+            <tr>
+               <td>Heures supplémentaires majorées de 30%</td> 
+               <td></td> 
+               <td> {{trente}} </td> 
+               <td> </td> 
+           </tr>
+            <tr>
+               <td>Heures supplémentaires majorées de 40%</td> 
+               <td></td> 
+               <td> {{quarante}} </td> 
+               <td> </td> 
+           </tr>
+            <tr>
+               <td>Heures supplémentaires majorées de 50%</td> 
+               <td></td> 
+               <td> {{cinquante}} </td> 
+               <td> </td> 
+           </tr>
+            <tr>
+               <td>Heures supplémentaires majorées de 100%</td> 
+               <td></td> 
+               <td> {{cent}} </td> 
+               <td> </td> 
+           </tr>
+            <tr>
+               <td></td> 
+               <td></td> 
+               <td></td> 
+               <td> </td> 
+           </tr>
+        </table>
+    </div>
+</body>
+</html>

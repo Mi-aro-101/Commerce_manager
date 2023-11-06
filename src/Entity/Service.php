@@ -21,9 +21,13 @@ class Service
     #[ORM\OneToMany(mappedBy: 'service', targetEntity: CVRequirements::class)]
     private Collection $cVRequirements;
 
+    #[ORM\OneToMany(mappedBy: 'service', targetEntity: Employe::class)]
+    private Collection $employes;
+
     public function __construct()
     {
         $this->cVRequirements = new ArrayCollection();
+        $this->employes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,6 +71,36 @@ class Service
             // set the owning side to null (unless already changed)
             if ($cVRequirement->getService() === $this) {
                 $cVRequirement->setService(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Employe>
+     */
+    public function getEmployes(): Collection
+    {
+        return $this->employes;
+    }
+
+    public function addEmploye(Employe $employe): static
+    {
+        if (!$this->employes->contains($employe)) {
+            $this->employes->add($employe);
+            $employe->setService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmploye(Employe $employe): static
+    {
+        if ($this->employes->removeElement($employe)) {
+            // set the owning side to null (unless already changed)
+            if ($employe->getService() === $this) {
+                $employe->setService(null);
             }
         }
 

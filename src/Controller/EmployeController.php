@@ -14,10 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+use Dompdf\Dompdf;
 
 #[Route('/employe')]
 class EmployeController extends AbstractController
 {
+
     #[Route('/', name: 'app_employe_index', methods: ['GET'])]
     #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function index(EmployeRepository $employeRepository): Response
@@ -31,8 +33,36 @@ class EmployeController extends AbstractController
     }
 
     /**
+     * Generate a pdf of a fiche de paie
+     */
+    #[Route('/fiche', name: 'app_employe_fiche', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
+    public function fiche_paie(EmployeRepository $employeRepository): Response
+    {   
+        $id = $_GET['id'];
+        $employe = $employeRepository->find($id);
+        // $data = [
+        //     'name'         => 'John Doe',
+        //     'address'      => 'USA',
+        //     'mobileNumber' => '000000000',
+        //     'email'        => 'john.doe@email.com'
+        // ];
+        $data = $employe -> getFichePaie();
+        $html =  $this->renderView('pdf_generator/index.html.twig', $data);
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+         
+        return new Response (
+            $dompdf->stream('resume', ["Attachment" => false]),
+            Response::HTTP_OK,
+            ['Content-Type' => 'application/pdf']
+        );
+    }
+
+    /**
      * Get the display value in manager of the employee
-     * @return an array of the value that is supposed to be displayed on the superieur field
+     * @return array of the value that is supposed to be displayed on the superieur field
      */
     public function getManager($employes) : ?array
     {
@@ -130,6 +160,7 @@ class EmployeController extends AbstractController
     {
         $user = $this->getUser();
         $myemp = $employeRepository->findOneByUtilisateur($user->getId());
+        // $myemp = $employeRepository->findOneByUtilisateur($user->getId());
 
         $employes = $employeRepository->findBy(
             [
