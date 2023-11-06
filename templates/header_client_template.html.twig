@@ -24,6 +24,13 @@
   <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{ asset('/plugins/fontawesome-free/css/all.min.css') }}">
+  <!-- fullCalendar -->
+  <link rel="stylesheet" href="{{ asset('/plugins/fullcalendar/main.css') }}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ asset('/dist/css/adminlte.min.css') }}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -175,6 +182,36 @@
                 <a href="{{ path('employe_conge') }}" class="nav-link">
                   <ion-icon name="person-remove-sharp"></ion-icon>
                   <p>Demandes de conge</p>
+                </a>
+              </li>
+               <li class="nav-item">
+                <a href="{{ path('app_heure_suplementaire_employe') }}" class="nav-link">
+                  <ion-icon name="time-sharp"></ion-icon>
+                  <p>Demandes d'heure sup</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ path('app_heure_suplementaire_new') }}" class="nav-link">
+             <ion-icon name="alarm-sharp"></ion-icon>
+              <p>
+                Heure Suplementaire
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ path('app_heure_suplementaire_new') }}" class="nav-link">
+                  <ion-icon name="hourglass-sharp"></ion-icon>
+                  <p>Demander heure sup</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ path('app_heure_suplementaire_employe') }}" class="nav-link">
+                  <ion-icon name="eye-sharp"></ion-icon>
+                  <p>Voir les demandes</p>
                 </a>
               </li>
             </ul>

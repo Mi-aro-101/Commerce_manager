@@ -124,6 +124,28 @@ class CongeController extends AbstractController
         ]);
     }
 
+    #[Route('/calendrier/employes', name: 'app_conge_calendrier')]
+    public function voirCalendrier(EmployeRepository $employeRepository, CongeRepository $congeRepository): Response
+    {
+
+        // retrieve employe of this user
+        $user = $this->getUser();
+        $myemp = $employeRepository->findOneByUtilisateur($user->getId());
+
+        $employes = $employeRepository->findBy(
+            [
+                'superieur' => strval($myemp->getId()),
+            ]
+        );
+
+        //Retrieve all demand of conge of all employes
+        $conges = $this->getCongesEmployesAccepte($employes, $congeRepository);
+
+        return $this->render('conge/calendrier.html.twig', [
+            'conges' => $conges,
+        ]);
+    }
+
     /**
      * @return array of all conges of all employees
      */
@@ -136,6 +158,26 @@ class CongeController extends AbstractController
                 [
                     'employe' => strval($employe->getId()),
                     'statut' => 5
+                ]
+            );
+            $results = array_merge($results, $conges);
+        }
+
+        return $results;
+    }
+
+    /**
+     * @return array of all conges of all employees that has been truly accepted
+     */
+    public function getCongesEmployesAccepte($employes, $congeRepository) : array
+    {
+        $results = array();
+
+        foreach($employes as $employe){
+            $conges = $congeRepository->findBy(
+                [
+                    'employe' => strval($employe->getId()),
+                    'statut' => 10
                 ]
             );
             $results = array_merge($results, $conges);
@@ -170,6 +212,20 @@ class CongeController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('employe_conge', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * Accepter conge (niveau 3)
+     */
+    #[Route('/rh/accepter/{idconge}', name: 'app_conge_accepter_rh', methods: ['GET', 'POST'])]
+    public function accepter2(int $idconge, CongeRepository $congeRepository, EntityManagerInterface $entityManager)
+    {
+        $conge = $congeRepository->find($idconge);
+        $conge->setStatut(10);
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_conge_all_employes', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
