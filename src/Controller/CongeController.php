@@ -260,7 +260,11 @@ class CongeController extends AbstractController
         foreach($conges as $conge){
             $congeReste = $conge->getResteCongeTotal();
             $totalCongeFaites = $this->getCongeFaites($conge, $congeRepository);
-            array_push($results, $congeReste - $totalCongeFaites);
+            $val = $congeReste - $totalCongeFaites;
+            if($val >= 90){
+                $val = 90;
+            }
+            array_push($results, $val);
         }
 
         return $results;
