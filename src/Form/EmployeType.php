@@ -15,20 +15,28 @@ class EmployeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('date_embauche')
+            ->add('date_embauche', null, [
+                'label' => "Date d'embauche : ",
+            ])
             ->add('cnaps')
             ->add('osti')
-            ->add('salaire')
+            ->add('salaire', null, [
+                'label' => "Salaire : "
+            ])
             ->add('service',EntityType::class,[
                 'class' => Service::class,
-                'choice_label' => 'des_service'
+                'choice_label' => 'des_service',
+                'label' => "Service : "
                 ])
-            ->add('poste')
+            ->add('poste', null, [
+                'label' => "Poste : "
+            ])
             ->add('statut',ChoiceType::class,[
                 'choices' => [
                     'Essai' => 5,
                     'Embauché' => 10
-                ]
+                ],
+                'label' => "Statut : "
             ])
         ;
     }

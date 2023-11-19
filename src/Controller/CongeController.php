@@ -6,6 +6,7 @@ use App\Entity\Conge;
 use App\Form\CongeType;
 use App\Repository\CongeRepository;
 use App\Repository\EmployeRepository;
+use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,6 +53,10 @@ class CongeController extends AbstractController
 
             if($conge->getDateDebut() < $conge->getEmploye()->getDateEmbauche()){
                 throw $this->createAccessDeniedException('Date invalide, conge avant date embauche');
+            }
+
+            if($conge->getDateDebut() < $conge->getEmploye()->getDateEmbauche()->add(new DateInterval('P1Y')) ){
+                throw $this->createAccessDeniedException("Vous ne pouvez pas demander un conge avant au moins un an de travail");
             }
 
             $entityManager->persist($conge);

@@ -83,7 +83,7 @@ class Employe
     /**
      * Return la somme a payer pour le cnaps selon le salaire
      */
-    public function getCnaps(){
+    public function getMontantCnaps(){
         $cnaps = ($this->getSalaire())/100;
         if($this->getSalaire()>(250000*8)){
             $cnaps = (250000*8)/100;
@@ -94,7 +94,7 @@ class Employe
     /**
      * Return la somme a payer pour la retenue sanitaire selon le salaire
      */
-    public function getOsti(){
+    public function getMontantOsti(){
         $cnaps = ($this->getSalaire())/100;
     
         return $cnaps;
@@ -273,6 +273,7 @@ class Employe
     public function setStatut(int $statut): static
     {
         $this->statut = $statut;
+        return $this;
     }
 
     /**
