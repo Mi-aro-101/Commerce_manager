@@ -1,56 +1,35 @@
-{% include 'header_achat.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Article founisseur{% endblock %}
-<div class="content-wrapper" style="min-height: 1302.4px;">
+{% block title %}ArticleFournisseur index{% endblock %}
 
-<section class="content">
-<div class="container-fluid">
-<div class="row">
-<div class="col-md-9">
-<div class="card">
-<div class="card-header">
-    <h1>Liste des articles des fournisseurs</h1>
-</div>
 {% block body %}
+    <h1>ArticleFournisseur index</h1>
 
-    <table class="table table-bordered">
+    <table class="table">
         <thead>
             <tr>
-                <th>Designation fournisseur</th>
-                <th>Designation de l'article</th>
-                <th>Prix actuel</th>
-                <th colspan="2" style="text-align:center">Actions</th>
+                <th>Id</th>
+                <th>Prix_actuel</th>
+                <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for article_fournisseur in article_fournisseurs %}
             <tr>
-                <td>{{ article_fournisseur.getFournisseur().getDesFournisseur() }}</td>
-                <td>{{ article_fournisseur.getArticle().getDesArticle() }}</td>
-                <td>{{ article_fournisseur.getPrixActuel() }}</td>
-                <td style="text-align:center">
-                    <a href="{{ path('app_article_fournisseur_show', {'id': article_fournisseur.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
-                </td>
-                <td style="text-align:center">
-                    <a href="{{ path('app_article_fournisseur_edit', {'id': article_fournisseur.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
+                <td>{{ article_fournisseur.id }}</td>
+                <td>{{ article_fournisseur.prixActuel }}</td>
+                <td>
+                    <a href="{{ path('app_article_fournisseur_show', {'id': article_fournisseur.id}) }}">show</a>
+                    <a href="{{ path('app_article_fournisseur_edit', {'id': article_fournisseur.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_article_fournisseur_new') }}"><button class="btn btn-primary">Create new</button></a>
+    <a href="{{ path('app_article_fournisseur_new') }}">Create new</a>
 {% endblock %}
-
-</div>
-</div>
-</div>
-</div>
-</section>
-</div>
-
-{% include 'footer_template.html.twig' %}

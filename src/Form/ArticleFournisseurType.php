@@ -15,15 +15,16 @@ class ArticleFournisseurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('fournisseur',EntityType::class, [
-            'class' => Fournisseur::class,
-            'choice_label' => 'des_fournisseur',
-            ])
-            ->add('article',EntityType::class, [
+            ->add('prix_actuel')
+            ->add('article', EntityType::class,[
                 'class' => Article::class,
                 'choice_label' => 'des_article',
-                ])
-        ->add('prix_actuel')
+            ])
+            ->add('fournisseur', EntityType::class, [
+                'class' => Fournisseur::class,
+                'choice_label' => 'des_fournisseur',
+            ])
+            ->add('prix_actuel')
         ;
     }
 

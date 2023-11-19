@@ -8,14 +8,13 @@
 <div class="col-md-6">
 <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title"> Article present dans un fournisseur </h3>
+            <h3 class="card-title"> Article d'un fournisseur </h3>
         </div>
         <div class="card-body">
 
             {% block body %}
 
             {{ form_start(form) }}
-
 
             <div class="row">
                 <div class="col-sm-6">
@@ -53,7 +52,7 @@
 
             <div class="row">
                 <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
-                <a href="{{ path('app_article_fournisseur_index') }}"><button class="btn btn-info">Voir</button></a>
+                <a href="{{ path('app_article_fournisseur_index') }}"><button  type="button" class="btn btn-info">Voir</button></a>
             </div>
 
                 {{ form_end(form) }}

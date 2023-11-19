@@ -1,0 +1,104 @@
+{% include 'header_achat.html.twig' %}
+
+{% block title %}Article par fournisseur{% endblock %}
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+    <section class="content">
+        <div class="container-fluid">
+
+                <div class="col-sm-6">
+                    <h1 style="font-family:Times New Roman" >{{ fournisseur.getDesFournisseur() }}</strong></h1>
+                </div><br>
+            <div class="row">
+
+            <div class="col-6">
+                <div class="card card-row card-default">
+
+                <div class="card-header bg-info">
+                    <h3 class="card-title">
+                        <strong>Liste des articles de {{ fournisseur.getDesFournisseur() }}</strong>
+                    </h3>
+                </div>
+                {% block body %}
+
+                <div class="card-body">
+
+                    {% for articlefournisseur in articlefournisseurs %}
+                    <div class="card-info card-outline">
+                        <div class="card-header">
+                                <h5 class="card-title"><strong>{{ articlefournisseur.getArticle().getDesArticle() }}</strong></h5>
+                             <div class="card-tools">
+                                <h6 class="card-title"> Ar {{ articlefournisseur.getPrixActuel()|number_format(2) }}</h6>
+                            </div>
+                        </div>
+                        {# <div class="card-body">
+                            <div class="">
+                                <label for="" class=""></label>
+                            </div>
+                        </div> #}
+                    {% endfor %}
+
+                </div>
+
+                {% endblock %}
+
+                </div>
+                <a href="{{ path('app_fournisseur_index') }}"><button class="btn btn-info">< < Retour</button></a>
+            </div>
+
+            </div>
+
+        </div>
+    </section>
+</div>
+
+{# <div class="content-wrapper" style="min-height : 1345.6px">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="card card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title"> Test d'aptitude </h3>
+                        </div>
+                        <div class="card-body">
+
+                        {% block body %}
+
+                        {{ form_start(form) }}
+
+                                <div id="sections">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+
+                                                {{ form_row(form.date_envoie) }}
+
+                                            </div>
+                                            {% for section in sections %}
+                                            <div class="form-group">
+                                                <label> {{ section.getDesQuestion() }} </label>
+                                                {% for value, reponse in  section.getReponseSections() %}
+                                                    {{ reponse.getDesReponse() }}<input type="radio" value="{{ reponse.getId() }}" name="sectionReponses[{{ section.getId() }}]">
+                                                {% endfor %}
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary" type="submit" id="save-section">Soumettre</button>
+
+                        {{ form_end(form) }}
+
+                        {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div> #}
+
+{% include 'footer_template.html.twig' %}

@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ArticleFournisseurRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticleFournisseurRepository::class)]
@@ -14,16 +13,16 @@ class ArticleFournisseur
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'articleFournisseurs')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Article $article = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'articleFournisseurs')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Fournisseur $fournisseur = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0')]
-    private ?string $prix_actuel = null;
+    #[ORM\Column]
+    private ?float $prix_actuel = null;
 
     public function getId(): ?int
     {
@@ -54,12 +53,12 @@ class ArticleFournisseur
         return $this;
     }
 
-    public function getPrixActuel(): ?string
+    public function getPrixActuel(): ?float
     {
         return $this->prix_actuel;
     }
 
-    public function setPrixActuel(string $prix_actuel): static
+    public function setPrixActuel(float $prix_actuel): static
     {
         $this->prix_actuel = $prix_actuel;
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Fournisseur;
 use App\Form\FournisseurType;
+use App\Repository\ArticleFournisseurRepository;
 use App\Repository\FournisseurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -77,5 +78,22 @@ class FournisseurController extends AbstractController
         }
 
         return $this->redirectToRoute('app_fournisseur_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/article/{id}', name: 'app_fournisseur_article_view', methods: ['GET'])]
+    public function viewArticle(int $id, FournisseurRepository $fournisseurRepository, ArticleFournisseurRepository $articleFournisseurRepository): Response
+    {
+
+        $articles = $articleFournisseurRepository->findBy(
+            [
+                'fournisseur' => strval($id)
+            ]
+        );
+        $fournisseur = $fournisseurRepository->find($id);
+
+        return $this->render('article_fournisseur/article_fournisseur.html.twig', [
+            'articlefournisseurs' => $articles,
+            'fournisseur' => $fournisseur
+        ]);
     }
 }

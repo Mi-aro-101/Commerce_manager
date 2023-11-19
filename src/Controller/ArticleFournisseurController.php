@@ -33,7 +33,7 @@ class ArticleFournisseurController extends AbstractController
             $entityManager->persist($articleFournisseur);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_article_fournisseur_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_article_fournisseur_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('article_fournisseur/new.html.twig', [
