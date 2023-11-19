@@ -1,0 +1,25 @@
+{% include 'header_template.html.twig' %}
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+
+{% block body %}
+
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+           <center><button class="btn btn-primary">{{ button_label|default('Save') }}</button></center>
+{{ form_end(form) }}
+
+{% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

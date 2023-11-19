@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CVCandidat{% endblock %}
+
+{% block body %}
+    <h1>CVCandidat</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ c_v_candidat.id }}</td>
+            </tr>
+            <tr>
+                <th>Date_depot</th>
+                <td>{{ c_v_candidat.dateDepot ? c_v_candidat.dateDepot|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date_reponse</th>
+                <td>{{ c_v_candidat.dateReponse ? c_v_candidat.dateReponse|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Statue</th>
+                <td>{{ c_v_candidat.statue }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_c_v_candidat_index') }}">back to list</a>
+
+    <a href="{{ path('app_c_v_candidat_edit', {'id': c_v_candidat.id}) }}">edit</a>
+
+    {{ include('cv_candidat/_delete_form.html.twig') }}
+{% endblock %}

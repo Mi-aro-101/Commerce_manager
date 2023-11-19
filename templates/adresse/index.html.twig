@@ -1,0 +1,54 @@
+{% include 'header_template.html.twig' %}
+
+{% block title %}Service index{% endblock %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-9">
+<div class="card">
+<div class="card-header">
+    <h1>Liste des adresses disponibles</h1>
+</div>
+{% block body %}
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Des_adresse</th>
+                <th>Niv_adresse</th>
+                <th colspan="2" style="text-align:center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for adresse in adresses %}
+            <tr>
+                <td>{{ adresse.getDesAdresse() }}</td>
+                <td style="text-align:right">{{ adresse.getNivAdresse() }}</td>
+                <td style="text-align:center">
+                    <a href="{{ path('app_adresse_show', {'id': adresse.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
+                </td>
+                <td style="text-align:center">
+                    <a href="{{ path('app_adresse_edit', {'id': adresse.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_adresse_new') }}"><button class="btn btn-info">Create new</button></a>
+{% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

@@ -1,0 +1,52 @@
+{% include 'header_template.html.twig' %}
+
+{% block title %}Service index{% endblock %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>Liste des domaines disponibles</h1>
+</div>
+{% block body %}
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Des_domaine</th>
+                <th colspan="2" style="text-align:center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for domaine in domaines %}
+            <tr>
+                <td>{{ domaine.getDesDomaine() }}</td>
+                <td style="text-align:center">
+                    <a href="{{ path('app_domaine_show', {'id': domaine.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
+                </td>
+                <td style="text-align:center">
+                    <a href="{{ path('app_domaine_edit', {'id': domaine.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_domaine_new') }}"><button class="btn btn-info">Create new</button></a>
+{% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

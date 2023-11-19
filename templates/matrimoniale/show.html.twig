@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Matrimoniale{% endblock %}
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>Liste des sexes</h1>
+</div>
+
+{% block body %}
+    <h1>Matrimoniale</h1>
+
+    <table class="table">
+        <tbody>
+            
+            <tr>
+                <th>Des_matrimoniale</th>
+                <td>{{ matrimoniale.desMatrimoniale }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_matrimoniale_index') }}">back to list</a>
+
+    <a href="{{ path('app_matrimoniale_edit', {'id': matrimoniale.id}) }}">edit</a>
+
+    {{ include('matrimoniale/_delete_form.html.twig') }}
+{% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

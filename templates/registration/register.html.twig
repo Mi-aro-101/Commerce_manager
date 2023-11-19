@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription!{% endblock %}
+
+{% block body %}
+
+<link rel="stylesheet" href="{{ asset('css/login.css') }}"/>
+<style>
+  .back-img { background: url("{{ asset('img/nyc-aerial-skyline.jpg')}}")no-repeat   center center}
+</style>
+  <div class="signin">
+    <div class="back-img">
+      <div class="sign-in-text">
+        <a href="{{ path('app_login') }}"><h2 class="nonactive">Sign In</h2></a>
+        <h2 class="active">Sign Up</h2>
+      </div><!--/.sign-in-text-->
+      <div class="layer">
+      </div><!--/.layer-->
+      <p class="point">&#9650;</p>
+    </div><!--/.back-img-->
+    <div class="form-section">
+
+    {# {{ form_errors(registrationForm) }} #}
+
+    {{ form_start(registrationForm) }}
+
+        
+
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <label class="mdl-textfield__label" for="sample3">Email</label>
+        {{ form_row(registrationForm.mail, 
+          {'attr': {'class':'mdl-textfield__input'}
+        }) }}
+    </div>
+    </br>
+
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <label class="mdl-textfield__label" for="sample3">Mot de passe</label>
+        {{ form_row(registrationForm.plainPassword, {
+            'attr': {'class': 'mdl-textfield__input', 'id': 'sample3'}
+        }) }}
+    </div>
+    </br>
+
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <label class="mdl-textfield__label" for="sample3">Nom</label>
+        {{ form_row(registrationForm.nom_utilisateur, 
+        {'attr': {'class':'mdl-textfield__input', 'id': 'sample3'}
+        }) }}
+
+    </div>
+    </br>
+    
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <label class="mdl-textfield__label" for="sample3">Prenom</label>
+        {{ form_row(registrationForm.prenom_utilisateur, 
+            {'attr': {'class':'mdl-textfield__input', 'id': 'sample3'}
+        }) }}
+    </div>
+    </br>
+
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <label class="mdl-textfield__label" for="sample3">Date de naissance</label>
+        {{ form_row(registrationForm.date_de_naissance, 
+            {'attr': {'class':'mdl-textfield__input', 'id': 'sample3'}
+        }) }}
+
+    </div>
+    </br>
+
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        {{ form_row(registrationForm.agreeTerms, 
+        {'attr': {'class':'mdl-checkbox__input'}
+        }) }}
+    </div>
+    </br>
+    </div>
+    
+
+    <button type="submit" class="sign-up-btn mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--raised mdl-button--colored">
+      S'inscrire
+    </button><!--/button-->    
+    
+    {{ form_end(registrationForm) }}
+
+    </div>
+{% endblock %}

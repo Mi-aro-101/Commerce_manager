@@ -1,0 +1,134 @@
+{% include 'header_client_template.html.twig' %}
+
+{% block title %}New TestResultat{% endblock %}
+
+{# {% block body %}
+    <h1>Repondre au test</h1>
+
+    {# {{ include('test_resultat/_form.html.twig') }} #}
+
+    {# <a href="{{ path('app_test_resultat_index') }}">back to list</a> #}
+{# {% endblock %}  #}
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+    <section class="content">
+        <div class="container-fluid">
+
+                <div class="col-sm-6">
+                    <h1>Test d'aptitude</strong></h1>
+                </div><br>
+            <div class="row">
+
+            <div class="col-10">
+                <div class="card card-row card-default">
+
+                <div class="card-header bg-info">
+                    <h3 class="card-title">
+                     Test, <strong>toutes les questions sont obligatoires</strong>
+                    </h3>
+                </div>
+                {% block body %}
+
+                {{ form_start(form) }}
+                <div class="card-body">
+                    <div class="card-info card-outline">
+                        <div class="card-header">
+                            <h5 class="card-title"></h5>
+                        </div>
+                        <div class="card-body">
+                            <h6>{{ form_row(form.date_envoie) }}</h6>
+                        </div>
+                    </div>
+
+                    {% for section in sections %}
+                    <div class="card-info card-outline">
+                        <div class="card-header">
+                            <h5 class="card-title"><strong>{{ section.getDesQuestion() }}</strong></h5>
+                        </div>
+                        <div class="card-body">
+                        {% for value, reponse in  section.getReponseSections() %}
+                            <div class="">
+                                <input type="radio" value="{{ reponse.getId() }}" name="sectionReponses[{{ section.getId() }}]">
+                                <label for="" class="">{{ reponse.getDesReponse() }}</label>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+                <center><button class="btn btn-primary" type="submit" id="save-section">Soumettre</button></center>
+
+                {{ form_end(form) }}
+
+                {% endblock %}
+
+                </div>
+            </div>
+
+            </div>
+
+        </div>
+    </section>
+</div>
+
+{# <div class="content-wrapper" style="min-height : 1345.6px">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="card card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title"> Test d'aptitude </h3>
+                        </div>
+                        <div class="card-body">
+
+                        {% block body %}
+
+                        {{ form_start(form) }}
+
+                                <div id="sections">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+
+                                                {{ form_row(form.date_envoie) }}
+
+                                            </div>
+                                            {% for section in sections %}
+                                            <div class="form-group">
+                                                <label> {{ section.getDesQuestion() }} </label>
+                                                {% for value, reponse in  section.getReponseSections() %}
+                                                    {{ reponse.getDesReponse() }}<input type="radio" value="{{ reponse.getId() }}" name="sectionReponses[{{ section.getId() }}]">
+                                                {% endfor %}
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary" type="submit" id="save-section">Soumettre</button>
+
+                        {{ form_end(form) }}
+
+                        {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div> #}
+
+{% include 'footer_client_template.html.twig' %}
+
+
+{# <p> {{ form_row(form.date_envoie) }} </p>
+
+    {% for section in sections %}
+        <label> {{ section.getDesQuestion() }} </label>
+        {% for value, reponse in  section.getReponseSections() %}
+            <p>{{ reponse.getDesReponse() }}<input type="radio" value="{{ reponse.getId() }}" name="sectionReponses[{{ section.getId() }}]"></p>
+        {% endfor %}
+    {% endfor %} #}

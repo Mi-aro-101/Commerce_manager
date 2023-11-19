@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SectionReponse{% endblock %}
+
+{% block body %}
+    <h1>SectionReponse</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ section_reponse.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_section_reponse_index') }}">back to list</a>
+
+    <a href="{{ path('app_section_reponse_edit', {'id': section_reponse.id}) }}">edit</a>
+
+    {{ include('section_reponse/_delete_form.html.twig') }}
+{% endblock %}

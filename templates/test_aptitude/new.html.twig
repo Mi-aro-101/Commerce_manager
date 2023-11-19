@@ -1,0 +1,138 @@
+{% include 'header_template.html.twig' %}
+
+<div class="content-wrapper" style="min-height : 1345.6px">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title"> Generer test d'aptitude </h3>
+                        </div>
+                        <div class="card-body">
+
+                        {% block body %}
+
+                        {{ form_start(form) }}
+
+                                <div id="sections">
+                                    <div class="row">
+                                    {% for section in form.sections %}
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label> Question </label>
+                                                <input type="text" class="form-control" name="{{ field_name(section.des_question) }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label> Coefficient section </label>
+                                                <input type="number" class="form-control" name="{{ field_name(section.coef_section) }}">
+                                            </div>
+                                            {# {{ form_row(section.des_question) }}
+                                            {{ form_row(section.coef_section) }} #}
+                                        </div>
+                                                {% for reponse in section.reponseSections %}
+                                            <div class="reponse-sections">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label> Reponse </label>
+                                                        <input type="text" class="form-control" name="{{ field_name(reponse.des_reponse) }}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-4">
+                                                            <label> Est vrai </label>
+                                                            <input type="checkbox" class="form-control" name="{{ field_name(reponse.is_true) }}">
+                                                        </div>
+                                                    </div>
+                                                    {# {{ form_row(reponse.des_reponse) }}
+                                                    {{ form_row(reponse.is_true) }} #}
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                    {% endfor %}
+                                    </div>
+                                </div>
+
+                            <input type="hidden" name="{{ field_name(form.cv_requirements) }}" value="{{ cv_requirements.getId() }}" />
+
+                            <button type="button" id="add-section">Add Section</button>
+                            <button type="submit" id="save-section">Save</button>
+
+                        {{ form_end(form) }}
+
+                        {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="{{ asset('dist/js/jquery.js') }}"></script>
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const addButton = document.getElementById('add-section');
+
+    addButton.addEventListener('click', function() {
+        const sectionsContainer = document.getElementById('sections');
+        const sectionIndex = sectionsContainer.children.length;
+
+        // Create a new section container
+        const newSectionContainer = document.createElement('div');
+        newSectionContainer.classList.add('row');
+
+        // Add new section HTML
+        newSectionContainer.innerHTML = `
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label> Question </label>
+                    <input type="text" class="form-control" name="test_aptitude[sections][${sectionIndex}][des_question]">
+                </div>
+                <div class="form-group">
+                    <label> Coefficient section </label>
+                    <input type="number" class="form-control" name="test_aptitude[sections][${sectionIndex}][coef_section]">
+                </div>
+            </div>
+            <div class="reponse-sections"></div>
+        `;
+
+        // Append the new section container
+        sectionsContainer.appendChild(newSectionContainer);
+
+        // Add response section button and handler
+        const addResponseButton = document.createElement('button');
+        addResponseButton.type = 'button';
+        addResponseButton.classList.add('add-response');
+        addResponseButton.textContent = 'Add a Response Section';
+
+        newSectionContainer.appendChild(addResponseButton);
+
+        addResponseButton.addEventListener('click', function() {
+            const responseSectionsContainer = newSectionContainer.querySelector('.reponse-sections');
+            const responseSectionIndex = responseSectionsContainer.children.length;
+
+            const newResponseSection = document.createElement('div');
+            newResponseSection.classList.add('col-sm-12');
+
+            newResponseSection.innerHTML = `
+                <div class="form-group">
+                    <label> Reponse </label>
+                    <input type="text" class="form-control" name="test_aptitude[sections][${sectionIndex}][reponseSections][${responseSectionIndex}][des_reponse]">
+                </div>
+                <div class="form-group">
+                    <label> Est vrai </label>
+                    <input type="checkbox" class="form-control" name="test_aptitude[sections][${sectionIndex}][reponseSections][${responseSectionIndex}][is_true]">
+                </div>
+            `;
+
+            responseSectionsContainer.appendChild(newResponseSection);
+        });
+    });
+});
+
+
+
+</script>
+
+{% include 'footer_template.html.twig' %}

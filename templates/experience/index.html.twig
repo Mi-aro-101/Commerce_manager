@@ -1,0 +1,56 @@
+{% include 'header_template.html.twig' %}
+
+{% block title %}Service index{% endblock %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-9">
+<div class="card">
+<div class="card-header">
+    <h1>Liste des diplomes</h1>
+</div>
+
+{% block body %}
+    <center><h1>Experience index</h1></center>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Des_xp</th>
+                <th>Niv_xp</th>
+                <th colspan="2" style="text-align:center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for experience in experiences %}
+            <tr>
+                <td>{{ experience.getDesXp() }}</td>
+                <td style="text-align:right">{{ experience.getNivXp() }}</td>
+                <td style="text-align:center">
+                    <a href="{{ path('app_experience_show', {'id': experience.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
+                </td>
+                <td style="text-align:center">
+                    <a href="{{ path('app_experience_edit', {'id': experience.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_experience_new') }}"><button class="btn btn-info">Create new</button></a>
+{% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

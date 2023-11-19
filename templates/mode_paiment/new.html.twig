@@ -1,0 +1,45 @@
+{% include 'header_achat.html.twig' %}
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-6">
+<div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title"> Mode de paiment </h3>
+        </div>
+        <div class="card-body">
+
+            {% block body %}
+
+            {{ form_start(form) }}
+
+            <div class="row">
+
+                <div class="form-group">
+                    <label> Designation de mode de paiment </label>
+                    <input type="text" class="form-control" name="{{ field_name(form.des_modepaiment) }}">
+                </div>
+            </div>
+
+            <div class="row">
+                <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+                <a href="{{ path('app_mode_paiment_index') }}"><button type="button" class="btn btn-info">Voir</button></a>
+            </div>
+
+                {{ form_end(form) }}
+
+
+                {% endblock %}
+        </div>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

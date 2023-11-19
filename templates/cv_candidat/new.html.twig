@@ -1,0 +1,169 @@
+{# {% block title %}New CVCandidat{% endblock %}
+
+{% block body %}
+<center> <h1>Create new CVCandidat</h1> </center>
+    {{ include('cv_candidat/_form.html.twig') }}
+
+    <a href="{{ path('app_c_v_candidat_index') }}">back to list</a>
+{% endblock %} #}
+{% include 'header_client_template.html.twig' %}
+
+{% block title %}Generer une annonce{% endblock %}
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+    {{ form_start(formcv) }}
+    <div class="row">
+        {% block body %}
+            <div class="col-md-6">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h2 class="card-title">CV Requis</h2>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                  <label> Date de depot </label>
+                                    {{ form_row(formcv.date_depot, 
+                                        {'attr': {'class':'form-control', 'id': 'exampleInputPassword1'}
+                                    }) }}
+                                </div>
+                            </div>
+                            {# <div class="col-sm-6">
+                                <div class="form-group">
+                                  <label> Date de fin </label>
+                                    {{ form_row(formcv.date_fin, 
+                                        {'attr': {'class':'form-control', 'id': 'exampleInputPassword1'}
+                                    }) }}
+                                </div>
+                            </div> #}
+                        </div>
+                    </div>  
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                  <label> Domaine </label>
+                                     <select name="{{ field_name(formcv.domaine) }}" class="form-control">
+                                        {% for label, value in field_choices(formcv.domaine) %}
+                                            <option value="{{ value }}">{{ label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                    {# <input type="hidden" class="form-control" id="exampleInputPassword1" name="id_cv" value=" {{ cv_requirements.getId() }}"> #}
+                    {# <input type="hidden" class="form-control" id="exampleInputPassword1" name="{{ field_name(formcv.statue)}}" value=5 >
+                    <input type="hidden" class="form-control" id="exampleInputPassword1" name="{{ field_name(formcv.date_reponse)}}" value= null > #}
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                <label> Diplome </label>
+                                    <select name="{{ field_name(formcv.diplome) }}" class="form-control">
+                                        {% for label, value in field_choices(formcv.diplome) %}
+                                            <option value="{{ value }}">{{ label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                <label> Experience </label>
+                                      <select name="{{ field_name(formcv.experience) }}" class="form-control">
+                                        {% for label, value in field_choices(formcv.experience) %}
+                                            <option value="{{ value }}">{{ label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                <label> Adresse </label>
+                                    <select name="{{ field_name(formcv.adresse) }}" class="form-control">
+                                        {% for label, value in field_choices(formcv.adresse) %}
+                                            <option value="{{ value }}">{{ label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                <label> Sexe </label>
+                                    <select name="{{ field_name(formcv.sexe) }}" class="form-control">
+                                        {% for label, value in field_choices(formcv.sexe) %}
+                                            <option value="{{ value }}">{{ label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                <label> Situation matrimoniale </label>
+                                     <select name="{{ field_name(formcv.matrimoniale) }}" class="form-control">
+                                        {% for label, value in field_choices(formcv.matrimoniale) %}
+                                            <option value="{{ value }}">{{ label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                <label> Nationalite </label>
+                                     <select name="{{ field_name(formcv.nationalite) }}" class="form-control">
+                                        {% for label, value in field_choices(formcv.nationalite) %}
+                                            <option value="{{ value }}">{{ label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                     <center><button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button></center>
+
+                </div>
+            </div>
+    {{ form_end(formcv) }}
+        {% endblock %}
+    </div>
+
+</div>
+</section>
+</div>
+
+{% include 'footer_client_template.html.twig' %}

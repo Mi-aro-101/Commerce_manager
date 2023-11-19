@@ -1,0 +1,59 @@
+{% include 'header_client_template.html.twig' %}
+
+{% block title %}Mes employes{% endblock %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-12">
+<div class="card">
+<div class="card-header">
+    <center><h1 style="font-family: Times New Roman">Liste des mes employes</h1></center>
+</div>
+
+{% block body %}
+<div class="card-body">
+<div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4>
+<div class="row">
+<div class="col-sm-12">
+
+    <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+        <thead>
+            <tr>
+                <th>Nom et prenom(s)</th>
+                <th>Date_embauche</th>
+                <th>Cnaps</th>
+                <th>Osti</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for employe in employes %}
+            <tr>
+                <td>{{ employe.getUtilisateur().getNomUtilisateur() }} {{ employe.getUtilisateur().getPrenomUtilisateur() }}</td>
+                <td>{{ employe.dateEmbauche ? employe.dateEmbauche|date('Y-m-d') : '' }}</td>
+                <td>{{ employe.cnaps ? 'Oui' : 'Non' }}</td>
+                <td>{{ employe.osti ? 'Oui' : 'Non' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Vous n'avez pas d'employe actuellement</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_client_template.html.twig' %}

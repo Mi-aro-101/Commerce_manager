@@ -1,0 +1,91 @@
+{% include 'header_template.html.twig' %}
+
+{% block title %}CVRequirements index{% endblock %}
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>CVRequirements index</h1>
+</div>
+{% block body %}
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Date d'envoie</th>
+                <th>Date fin</th>
+                <th>Poste_description</th>
+                <th>Service</th>
+                <th>Domaine</th>
+                <th>Diplome</th>
+                <th>Coef_diplome</th>
+                <th>Experience</th>
+                <th>Coef_xp</th>
+                <th>Adresse</th>
+                <th>Coef_adresse</th>
+                <th>Sexe</th>
+                <th>Coef_Sexe</th>
+                <th>Nationalite</th>
+                <th>Coef_Nationalite</th>
+                <th>Matrimoniale</th>
+                <th>Coef_Matrimoniale</th>
+                <th colspan="4" style="text-align:center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for c_v_requirement in c_v_requirements %}
+            <tr>
+                <td>{{ c_v_requirement.dateEnvoie ? c_v_requirement.dateEnvoie|date('Y-m-d') : '' }}</td>
+                <td>{{ c_v_requirement.dateEnvoie ? c_v_requirement.dateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ c_v_requirement.posteDescription }}</td>
+                <td>{{ c_v_requirement.service.getDesService() }}</td>
+                <td>{{ c_v_requirement.domaine.getDesDomaine() }}</td>
+                <td>{{ c_v_requirement.diplome.getDesDiplome() }}</td>
+                <td>{{ c_v_requirement.coefDiplome }}</td>
+                <td>{{ c_v_requirement.experience.getDesXp() }}</td>
+                <td>{{ c_v_requirement.coefXp }}</td>
+                <td>{{ c_v_requirement.adresse.getDesAdresse() }}</td>
+                <td>{{ c_v_requirement.coefAdresse }}</td>
+                <td>{{ c_v_requirement.sexe.getDesSexe() }}</td>
+                <td>{{ c_v_requirement.coefSexe }}</td>
+                <td>{{ c_v_requirement.nationalite.getDesNationalite() }}</td>
+                <td>{{ c_v_requirement.coefNationalite }}</td>
+                <td>{{ c_v_requirement.matrimoniale.getDesMatrimoniale() }}</td>
+                <td>{{ c_v_requirement.coefMatrimoniale }}</td>
+                <td>
+                    <a href="{{ path('app_c_v_requirements_show', {'id': c_v_requirement.id}) }}">show</a>
+                </td>
+                <td>
+                    <a href="{{ path('app_test_aptitude_new', {'id': c_v_requirement.id}) }}">create a Test_aptitude</a>
+                </td>
+                <td>
+                    <a href="{{ path('app_c_v_requirements_liste_candidat_cv', {'id': c_v_requirement.id}) }}">Liste candidature</a>
+                </td>
+                <td>
+                    <a href="{{ path('app_resultat_test_aptitude', {'id': c_v_requirement.id}) }}"> Voir resultats des tests </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_c_v_requirements_new') }}"><button class="btn btn-info">Create new</button></a>
+{% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

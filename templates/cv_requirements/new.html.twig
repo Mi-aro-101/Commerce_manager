@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CVRequirements{% endblock %}
+
+{% block body %}
+    <h1>Create new CVRequirements</h1>
+
+    {{ include('cv_requirements/_form.html.twig') }}
+
+    <a href="{{ path('app_c_v_requirements_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% include 'header_template.html.twig' %}
+
+{% block title %}Service index{% endblock %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>Liste des services</h1>
+</div>
+{% block body %}
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Des_service</th>
+                <th colspan="2" style="text-align:center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for service in services %}
+            <tr>
+                <td>{{ service.getDesService() }}</td>
+                <td>
+                    <a href="{{ path('app_service_show', {'id_service': service.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
+                </td>
+                <td>
+                    <a href="{{ path('app_service_edit', {'id_service': service.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <a href="{{ path('app_service_new') }}"><button class="btn btn-primary">Create new +</button></a>
+{% endblock %}
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}
+

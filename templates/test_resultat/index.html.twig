@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TestResultat index{% endblock %}
+
+{% block body %}
+    <h1>TestResultat index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date_envoie</th>
+                <th>Date_reponse</th>
+                <th>Statut</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for test_resultat in test_resultats %}
+            <tr>
+                <td>{{ test_resultat.id }}</td>
+                <td>{{ test_resultat.dateEnvoie ? test_resultat.dateEnvoie|date('Y-m-d') : '' }}</td>
+                <td>{{ test_resultat.dateReponse ? test_resultat.dateReponse|date('Y-m-d') : '' }}</td>
+                <td>{{ test_resultat.statut }}</td>
+                <td>
+                    <a href="{{ path('app_test_resultat_show', {'id': test_resultat.id}) }}">show</a>
+                    <a href="{{ path('app_test_resultat_edit', {'id': test_resultat.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_test_resultat_new') }}">Create new</a>
+{% endblock %}

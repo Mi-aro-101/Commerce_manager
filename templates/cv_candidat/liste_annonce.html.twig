@@ -1,0 +1,55 @@
+{% include 'header_client_template.html.twig' %}
+
+{% block title %}Liste des annonce disponible{% endblock %}
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-12">
+<div class="card">
+<div class="card-header">
+    <h1>Liste d'annonce</h1>
+</div>
+{% block body %}
+     <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Date fin de depot</th> 
+                <th>Poste_description</th>
+                <th>Diplome requis</th>
+                <th>Experience minimum</th>
+                <th colspan="2" style="text-align:center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set i = 0 %}
+        {% for cv in c_v_disponibles %}
+            <tr>
+                <td>{{ cv.getDateFin()|date('Y-m-d') }}</td> 
+                <td>{{ cv.getPosteDescription() }}</td>
+                <td>{{ cv.diplome.getDesDiplome() }}</td>
+                <td>{{ cv.experience.getDesXp() }}</td>
+                <td>
+                    <a href="{{ path('app_c_v_candidat_new', {'id': cv.id}) }}">Envoyer mon cv</a>
+                </td>
+                <td>
+                    {# <a href="{{ path('app_test_resultat_new', {'id': cv.id}) }}">test-aptidude</a> #}
+                    {{ links[i] | raw }}
+                </td>
+            </tr>
+            {% set i = i+1 %}
+        {% endfor %}
+        </tbody>
+     </table>
+{% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_client_template.html.twig' %}

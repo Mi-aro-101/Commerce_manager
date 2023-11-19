@@ -1,0 +1,50 @@
+{% include 'header_template.html.twig' %}
+
+{% block title %}Nationalite index{% endblock %}
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-">
+<div class="card">
+<div class="card-header">
+    <h1>Liste des nations</h1>
+</div>
+{% block body %}
+    <h1>Nationalite index</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Des_nationalite</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for nationalite in nationalites %}
+            <tr>
+                <td>{{ nationalite.getDesNationalite() }}</td>
+                <td>
+                    <a href="{{ path('app_nationalite_show', {'id': nationalite.getId()}) }}">show</a>
+                    <a href="{{ path('app_nationalite_edit', {'id': nationalite.getId()}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_nationalite_new') }}"><button class="btn btn-info">Create new</button></a>
+{% endblock %}
+</div>table-bordered
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}
