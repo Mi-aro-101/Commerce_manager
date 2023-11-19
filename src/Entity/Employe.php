@@ -273,6 +273,7 @@ class Employe
     public function setStatut(int $statut): static
     {
         $this->statut = $statut;
+    }
 
     /**
      * @return Collection<int, HeureSuplementaire>

@@ -164,7 +164,8 @@ class EmployeController extends AbstractController
 
         $employes = $employeRepository->findBy(
             [
-                'superieur' => strval($myemp->getId())
+                'superieur' => strval($myemp->getId()),
+                ''
             ]
         );
 
