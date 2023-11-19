@@ -31,7 +31,7 @@ class ArticleFournisseur
     }
 
     public function getArticle(): ?Article
-    {7
+    {
         return $this->article;
     }
 
