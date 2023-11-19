@@ -9,6 +9,7 @@ use App\Repository\ReponseSectionRepository;
 use App\Repository\SectionRepository;
 use App\Repository\TestAptitudeRepository;
 use App\Repository\TestResultatRepository;
+use App\Repository\TestCandidatNoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

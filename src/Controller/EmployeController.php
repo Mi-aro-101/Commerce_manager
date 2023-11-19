@@ -38,7 +38,7 @@ class EmployeController extends AbstractController
     #[Route('/fiche', name: 'app_employe_fiche', methods: ['GET'])]
     #[IsGranted("ROLE_ADMIN", statusCode:404, message:"Error 404 Page not found")]
     public function fiche_paie(EmployeRepository $employeRepository): Response
-    {   
+    {
         $id = $_GET['id'];
         $employe = $employeRepository->find($id);
         // $data = [
@@ -52,7 +52,7 @@ class EmployeController extends AbstractController
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);
         $dompdf->render();
-         
+
         return new Response (
             $dompdf->stream('resume', ["Attachment" => false]),
             Response::HTTP_OK,
@@ -165,7 +165,6 @@ class EmployeController extends AbstractController
         $employes = $employeRepository->findBy(
             [
                 'superieur' => strval($myemp->getId()),
-                ''
             ]
         );
 

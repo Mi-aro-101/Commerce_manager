@@ -1,14 +1,14 @@
-{% include 'header_client_template.html.twig' %}
+{% include 'header_achat.html.twig' %}
 
 <div class="content-wrapper" style="min-height: 1302.4px;">
 
 <section class="content">
 <div class="container-fluid">
 <div class="row">
-<div class="col-md-5">
+<div class="col-md-6">
 <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title"> <strong>Fiche de demande de conge </strong></h3>
+            <h3 class="card-title"> Mode de paiment </h3>
         </div>
         <div class="card-body">
 
@@ -18,22 +18,19 @@
 
             <div class="row">
 
-                <div class="form-group" style="font-size: 110%">
-                    {{ form_row(form.date_debut) }}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group" style="font-size: 110%">
-                    {{ form_row(form.date_fin) }}
+                <div class="form-group">
+                    <label> Designation de mode de paiment </label>
+                    <input type="text" class="form-control" name="{{ field_name(form.des_modepaiment) }}">
                 </div>
             </div>
 
             <div class="row">
                 <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+                <a href="{{ path('app_mode_paiment_index') }}"><button type="button" class="btn btn-info">Voir</button></a>
             </div>
 
                 {{ form_end(form) }}
+
 
                 {% endblock %}
         </div>
@@ -45,4 +42,4 @@
 </section>
 </div>
 
-{% include 'footer_client_template.html.twig' %}
+{% include 'footer_template.html.twig' %}
