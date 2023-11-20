@@ -11,9 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Article
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy:"AUTO")]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column (length: 15)]
+    private ?string $id = null;
 
     #[ORM\Column(length: 100)]
     private ?string $des_article = null;
@@ -21,14 +20,24 @@ class Article
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: ArticleFournisseur::class)]
     private Collection $articleFournisseurs;
 
+    #[ORM\OneToMany(mappedBy: 'article', targetEntity: DemandeDepartement::class)]
+    private Collection $demandeDepartements;
+
     public function __construct()
     {
         $this->articleFournisseurs = new ArrayCollection();
+        $this->demandeDepartements = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
+    }
+    public function setId(string $id): static
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getDesArticle(): ?string
@@ -67,6 +76,36 @@ class Article
             // set the owning side to null (unless already changed)
             if ($articleFournisseur->getArticle() === $this) {
                 $articleFournisseur->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DemandeDepartement>
+     */
+    public function getDemandeDepartements(): Collection
+    {
+        return $this->demandeDepartements;
+    }
+
+    public function addDemandeDepartement(DemandeDepartement $demandeDepartement): static
+    {
+        if (!$this->demandeDepartements->contains($demandeDepartement)) {
+            $this->demandeDepartements->add($demandeDepartement);
+            $demandeDepartement->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemandeDepartement(DemandeDepartement $demandeDepartement): static
+    {
+        if ($this->demandeDepartements->removeElement($demandeDepartement)) {
+            // set the owning side to null (unless already changed)
+            if ($demandeDepartement->getArticle() === $this) {
+                $demandeDepartement->setArticle(null);
             }
         }
 

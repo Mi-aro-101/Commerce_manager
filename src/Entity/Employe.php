@@ -112,6 +112,7 @@ class Employe
     private Collection $heuresuplementaire;
 
 
+
     public function __construct()
     {
         $this->historiqueSalaires = new ArrayCollection();
@@ -329,6 +330,18 @@ class Employe
                 $heuresuplementaire->setEmploye(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDepartement(): ?Departement
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?Departement $departement): static
+    {
+        $this->departement = $departement;
 
         return $this;
     }

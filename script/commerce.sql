@@ -24,16 +24,6 @@ SET default_table_access_method = heap;
 -- Name: utilisateur; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.utilisateur (
-    id integer NOT NULL,
-    mail character varying(180) NOT NULL,
-    roles json NOT NULL,
-    mot_de_passe character varying(255) NOT NULL,
-    nom_utilisateur character varying(30) NOT NULL,
-    prenom_utilisateur character varying(30) NOT NULL,
-    date_de_naissance date NOT NULL,
-    cv_candidat_note_id integer
-);
 
 
 ALTER TABLE public.utilisateur OWNER TO postgres;

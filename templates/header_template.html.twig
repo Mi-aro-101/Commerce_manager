@@ -110,13 +110,13 @@
             <a href="{{ path('app_annonce') }}" class="nav-link">
               <ion-icon name="receipt-sharp"></ion-icon>
               <p>
-                Annonce
+                Departement
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ path('app_annonce_new') }}" class="nav-link {{ app.request.get('_route') == 'app_annonce_new' ? 'active' }}">
+                <a href="{{ path('app_departement_new') }}" class="nav-link {{ app.request.get('_route') == 'app_departement_new' ? 'active' }}">
                   <ion-icon name="duplicate-sharp"></ion-icon>
                   <p>Creer</p>
                 </a>

@@ -24,10 +24,14 @@ class Service
     #[ORM\OneToMany(mappedBy: 'service', targetEntity: Employe::class)]
     private Collection $employes;
 
+    #[ORM\OneToMany(mappedBy: 'service', targetEntity: DemandeDepartement::class)]
+    private Collection $demandeDepartements;
+
     public function __construct()
     {
         $this->cVRequirements = new ArrayCollection();
         $this->employes = new ArrayCollection();
+        $this->demandeDepartements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,6 +105,36 @@ class Service
             // set the owning side to null (unless already changed)
             if ($employe->getService() === $this) {
                 $employe->setService(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DemandeDepartement>
+     */
+    public function getDemandeDepartements(): Collection
+    {
+        return $this->demandeDepartements;
+    }
+
+    public function addDemandeDepartement(DemandeDepartement $demandeDepartement): static
+    {
+        if (!$this->demandeDepartements->contains($demandeDepartement)) {
+            $this->demandeDepartements->add($demandeDepartement);
+            $demandeDepartement->setService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemandeDepartement(DemandeDepartement $demandeDepartement): static
+    {
+        if ($this->demandeDepartements->removeElement($demandeDepartement)) {
+            // set the owning side to null (unless already changed)
+            if ($demandeDepartement->getService() === $this) {
+                $demandeDepartement->setService(null);
             }
         }
 
