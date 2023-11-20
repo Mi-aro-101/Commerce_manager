@@ -1,0 +1,45 @@
+{% include 'header_template.html.twig' %}
+{# 
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #}
+
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-5">
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"> <strong>Nouveau departement </strong></h3>
+    </div>
+    <div class="card-body">
+        {% block body %}
+
+            {{ form_start(form) }}
+
+                <div class="row">
+                    <div class="form-group" style="font-size: 110%">
+                        {{ form_row(form.designation) }}
+                    </div>
+                </div>
+               
+                <div class="row">
+                    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+                </div>
+            {{ form_end(form) }}
+
+        {% endblock %}
+    </div>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

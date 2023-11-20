@@ -11,9 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Fournisseur
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(length: 10)]
+    private ?string $id = null;
 
     #[ORM\Column(length: 50)]
     private ?string $des_fournisseur = null;
@@ -30,9 +29,17 @@ class Fournisseur
         $this->articleFournisseurs = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
+    }
+
+
+    public function setId(string $id): static
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getDesFournisseur(): ?string
