@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ProformatArticle{% endblock %}
+
+{% block body %}
+    <h1>ProformatArticle</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ proformat_article.id }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ proformat_article.statut }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_proformat_article_index') }}">back to list</a>
+
+    <a href="{{ path('app_proformat_article_edit', {'id': proformat_article.id}) }}">edit</a>
+
+    {{ include('proformat_article/_delete_form.html.twig') }}
+{% endblock %}

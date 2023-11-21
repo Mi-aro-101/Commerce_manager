@@ -31,11 +31,55 @@ class Demande
         $this->demandeDepartement = new ArrayCollection();
     }
 
+    public function getArticlesNonTraites($connexion, $articleRepository) : Collection {
+        $query = "select * from v_get_articles_non_traite_groupe";
+        $stmt = $connexion->prepare($query);
+        $stmt = $stmt->executeQuery();
+        $demandes = new ArrayCollection();
+        while ($row = $stmt->fetchAssociative()) {
+            $demande = new Demande();
+            $demande -> setQuantiteTotal($row['quantite_total']);
+            $demande -> setArticle($articleRepository->find($row['article_id']));
+            $demandes->add($demande);
+        }
+        return $demandes;
+    }
+    public function toSaveDemande($connexion, $id_article,$articleRepository) : Demande {
+        $demande = $this ->getArticleNonTraite($connexion, $id_article,$articleRepository);
+        $demande -> setId($this -> getSequenceDemande($connexion,$articleRepository));
+        return $demande;
+    }
+    public function getArticleNonTraite($connexion, $id_article,$articleRepository) : Demande {
+        $query = "select * from v_get_articles_non_traite_groupe where article_id = '%s'";
+        $query = sprintf($query,$id_article);
+        $stmt = $connexion->prepare($query);
+        $stmt = $stmt->executeQuery();
+        $demande = new Demande();
+        while ($row = $stmt->fetchAssociative()) {
+            $demande -> setQuantiteTotal($row['quantite_total']);
+            $demande -> setArticle($articleRepository->find($row['article_id']));
+        }
+        return $demande;
+    }
+    public function getSequenceDemande($connexion,$articleRepository): ?int {
+        $query = " select nextval('demande_id_seq') as id";
+        $stmt = $connexion->prepare($query);
+        $stmt = $stmt->executeQuery();
+        $row = $stmt ->fetchAssociative();
+        $id = $row['id'];
+        return $id;
+    }
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
+    }
     public function getArticle(): ?Article
     {
         return $this->article;

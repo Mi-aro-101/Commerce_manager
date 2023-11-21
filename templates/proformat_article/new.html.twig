@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ProformatArticle{% endblock %}
+
+{% block body %}
+    <h1>Create new ProformatArticle</h1>
+
+    {{ include('proformat_article/_form.html.twig') }}
+
+    <a href="{{ path('app_proformat_article_index') }}">back to list</a>
+{% endblock %}

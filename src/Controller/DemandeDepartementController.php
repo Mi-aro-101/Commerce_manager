@@ -2,10 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Demande;
 use App\Entity\DemandeDepartement;
 use App\Form\DemandeDepartementType;
+use App\Repository\ArticleFournisseurRepository;
+use App\Repository\ArticleRepository;
 use App\Repository\DemandeDepartementRepository;
+use App\Repository\DemandeRepository;
 use App\Repository\EmployeRepository;
+use App\Repository\ServiceRepository;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +21,21 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/demande/departement')]
 class DemandeDepartementController extends AbstractController
 {
+
+    #[Route('/details', name: 'app_demande_departement_detail', methods: ['GET'])]
+    public function details(EntityManagerInterface $entityManager,ArticleRepository $articleRepository,ServiceRepository $serviceRepository): Response
+    {
+        $id_article = $_GET['id'];
+        $connection = $entityManager->getConnection();
+        $demandeDepartement = new DemandeDepartement();
+        $demandeDepartement =  $demandeDepartement -> getArticleNonTraiteDetails($connection,$id_article,$articleRepository,$serviceRepository);
+        // $article = $articleRepository -> find($id_article);
+        return $this->render('demande_departement/details_demandes.html.twig', [
+            // 'demande' => $demande -> getArticleNonTraite($connection,$id_article,$articleRepository),
+            'demandesDepartements' => $demandeDepartement,
+        ]);
+    }
+    
     #[Route('/', name: 'app_demande_departement_index', methods: ['GET'])]
     public function index(DemandeDepartementRepository $demandeDepartementRepository): Response
     {

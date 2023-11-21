@@ -21,20 +21,20 @@ class ArticleFournisseurRepository extends ServiceEntityRepository
         parent::__construct($registry, ArticleFournisseur::class);
     }
 
-//    /**
-//     * @return ArticleFournisseur[] Returns an array of ArticleFournisseur objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return ArticleFournisseur[] Returns an array of ArticleFournisseur objects
+    */
+   public function findByArticle($value): array
+   {
+       return $this->createQueryBuilder('a')
+           ->andWhere('a.article = :val')
+           ->setParameter('val', $value)
+           ->orderBy('a.prix_actuel', 'ASC')
+           ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?ArticleFournisseur
 //    {

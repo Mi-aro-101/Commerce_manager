@@ -1,0 +1,53 @@
+{% include 'header_achat.html.twig' %}
+
+{% block title %}Comparatif{% endblock %}
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-9">
+<div class="card">
+<div class="card-header">
+    <h1>Comparatif des fournisseurs </h1>
+</div>
+
+{% block body %}
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Fournisseur</th>
+                <th>Article</th>
+                <th>Prix</th>
+                <th> Actions </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for articleFournisseur in articleFournisseurs %}
+            <tr>
+                <td>{{ articleFournisseur.getFournisseur().getDesFournisseur() }}</td>
+                <td>{{ articleFournisseur.getArticle().getDesArticle() }}</td>
+                <td>{{ articleFournisseur.getPrixActuel()|number_format(2, '.', ' ')  }} MDG </td>
+                <td style="text-align:center">
+                     <a href="{{ path('app_proformat_article_commander', {'id_article':  articleFournisseur.getArticle().getId(),'id_fournisseur' : articleFournisseur.getFournisseur().getId() }) }}"><button class="btn btn-info">commander</button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}
