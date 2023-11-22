@@ -71,6 +71,23 @@ class BonCommande
         return $this->bonCommandeDetails;
     }
 
+    public function getMontantTotalHT(){
+        return $this -> getMontantTotal() - $this -> getMontantTotalTVA(); 
+    }
+
+    public function getMontantTotalTVA(){
+        return $this -> getMontantTotal() * 0.2; 
+    }
+
+    public function getMontantTotal(){
+        $montant = 0;
+        foreach ($this -> getBonCommandeDetails() as $detail) {
+            # code...
+            $montant = $montant + $detail -> montantTotal();
+        }
+        return $montant;
+    }
+
     public function addBonCommandeDetail(BonCommandeDetail $bonCommandeDetail): static
     {
         if (!$this->bonCommandeDetails->contains($bonCommandeDetail)) {

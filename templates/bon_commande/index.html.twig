@@ -1,35 +1,63 @@
-{% extends 'base.html.twig' %}
+{% include 'header_finance.html.twig' %}
 
-{% block title %}BonCommande index{% endblock %}
+{% block title %}Fournisseur{% endblock %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
 
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-9">
+<div class="card">
+<div class="card-header">
+    <h1>Liste des fournisseurs</h1>
+</div>
 {% block body %}
-    <h1>BonCommande index</h1>
 
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>DateLivraison</th>
-                <th>actions</th>
+                <th>Bon Commande</th>
+                <th>Fournisseur</th>
+                <th>Date d'envoie</th>
+                <th>Date de livraison</th>
+                <th>PDF</th>
+
+                {# <th colspan="3" style="text-align:center">Actions</th> #}
             </tr>
         </thead>
         <tbody>
-        {% for bon_commande in bon_commandes %}
+        {% for bonCommande in bonCommandes %}
             <tr>
-                <td>{{ bon_commande.id }}</td>
-                <td>{{ bon_commande.dateLivraison ? bon_commande.dateLivraison|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_bon_commande_show', {'id': bon_commande.id}) }}">show</a>
-                    <a href="{{ path('app_bon_commande_edit', {'id': bon_commande.id}) }}">edit</a>
+                <td>{{ bonCommande.getId() }}</td>
+                <td>{{ bonCommande.getFournisseur().getDesFournisseur() }}</td>
+                <td>{{ bonCommande.getDateEnvoi()|date('Y-m-d')  }}</td>
+                <td>{{ bonCommande.getDateLivraison()|date('Y-m-d')  }}</td>
+               <td style="text-align:center">
+                    <a href="{{ path('app_bon_commande_pdf', {'id': bonCommande.getId()}) }}"><button class="btn btn-info">Voir</button></a>
                 </td>
+                {#  <td style="text-align:center">
+                    <a href="{{ path('app_fournisseur_show', {'id': fournisseur.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
+                </td>
+                <td style="text-align:center">
+                    <a href="{{ path('app_fournisseur_edit', {'id': fournisseur.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
+                </td> #}
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_bon_commande_new') }}">Create new</a>
+    <a href="{{ path('app_fournisseur_new') }}"><button class="btn btn-primary">Create new</button></a>
 {% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}
