@@ -116,13 +116,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ path('app_demande_departement_new') }}" class="nav-link {{ app.request.get('_route') == 'app_annonce_new' ? 'active' }}">
+                <a href="{{ path('app_demande_departement_new') }}" class="nav-link {{ app.request.get('_route') == 'app_demande_departement_new' ? 'active' }}">
                   <ion-icon name="duplicate-sharp"></ion-icon>
                   <p>Faire une demande</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ path('app_annonce') }}" class="nav-link {{ app.request.get('_route') == 'app_annonce' ? 'active' }}">
+                <a href="{{ path('app_demande_departement_liste') }}" class="nav-link {{ app.request.get('_route') == 'app_demande_departement_liste' ? 'active' }}">
                   <ion-icon name="eye-sharp"></ion-icon>
                   <p>Liste des demandes en cours</p>
                 </a>

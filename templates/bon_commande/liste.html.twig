@@ -18,7 +18,7 @@
             <tr>
                 {# <th>Bon Commande</th>
                 <th>Fournisseur</th> #}
-                <th>Article/th>
+                <th>Article</th>
                 <th> PU</th>
                 <th>Quantite Total</th>
                 <th> Montant Total</th>
@@ -32,7 +32,7 @@
                 <td>{{ proformat.getDemande().getArticle().getDesArticle() }}</td>
                 <td>{{ proformat.getPrixActuel() }}</td>
                 <td>{{ proformat.getDemande().getQuantiteTotal()  }}</td>
-                <td>{{ proformat.getMontantTotal() }} MGA</td>
+                <td>{{ proformat.getMontantTotal()|number_format(2,'.',' ') }} MGA</td>
                {# <td style="text-align:center">
                     <a href="{{ path('app_bon_commande_pdf', {'id': bonCommande.getId()}) }}"><button class="btn btn-info">Voir</button></a>
                 </td> #}
