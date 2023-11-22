@@ -10,7 +10,7 @@
 <div class="col-md-9">
 <div class="card">
 <div class="card-header">
-    <h1>Details commandes de l'article</h1>
+    <h1>Details commandes par departement  de l'article</h1>
         <h2> {{ demandesDepartements[0].getArticle().getDesArticle()}}
 </div>
 
@@ -21,7 +21,6 @@
             <tr>
                 <th>Departement</th>
                 <th>Quantite</th>
-                {# <th colspan="3" style="text-align:center">Actions</th> #}
             </tr>
         </thead>
         <tbody>
@@ -29,12 +28,6 @@
             <tr>
                 <td>{{ demandeDepartement.getService().getDesService() }}</td>
                 <td>{{ demandeDepartement.getQuantite() }}</td>
-                {# <td style="text-align:center">
-                    <a href="{{ path('app_demande_departement_detail', {'id': demande.article.getId() }) }}"><button class="btn btn-info">Details</button></a>
-                </td>
-                <td style="text-align:center">
-                     <a href="{{ path('app_demande_traiter', {'id':  demande.article.getId() }) }}"><button class="btn btn-info">Traiter</button></a>
-                </td> #}
             </tr>
         {% else %}
             <tr>

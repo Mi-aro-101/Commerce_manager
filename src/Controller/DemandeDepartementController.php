@@ -31,7 +31,6 @@ class DemandeDepartementController extends AbstractController
         $demandeDepartement =  $demandeDepartement -> getArticleNonTraiteDetails($connection,$id_article,$articleRepository,$serviceRepository);
         // $article = $articleRepository -> find($id_article);
         return $this->render('demande_departement/details_demandes.html.twig', [
-            // 'demande' => $demande -> getArticleNonTraite($connection,$id_article,$articleRepository),
             'demandesDepartements' => $demandeDepartement,
         ]);
     }

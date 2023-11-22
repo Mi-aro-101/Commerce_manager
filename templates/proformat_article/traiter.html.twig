@@ -44,7 +44,7 @@
         {% endfor %}
         </tbody>
     </table>
-     <a href="{{ path('app_proformat_article_envoyer', {'id_fournisseur': proformats[0].getFournisseur().getId() }) }}"><button class="btn btn-info">Envoyer departement finance</button></a>
+     <a href="{{ path('app_proformat_article_traiter', {'id_fournisseur': proformats[0].getFournisseur().getId() }) }}"><button class="btn btn-info">Details</button></a>
 {% endblock %}
 
 </div>
