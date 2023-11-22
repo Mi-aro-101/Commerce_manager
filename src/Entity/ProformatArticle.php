@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProformatArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Void_;
 
@@ -26,8 +28,67 @@ class ProformatArticle
     private ?int $statut = null;
 
     /**
-     * Get the proformat not yet send to the financial responsable
+     * get les proformats envoyés
      */
+    public function receiveProformat($connexion,$id_fournisseur, ProformatArticleRepository $proformatArticleRepository): Collection {
+        $query = "select * from v_get_proformat_send where fournisseur_id = '%s'";
+        $query = sprintf($query,$id_fournisseur);
+        $stmt = $connexion->prepare($query);
+        $stmt = $stmt->executeQuery();
+        $proformats = new ArrayCollection();
+        while ($row = $stmt ->fetchAssociative()) {
+            # code...
+            $proformat = $proformatArticleRepository -> find($row['id']) ;
+            $proformats -> add($proformat);
+        }
+        return $proformats;
+    }
+        
+    /**
+     * Send a proformat => change the statut of proformat to 10
+     */
+    public function sendProformat ($connexion,$id_fournisseur, ProformatArticleRepository $proformatArticleRepository) : void {
+        $query = "select * from v_get_proformat_not_send where fournisseur_id = '%s'";
+        $query = sprintf($query,$id_fournisseur);
+        $stmt = $connexion->prepare($query);
+        $stmt = $stmt->executeQuery();
+        while ($row = $stmt ->fetchAssociative()) {
+            # code...
+            $proformat = $proformatArticleRepository -> find($row['id']) ;
+            $proformat -> updradeStatut($connexion,10);
+        }
+    }
+
+    /**
+     * Upgrade a proformat 's statut
+     */
+    public function updradeStatut($connexion,$statut) : void {
+        $query = "update proformat_article set statut=%s where id = %s";
+        $query = sprintf($query,$statut,$this -> getId());
+        $stmt = $connexion->prepare($query);
+        $stmt = $stmt->executeQuery();
+    }
+
+    /**
+     * Get the proformat not yet send to the financial responsable
+     * @param connexion
+     * @param id_fournisseur
+     * @param  ProformatArticleRepository 
+     * @return Collection of all the proformats
+     */
+    public function getProformatNotSend($connexion,$id_fournisseur, ProformatArticleRepository $proformatArticleRepository):Collection {
+        $query = "select * from v_get_proformat_not_send where fournisseur_id = '%s'";
+        $query = sprintf($query,$id_fournisseur);
+        $stmt = $connexion->prepare($query);
+        $stmt = $stmt->executeQuery();
+        $proformats = new ArrayCollection();
+        while ($row = $stmt ->fetchAssociative()) {
+            # code...
+            $proformat = $proformatArticleRepository -> find($row['id']) ;
+            $proformats -> add($proformat);
+        }
+        return $proformats;
+    }
     /**
      * Generate a proformat per article
      */

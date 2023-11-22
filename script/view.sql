@@ -12,3 +12,9 @@ create or replace view v_get_proformat_not_send as select * from proformat_artic
 -- create or replace view v_get_fournisseur_proformat_not_send as select distinct(p.fournisseur_id),f.des_fournisseur,f.mode_paiement_id from proformat_article  as p
 -- join fournisseur as f on f.id= p.fournisseur_id where p.statut = 1;
 create or replace view v_get_fournisseur_proformat_not_send as select distinct(fournisseur_id) from proformat_article where statut = 1;
+
+--get les proformats envoyes a la finance
+create or replace view  v_get_proformat_send as select * from proformat_article where statut = 10;
+
+--get les  fournisseurs des proformats envoyes
+create or replace view  v_get_fournisseur_proformat_send as select distinct(fournisseur_id) from v_get_proformat_send

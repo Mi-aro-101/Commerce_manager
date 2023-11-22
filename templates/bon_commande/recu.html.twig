@@ -1,6 +1,6 @@
-{% include 'header_achat.html.twig' %}
+{% include 'header_finance.html.twig' %}
 
-{% block title %}Demandes non traites{% endblock %}
+{% block title %}Demandes reçues{% endblock %}
 
 <div class="content-wrapper" style="min-height: 1302.4px;">
 
@@ -20,8 +20,8 @@
             <tr>
                 {# <th>Id</th> #}
                 <th>Fournisseurs</th>
-                <th>Actions</th>
-                {# <th colspan="3" style="text-align:center">Actions</th> #}
+                {# <th>Actions</th> #}
+                <th colspan="3" style="text-align:center">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -34,6 +34,7 @@
                 </td> #}
                 <td style="text-align:center">
                      <a href="{{ path('app_proformat_article_traiter', {'id_fournisseur': fournisseur.getId() }) }}"><button class="btn btn-info">Details</button></a>
+                      <a href="{{ path('app_bon_commande_new', {'id_fournisseur': fournisseur.getId() }) }}"><button class="btn btn-info">Traiter</button></a>
                 </td>
             </tr>
         {% else %}

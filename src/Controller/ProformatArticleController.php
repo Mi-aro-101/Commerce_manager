@@ -20,6 +20,20 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/proformat/article')]
 class ProformatArticleController extends AbstractController
 {
+
+    #[Route('/envoyer', name: 'app_proformat_article_envoyer', methods: ['GET', 'POST'])]
+    public function envoyer(Request $request, EntityManagerInterface $entityManager,ProformatArticleRepository $proformatArticleRepository): Response
+    {
+        $id_fournisseur = $_GET['id_fournisseur'];
+        $connection = $entityManager->getConnection();
+
+        $proformatArticle = new ProformatArticle();
+        $proformatArticle -> sendProformat($connection,$id_fournisseur,$proformatArticleRepository);
+        return $this->render('proformat_article/ok.html.twig', [
+            // 'proformats' => $proformatArticle -> getProformatNotSend($connection,$id_fournisseur,$proformatArticleRepository)
+        ]);
+    }
+
     #[Route('/commander', name: 'app_proformat_article_commander', methods: ['GET'])]
     public function commander(EntityManagerInterface $entityManager,ProformatArticleRepository $proformatArticleRepository,ArticleRepository $articleRepository,FournisseurRepository $fournisseurRepository,ServiceRepository $serviceRepository): Response
     {
@@ -64,29 +78,22 @@ class ProformatArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_proformat_article_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/traiter', name: 'app_proformat_article_traiter', methods: ['GET', 'POST'])]
+    public function traiter(Request $request, EntityManagerInterface $entityManager,ProformatArticleRepository $proformatArticleRepository): Response
     {
+        $id_fournisseur = $_GET['id_fournisseur'];
+        $connection = $entityManager->getConnection();
+
         $proformatArticle = new ProformatArticle();
-        $form = $this->createForm(ProformatArticleType::class, $proformatArticle);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($proformatArticle);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_proformat_article_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('proformat_article/new.html.twig', [
-            'proformat_article' => $proformatArticle,
-            'form' => $form,
+        return $this->render('proformat_article/traiter.html.twig', [
+            'proformats' => $proformatArticle -> getProformatNotSend($connection,$id_fournisseur,$proformatArticleRepository)
         ]);
     }
 
-
-    #[Route('/traiter', name: 'app_proformat_article_traiter', methods: ['GET', 'POST'])]
-    public function traiter(Request $request, EntityManagerInterface $entityManager): Response
+    //CRUD
+    #[Route('/new', name: 'app_proformat_article_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $proformatArticle = new ProformatArticle();
         $form = $this->createForm(ProformatArticleType::class, $proformatArticle);

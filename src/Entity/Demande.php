@@ -61,6 +61,7 @@ class Demande
         }
         return $demande;
     }
+    
     public function getSequenceDemande($connexion,$articleRepository): ?int {
         $query = " select nextval('demande_id_seq') as id";
         $stmt = $connexion->prepare($query);

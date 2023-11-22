@@ -29,6 +29,24 @@ class Fournisseur
         $this->articleFournisseurs = new ArrayCollection();
     }
 
+    public function getFournisseurProformatEnvoye ($connexion,FournisseurRepository $fournisseurRepository) : Collection {
+        $query = "select * from v_get_fournisseur_proformat_send";
+        $stmt = $connexion->prepare($query);
+        $stmt = $stmt->executeQuery();
+
+        $fournisseurs = new ArrayCollection();
+        while($row = $stmt ->fetchAssociative()) {
+            $fournisseur = $fournisseurRepository ->find($row['fournisseur_id']);
+            $fournisseurs -> add($fournisseur);
+        }
+        return $fournisseurs;
+    }
+    
+    /**
+     * get list of fournisseur with their proformat
+     * @param FournisseurRepository $fournisseurRepository
+     * @return Collection
+     */
     public function getFournisseurProformat($connexion,FournisseurRepository $fournisseurRepository): Collection {
         $query = "select * from v_get_fournisseur_proformat_not_send";
         $stmt = $connexion->prepare($query);
