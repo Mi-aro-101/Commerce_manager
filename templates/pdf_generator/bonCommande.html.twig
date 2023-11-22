@@ -7,46 +7,48 @@
 <body>
     <div style="display: block;width: 700px;">
         <div style= "width: 250px;" >
-            Fournisseur: {{ bonCommande.getFournisseur().getDesFournisseur() }}
-            </br>
+            Fournisseur: <strong>{{ bonCommande.getFournisseur().getDesFournisseur() }}</strong>
+            </br><hr>
             Date envoie: {{bonCommande.getDateEnvoi()|date('Y-m-d') }}
-            </br>
+            </br><hr>
              Date de livraison: {{bonCommande.getDateLivraison()|date('Y-m-d') }}
-            </br>
+            </br><hr>
             Mode de paiement : {{ bonCommande.getFournisseur().getModePaiment().getDesModepaiment }}
-            </br>
-    </div>
+            </br><hr>
+    </div><br>
     <div>
-        <table width="100%" border="1">
+        <table width="100%">
             <tr>
-                <th width="45%">Article</th>
+                <th>Article</th>
                 <th>PU</th>
-                <th width="20%">Quantite</th>
-                <th width="20%">Montant</th>
+                <th>Quantite</th>
+                <th>Montant</th>
             </tr>
             {% for bonCommandeD in bonCommande.getBonCommandeDetails() %}
-           <tr>
-               <td>{{ bonCommandeD.getProformatArticle().getDemande().getArticle().getDesArticle() }}</td> 
-               <td>{{ bonCommandeD.getPrixActuel() }} MGA</td> 
-               <td> {{ bonCommandeD.getProformatArticle().getDemande().getQuantiteTotal() }} </td> 
-               <td> {{ bonCommandeD.montantTotal|number_format(2,'.',' ') }} MGA</td> 
-           </tr>  
-        {% endfor %}
-            <tr>    
-                 <th colspan="3" style="text-align:center">Total HT</th>
-                 <th> {{bonCommande.getMontantTotalHT|number_format(2,'.',' ') }} </th>
-            <tr> 
-             <tr>    
-                 <th colspan="3" style="text-align:center">Total TVA 20 % </th>
-                 <th> {{bonCommande.getMontantTotalTVA|number_format(2,'.',' ') }} </th>
-
-            <tr>  
-            <tr>    
-                 <th colspan="3" style="text-align:center">Total TTC</th>
-                 <th> {{bonCommande.getMontantTotal|number_format(2,'.',' ') }}</th>
-
-            <tr>
-        </table>
+                <tr>
+                    <td>{{ bonCommandeD.getProformatArticle().getDemande().getArticle().getDesArticle() }}</td> 
+                    <td style="text-align:right">{{ bonCommandeD.getPrixActuel() }} MGA</td> 
+                    <td style="text-align:right"> {{ bonCommandeD.getProformatArticle().getDemande().getQuantiteTotal() }} </td> 
+                    <td style="text-align:right"> {{ bonCommandeD.montantTotal|number_format(2,'.',' ') }} MGA</td> 
+                </tr>
+            {% endfor %}
+        </table><br>
     </div>
+        <hr>
+
+        <div style="float:right"> {{bonCommande.getMontantTotalHT|number_format(2,'.',' ') }} MGA</div>
+        <div style="text-align:left">Total HT</div><br>
+
+        <div style="float:right"> {{bonCommande.getMontantTotalTVA|number_format(2,'.',' ') }} MGA</div>
+        <div style="text-align:left">Total TVA 20 %</div>
+
+        <hr>
+        <br>
+
+        <div style="float:right"> <strong>{{bonCommande.getMontantTotal|number_format(2,'.',' ') }} MGA</strong></div>
+        <div style="text-align:left"><strong>Total TTC</strong></div>
+
 </body>
 </html>
+
+
