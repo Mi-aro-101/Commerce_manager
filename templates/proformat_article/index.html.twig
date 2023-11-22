@@ -10,7 +10,7 @@
 <div class="col-md-9">
 <div class="card">
 <div class="card-header">
-    <h1>Bon commande en attente</h1>
+    <h1>Proformat à envoyer</h1>
 </div>
 
 {% block body %}
@@ -20,8 +20,8 @@
             <tr>
                 {# <th>Id</th> #}
                 <th>Fournisseurs</th>
-                <th>Actions</th>
-                {# <th colspan="3" style="text-align:center">Actions</th> #}
+                {# <th>Actions</th> #}
+                <th colspan="2" style="text-align:center">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -34,6 +34,9 @@
                 </td> #}
                 <td style="text-align:center">
                      <a href="{{ path('app_proformat_article_traiter', {'id_fournisseur': fournisseur.getId() }) }}"><button class="btn btn-info">Details</button></a>
+                </td> 
+                <td style="text-align:center">
+                     <a href="{{ path('app_proformat_article_envoyer', {'id_fournisseur': fournisseur.getId() }) }}"><button class="btn btn-info">Envoyer</button></a>
                 </td>
             </tr>
         {% else %}

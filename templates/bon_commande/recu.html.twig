@@ -33,7 +33,7 @@
                     <a href="{{ path('app_demande_departement_detail', {'id': demande.article.getId() }) }}"><button class="btn btn-info">Details</button></a>
                 </td> #}
                 <td style="text-align:center">
-                     <a href="{{ path('app_proformat_article_traiter', {'id_fournisseur': fournisseur.getId() }) }}"><button class="btn btn-info">Details</button></a>
+                     <a href="{{ path('app_bon_commande_liste', {'id_fournisseur': fournisseur.getId() }) }}"><button class="btn btn-info">Details</button></a>
                       <a href="{{ path('app_bon_commande_new', {'id_fournisseur': fournisseur.getId() }) }}"><button class="btn btn-info">Traiter</button></a>
                 </td>
             </tr>

@@ -9,32 +9,33 @@
 <div class="col-md-9">
 <div class="card">
 <div class="card-header">
-    <h1>Liste bon commande envoyées</h1>
+    <h1>Details de la commande</h1>
 </div>
 {% block body %}
 
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Bon Commande</th>
-                <th>Fournisseur</th>
-                <th>Date d'envoie</th>
-                <th>Date de livraison</th>
-                <th>PDF</th>
+                {# <th>Bon Commande</th>
+                <th>Fournisseur</th> #}
+                <th>Article/th>
+                <th> PU</th>
+                <th>Quantite Total</th>
+                <th> Montant Total</th>
 
                 {# <th colspan="3" style="text-align:center">Actions</th> #}
             </tr>
         </thead>
         <tbody>
-        {% for bonCommande in bonCommandes %}
+        {% for proformat in proformats %}
             <tr>
-                <td>{{ bonCommande.getId() }}</td>
-                <td>{{ bonCommande.getFournisseur().getDesFournisseur() }}</td>
-                <td>{{ bonCommande.getDateEnvoi()|date('Y-m-d')  }}</td>
-                <td>{{ bonCommande.getDateLivraison()|date('Y-m-d')  }}</td>
-               <td style="text-align:center">
+                <td>{{ proformat.getDemande().getArticle().getDesArticle() }}</td>
+                <td>{{ proformat.getPrixActuel() }}</td>
+                <td>{{ proformat.getDemande().getQuantiteTotal()  }}</td>
+                <td>{{ proformat.getMontantTotal() }} MGA</td>
+               {# <td style="text-align:center">
                     <a href="{{ path('app_bon_commande_pdf', {'id': bonCommande.getId()}) }}"><button class="btn btn-info">Voir</button></a>
-                </td>
+                </td> #}
                 {#  <td style="text-align:center">
                     <a href="{{ path('app_fournisseur_show', {'id': fournisseur.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
                 </td>
@@ -50,7 +51,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_fournisseur_new') }}"><button class="btn btn-primary">Create new</button></a>
+    <a href="{{ path('app_bon_commande_recu') }}"><button class="btn btn-primary">Retour</button></a>
 {% endblock %}
 
 </div>

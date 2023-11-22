@@ -27,6 +27,8 @@ class ProformatArticle
     #[ORM\Column]
     private ?int $statut = null;
 
+    private ?float $prixActuel; 
+
     /**
      * get les proformats envoyés
      */
@@ -107,6 +109,21 @@ class ProformatArticle
         $row = $stmt ->fetchAssociative();
         $id = $row['id'];
         return $id;
+    }
+    public function getMontantTotal() : ?float {
+        $qte = $this -> getDemande() -> getQuantiteTotal();
+        return $qte * $this -> getPrixActuel();
+    }
+    public function getPrixActuel(): ?int
+    {
+        return $this->prixActuel;
+    }
+
+    public function setPrixActuel(float $prixActuel): static
+    {
+        $this->prixActuel = $prixActuel;
+
+        return $this;
     }
     public function getId(): ?int
     {

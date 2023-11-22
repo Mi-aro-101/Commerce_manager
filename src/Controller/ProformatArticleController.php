@@ -29,9 +29,10 @@ class ProformatArticleController extends AbstractController
 
         $proformatArticle = new ProformatArticle();
         $proformatArticle -> sendProformat($connection,$id_fournisseur,$proformatArticleRepository);
-        return $this->render('proformat_article/ok.html.twig', [
-            // 'proformats' => $proformatArticle -> getProformatNotSend($connection,$id_fournisseur,$proformatArticleRepository)
-        ]);
+        // return $this->render('proformat_article/ok.html.twig', [
+        //     // 'proformats' => $proformatArticle -> getProformatNotSend($connection,$id_fournisseur,$proformatArticleRepository)
+        // ]);
+        return $this->redirectToRoute('app_proformat_article_envoyer', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/commander', name: 'app_proformat_article_commander', methods: ['GET'])]
@@ -62,9 +63,10 @@ class ProformatArticleController extends AbstractController
 
         }
 
-        return $this->render('proformat_article/index.html.twig', [
-            'proformat_articles' => $proformatArticleRepository->findAll(),
-        ]);
+        // return $this->render('proformat_article/index.html.twig', [
+        //     'proformat_articles' => $proformatArticleRepository->findAll(),
+        // ]);
+        return $this->redirectToRoute('app_demande_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/', name: 'app_proformat_article_index', methods: ['GET'])]
