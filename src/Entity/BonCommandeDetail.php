@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BonCommandeDetailRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BonCommandeDetailRepository::class)]
@@ -21,6 +22,15 @@ class BonCommandeDetail
     #[ORM\JoinColumn(nullable: false)]
     private ?ProformatArticle $proformatArticle = null;
 
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    private ?string $prixActuel = null;
+
+    public function montantTotal() {
+        $qte_total = $this -> getProformatArticle()->getDemande()->getQuantiteTotal();
+        $prix = $this -> getPrixActuel();
+        return $qte_total * $prix;
+    }
+    
     public function getSequenceBonCommandeDetail($connexion): ?int {
         $query = " select nextval('bon_commande_detail_id_seq') as id";
         $stmt = $connexion->prepare($query);
@@ -61,6 +71,18 @@ class BonCommandeDetail
     public function setProformatArticle(?ProformatArticle $proformatArticle): static
     {
         $this->proformatArticle = $proformatArticle;
+
+        return $this;
+    }
+
+    public function getPrixActuel(): ?string
+    {
+        return $this->prixActuel;
+    }
+
+    public function setPrixActuel(string $prixActuel): static
+    {
+        $this->prixActuel = $prixActuel;
 
         return $this;
     }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Resume</title>
+</head>
+<body>
+    <div style="display: block;width: 700px;">
+        <div style= "width: 250px;" >
+            Fournisseur: {{ bonCommande.getFournisseur().getDesFournisseur() }}
+            </br>
+            Date envoie: {{bonCommande.getDateEnvoi()|date('Y-m-d') }}
+            </br>
+             Date de livraison: {{bonCommande.getDateLivraison()|date('Y-m-d') }}
+            </br>
+            Mode de paiement : {{ bonCommande.getFournisseur().getModePaiment().getDesModepaiment }}
+            </br>
+    </div>
+    <div>
+        <table width="100%" border="1">
+            <tr>
+                <th width="45%">Article</th>
+                <th>PU</th>
+                <th width="20%">Quantite</th>
+                <th width="20%">Montant</th>
+            </tr>
+            {% for bonCommandeD in bonCommande.getBonCommandeDetails() %}
+           <tr>
+               <td>{{ bonCommandeD.getProformatArticle().getDemande().getArticle().getDesArticle() }}</td> 
+               <td>{{ bonCommandeD.getPrixActuel() }} MGA</td> 
+               <td> {{ bonCommandeD.getProformatArticle().getDemande().getQuantiteTotal() }} </td> 
+               <td> {{ bonCommandeD.montantTotal|number_format(2,'.',' ') }} MGA</td> 
+           </tr>  
+        {% endfor %}
+            <tr>    
+                 <th colspan="3" style="text-align:center">Total HT</th>
+                 <th> {{bonCommande.getMontantTotalHT|number_format(2,'.',' ') }} </th>
+            <tr> 
+             <tr>    
+                 <th colspan="3" style="text-align:center">Total TVA 20 % </th>
+                 <th> {{bonCommande.getMontantTotalTVA|number_format(2,'.',' ') }} </th>
+
+            <tr>  
+            <tr>    
+                 <th colspan="3" style="text-align:center">Total TTC</th>
+                 <th> {{bonCommande.getMontantTotal|number_format(2,'.',' ') }}</th>
+
+            <tr>
+        </table>
+    </div>
+</body>
+</html>

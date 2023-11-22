@@ -7,10 +7,12 @@ use App\Entity\BonCommandeDetail;
 use App\Entity\Fournisseur;
 use App\Entity\ProformatArticle;
 use App\Form\BonCommandeType;
+use App\Repository\ArticleFournisseurRepository;
 use App\Repository\BonCommandeRepository;
 use App\Repository\FournisseurRepository;
 use App\Repository\ProformatArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Dompdf\Dompdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +21,25 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/bon/commande')]
 class BonCommandeController extends AbstractController
 {
+    #[Route('/pdf', name: 'app_bon_commande_pdf', methods: ['GET'])]
+    public function pdf(BonCommandeRepository $bonCommandeRepository): Response
+    {
+        $id = $_GET['id'];
+        $bonCommande = $bonCommandeRepository->find($id);
+
+        // $data = $employe -> getFichePaie();
+        $html =  $this->renderView('pdf_generator/bonCommande.html.twig',['bonCommande' => $bonCommande]);
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+
+        return new Response (
+            $dompdf->stream('resume', ["Attachment" => false]),
+            Response::HTTP_OK,
+            ['Content-Type' => 'application/pdf']
+        );
+    }
+
     #[Route('/traiter', name: 'app_bon_commande_traiter', methods: ['GET'])]
     public function traiter(Request $request,EntityManagerInterface $entityManager,FournisseurRepository $fournisseurRepository,ProformatArticleRepository $proformatArticleRepository): Response
     {
@@ -71,12 +92,12 @@ class BonCommandeController extends AbstractController
     public function index(BonCommandeRepository $bonCommandeRepository): Response
     {
         return $this->render('bon_commande/index.html.twig', [
-            'bon_commandes' => $bonCommandeRepository->findAll(),
+            'bonCommandes' => $bonCommandeRepository->findAll(),
         ]);
     }
 
     #[Route('/new', name: 'app_bon_commande_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,FournisseurRepository $fournisseurRepository,ProformatArticleRepository $proformatArticleRepository): Response
+    public function new(Request $request, ArticleFournisseurRepository $articleFournisseurRepository, EntityManagerInterface $entityManager,FournisseurRepository $fournisseurRepository,ProformatArticleRepository $proformatArticleRepository): Response
     {
        $connection = $entityManager->getConnection();
        $id_fournisseur = $_GET['id_fournisseur'];
@@ -91,11 +112,17 @@ class BonCommandeController extends AbstractController
             $bonCommande -> setFournisseur($fournisseur);
             $entityManager->persist($bonCommande);
             foreach ($proformats as $proformat ) {
+                $article_fournisseur = $articleFournisseurRepository -> findby(
+                    [
+                        'article' => $proformat->getDemande()->getArticle(),
+                        'fournisseur' => $proformat -> getFournisseur()
+                    ]);
                 $proformat -> updradeStatut($connection,20);
                 $detail = new BonCommandeDetail();
                 $detail -> setId($detail -> getSequenceBonCommandeDetail($connection));
                 $detail -> setBonCommande($bonCommande);
                 $detail -> setProformatArticle($proformat);
+                $detail -> setPrixActuel($article_fournisseur[0] ->  getPrixActuel());
                 $entityManager->persist($detail);
                 # code...
             }

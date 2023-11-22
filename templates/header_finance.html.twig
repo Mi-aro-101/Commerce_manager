@@ -111,7 +111,7 @@
             <a href="{{ path('app_annonce') }}" class="nav-link">
               <ion-icon name="cog-sharp"></ion-icon>
               <p>
-                Bon Commande A envoyer
+                Bon Commande
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -119,15 +119,15 @@
               <li class="nav-item">
                 <a href="{{ path('app_bon_commande_recu') }}" class="nav-link {{ app.request.get('_route') == 'app_bon_commande_recu' ? 'active' }}">
                   <ion-icon name="bag-add-sharp"></ion-icon>
-                  <p>Voir</p>
+                  <p>En attente</p>
                 </a>
               </li>
-              {# <li class="nav-item">
-                <a href="{{ path('app_mode_paiment_new') }}" class="nav-link {{ app.request.get('_route') == 'app_mode_paiment_new' ? 'active' }}">
+              <li class="nav-item">
+                <a href="{{ path('app_bon_commande_index') }}" class="nav-link {{ app.request.get('_route') == 'app_bon_commande_index' ? 'active' }}">
                   <ion-icon name="card-sharp"></ion-icon>
-                  <p>Mode de paiment</p>
+                  <p>Envoyées</p>
                 </a>
-              </li> #}
+              </li>
             </ul>
           </li>
 
