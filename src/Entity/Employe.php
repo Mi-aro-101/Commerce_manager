@@ -74,8 +74,8 @@ class Employe
             'cinquante' => $this->getIndice()/1.5,
             'cent' => $this->getIndice()/2.0,
             'nuit' => $this->getIndice()/0.3,
-            'cnaps' => $this->getCnaps(),
-            'osti' => $this->getOsti()
+            'cnaps' => $this->getMontantCnaps(),
+            'osti' => $this->getMontantOsti()
         ];
         return $data;
     }

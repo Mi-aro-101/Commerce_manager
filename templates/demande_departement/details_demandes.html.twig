@@ -10,7 +10,8 @@
 <div class="col-md-9">
 <div class="card">
 <div class="card-header">
-    <h1>Liste des fournisseurs</h1>
+    <h1>Details commandes de l'article</h1>
+        <h2> {{ demandesDepartements[0].getArticle().getDesArticle()}}
 </div>
 
 {% block body %}
@@ -18,22 +19,22 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>QuantiteTotal</th>
-                <th colspan="3" style="text-align:center">Actions</th>
+                <th>Departement</th>
+                <th>Quantite</th>
+                {# <th colspan="3" style="text-align:center">Actions</th> #}
             </tr>
         </thead>
         <tbody>
-        {% for demande in demandes %}
+        {% for demandeDepartement in demandesDepartements %}
             <tr>
-                <td>{{ demande.article.getDesArticle() }}</td>
-                <td>{{ demande.quantiteTotal }}</td>
-                <td style="text-align:center">
+                <td>{{ demandeDepartement.getService().getDesService() }}</td>
+                <td>{{ demandeDepartement.getQuantite() }}</td>
+                {# <td style="text-align:center">
                     <a href="{{ path('app_demande_departement_detail', {'id': demande.article.getId() }) }}"><button class="btn btn-info">Details</button></a>
                 </td>
                 <td style="text-align:center">
                      <a href="{{ path('app_demande_traiter', {'id':  demande.article.getId() }) }}"><button class="btn btn-info">Traiter</button></a>
-                </td>
+                </td> #}
             </tr>
         {% else %}
             <tr>
@@ -42,6 +43,7 @@
         {% endfor %}
         </tbody>
     </table>
+         <a href="{{ path('app_demande_index') }}"><button class="btn btn-info">Retour</button></a>
 {% endblock %}
 
 </div>

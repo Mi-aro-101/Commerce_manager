@@ -142,6 +142,58 @@
             </ul>
           </li>
 
+           <li class="nav-item">
+            <a href="{{ path('app_annonce') }}" class="nav-link">
+              <ion-icon name="cog-sharp"></ion-icon>
+              <p>
+                Liste Demande
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ path('app_demande_index') }}" class="nav-link {{ app.request.get('_route') == 'app_demande_index' ? 'active' }}">
+                  <ion-icon name="bag-add-sharp"></ion-icon>
+                  <p>Voir</p>
+                </a>
+              </li>
+              {# <li class="nav-item">
+                <a href="{{ path('app_mode_paiment_new') }}" class="nav-link {{ app.request.get('_route') == 'app_mode_paiment_new' ? 'active' }}">
+                  <ion-icon name="card-sharp"></ion-icon>
+                  <p>Mode de paiment</p>
+                </a>
+              </li> #}
+            </ul>
+          </li>
+
+
+           <li class="nav-item">
+            <a href="{{ path('app_annonce') }}" class="nav-link">
+              <ion-icon name="cog-sharp"></ion-icon>
+              <p>
+                Bon Commande A envoyer
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ path('app_proformat_article_index') }}" class="nav-link {{ app.request.get('_route') == 'app_proformat_article_index' ? 'active' }}">
+                  <ion-icon name="bag-add-sharp"></ion-icon>
+                  <p>Voir</p>
+                </a>
+              </li>
+              {# <li class="nav-item">
+                <a href="{{ path('app_mode_paiment_new') }}" class="nav-link {{ app.request.get('_route') == 'app_mode_paiment_new' ? 'active' }}">
+                  <ion-icon name="card-sharp"></ion-icon>
+                  <p>Mode de paiment</p>
+                </a>
+              </li> #}
+            </ul>
+          </li>
+
+      </ul>
+        
+
 
       <!-- /.sidebar-menu -->
     </div>

@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Demande;
 use App\Form\DemandeType;
+use App\Repository\ArticleFournisseurRepository;
+use App\Repository\ArticleRepository;
 use App\Repository\DemandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,10 +17,26 @@ use Symfony\Component\Routing\Annotation\Route;
 class DemandeController extends AbstractController
 {
     #[Route('/', name: 'app_demande_index', methods: ['GET'])]
-    public function index(DemandeRepository $demandeRepository): Response
+    public function index(DemandeRepository $demandeRepository,EntityManagerInterface $entityManager,ArticleRepository $articleRepository): Response
     {
+        $connection = $entityManager->getConnection();
+        $demande = new Demande();
         return $this->render('demande/index.html.twig', [
-            'demandes' => $demandeRepository->findAll(),
+            'demandes' => $demande -> getArticlesNonTraites($connection,$articleRepository),
+        ]);
+    }
+    
+    #[Route('/traiter', name: 'app_demande_traiter', methods: ['GET'])]
+    public function traiter(DemandeRepository $demandeRepository,EntityManagerInterface $entityManager,ArticleRepository $articleRepository, ArticleFournisseurRepository $articleFournisseurRepository): Response
+    {
+        $id_article = $_GET['id'];
+        $connection = $entityManager->getConnection();
+        $demande = new Demande();
+        $demande =  $demande -> getArticleNonTraite($connection,$id_article,$articleRepository);
+        $article = $articleRepository -> find($id_article);
+        return $this->render('demande/listefournisseur.html.twig', [
+            'demande' => $demande -> getArticleNonTraite($connection,$id_article,$articleRepository),
+            'articleFournisseurs' => $articleFournisseurRepository->findByArticle($article),
         ]);
     }
 

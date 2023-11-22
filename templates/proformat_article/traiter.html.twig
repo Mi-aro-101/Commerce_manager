@@ -1,0 +1,57 @@
+{% include 'header_achat.html.twig' %}
+
+{% block title %}Demandes non traites{% endblock %}
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-9">
+<div class="card">
+<div class="card-header">
+    <h1>Bon commande a envoyer au fournisseur : {{ proformats[0].getFournisseur().getDesFournisseur }} </h1>
+</div>
+
+{% block body %}
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Article</th>
+                <th>Quantite</th>
+                {# <th colspan="3" style="text-align:center">Actions</th> #}
+            </tr>
+        </thead>
+        <tbody>
+        {% for proformat in proformats %}
+            <tr>
+                <td>{{ proformat.getDemande().getArticle().getDesArticle() }}</td>
+                {# <td>{{ demande.quantiteTotal }}</td> #}
+                {# <td style="text-align:center">
+                    <a href="{{ path('app_demande_departement_detail', {'id': demande.article.getId() }) }}"><button class="btn btn-info">Details</button></a>
+                </td> #}
+                {# <td style="text-align:center">
+                     <a href="{{ path('app_proformat_article_traiter', {'id_fournisseur': fournisseur.getId() }) }}"><button class="btn btn-info">Details</button></a>
+                </td> #}
+                <td>{{ proformat.getDemande().getQuantiteTotal() }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Pas de resultats</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+     <a href="{{ path('app_proformat_article_envoyer', {'id_fournisseur': proformats[0].getFournisseur().getId() }) }}"><button class="btn btn-info">Envoyer departement finance</button></a>
+{% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

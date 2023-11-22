@@ -24,6 +24,8 @@ class ArticleFournisseur
     #[ORM\Column]
     private ?float $prix_actuel = null;
 
+    
+    
     public function getId(): ?int
     {
         return $this->id;

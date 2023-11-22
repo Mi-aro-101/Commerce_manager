@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DemandeDepartementRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -30,12 +32,53 @@ class DemandeDepartement
 
 
     #[ORM\ManyToOne(inversedBy: 'demandeDepartements')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Demande $demande = null;
+    
+    #[ORM\ManyToOne(inversedBy: 'demandeDepartements')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Service $service = null;
+
+    public function updateStatutAndDemande($connexion,$demande) : void {
+        // $this -> setStatut(10);
+        // $this -> setDemande($demande);
+        $query = "update demande_departement set statut=10, demande_id = %s where id = %s";
+        $query = sprintf($query,$demande->getId(),$this -> getId());
+        $stmt = $connexion->prepare($query);
+        $stmt = $stmt->executeQuery();
+    }
+    public function getArticleNonTraiteDetails($connexion,$id_article,$articleRepository,$serviceRepository): Collection {
+        $query = "select * from v_get_articles_non_traite where article_id = '%s'";
+        $query = sprintf($query,$id_article);
+        $stmt = $connexion->prepare($query);
+        $stmt = $stmt->executeQuery();
+        $demandesDepartement = new ArrayCollection();
+        while($row = $stmt->fetchAssociative()){
+            $demandeDepartement = new DemandeDepartement();
+            $demandeDepartement -> setId($row['id']);
+            $demandeDepartement -> setArticle($articleRepository -> find($row['article_id']));
+            $demandeDepartement -> setService($serviceRepository->find($row['service_id']));
+
+            $date = \DateTime::createFromFormat('Y-m-d',  $row['date']); 
+            $demandeDepartement -> setDate($date);
+
+            $demandeDepartement -> setQuantite($row['quantite']);
+
+            $demandesDepartement -> add($demandeDepartement);
+        }
+        return $demandesDepartement;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getArticle(): ?Article
@@ -95,6 +138,17 @@ class DemandeDepartement
     public function setService(?Service $service): static
     {
         $this->service = $service;
+
+        return $this;
+    }
+    public function getDemande(): ?Demande
+    {
+        return $this->demande;
+    }
+
+    public function setDemande(?Demande $Demande): static
+    {
+        $this->demande = $Demande;
 
         return $this;
     }
