@@ -31,15 +31,18 @@ class DemandeDepartementController extends AbstractController
         $demandeDepartement =  $demandeDepartement -> getArticleNonTraiteDetails($connection,$id_article,$articleRepository,$serviceRepository);
         // $article = $articleRepository -> find($id_article);
         return $this->render('demande_departement/details_demandes.html.twig', [
+
             'demandesDepartements' => $demandeDepartement,
         ]);
     }
     
-    #[Route('/', name: 'app_demande_departement_index', methods: ['GET'])]
-    public function index(DemandeDepartementRepository $demandeDepartementRepository): Response
+    #[Route('/liste', name: 'app_demande_departement_liste', methods: ['GET'])]
+    public function index(DemandeDepartementRepository $demandeDepartementRepository, UtilisateurRepository $utilisateurRepository): Response
     {
+        $user = $utilisateurRepository-> find($this->getUser());
+        $departement = $user->getEmploye()->getService();
         return $this->render('demande_departement/index.html.twig', [
-            'demande_departements' => $demandeDepartementRepository->findAll(),
+            'demande_departements' => $demandeDepartementRepository->findBy(['service' => $departement]),
         ]);
     }
 

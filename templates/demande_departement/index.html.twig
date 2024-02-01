@@ -1,31 +1,44 @@
-{% extends 'base.html.twig' %}
+{% include 'header_departement.html.twig' %}
 
-{% block title %}DemandeDepartement index{% endblock %}
+{% block title %}Fournisseur{% endblock %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
 
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-9">
+<div class="card">
+<div class="card-header">
+    <h1>Demande en cours de traitement</h1>
+</div>
 {% block body %}
-    <h1>DemandeDepartement index</h1>
 
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Article</th>
                 <th>Quantite</th>
                 <th>Date</th>
-                <th>Statut</th>
-                <th>actions</th>
+                {# <th>Statut</th> #}
+                {# <th>actions</th> #}
             </tr>
         </thead>
         <tbody>
         {% for demande_departement in demande_departements %}
             <tr>
-                <td>{{ demande_departement.id }}</td>
+                <td>{{ demande_departement.getArticle().getDesArticle() }}</td>
                 <td>{{ demande_departement.quantite }}</td>
                 <td>{{ demande_departement.date ? demande_departement.date|date('Y-m-d') : '' }}</td>
-                <td>{{ demande_departement.statut }}</td>
-                <td>
-                    <a href="{{ path('app_demande_departement_show', {'id': demande_departement.id}) }}">show</a>
-                    <a href="{{ path('app_demande_departement_edit', {'id': demande_departement.id}) }}">edit</a>
+                {# <td>{{ demande_departement.statut }}</td> #}
+                {# <td style="text-align:center">
+                    <a href="{{ path('app_fournisseur_article_view', {'id': fournisseur.getId()}) }}"><button class="btn btn-info">Voir les articles</button></a>
                 </td>
+                <td style="text-align:center">
+                    <a href="{{ path('app_fournisseur_show', {'id': fournisseur.getId()}) }}"><button class="btn btn-success"><i class="nav-icon fas fa-file"></i></button></a>
+                </td>
+                <td style="text-align:center">
+                    <a href="{{ path('app_fournisseur_edit', {'id': fournisseur.getId()}) }}"><button class="btn btn-warning"><i class="nav-icon fas fa-edit"></i></button></a>
+                </td> #}
             </tr>
         {% else %}
             <tr>
@@ -35,5 +48,14 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_demande_departement_new') }}">Create new</a>
+    <a href="{{ path('app_fournisseur_new') }}"><button class="btn btn-primary">Create new</button></a>
 {% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}
