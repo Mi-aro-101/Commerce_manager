@@ -1,0 +1,61 @@
+{% include 'header_achat.html.twig' %}
+
+<style>
+    #example1{
+        margin-right: auto;
+        margin-left: auto;
+    }
+</style>
+
+{% block title %}Fournisseur{% endblock %}
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-10">
+<div class="card">
+<div class="card-header">
+    <h1>Liste de immobilisations operationnelles</h1>
+</div>
+
+    <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+        <thead>
+            <tr role="row">
+                <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">
+                    Identifiant immobilisation
+                </th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                    Article
+                </th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">
+                    Taux d'ammortissement
+                </th>
+                <th  style="text-align:center" class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
+                    Voir
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for immobilisation in immobilisations %}
+
+                <tr class="odd">
+                    <td class="dtr-control sorting_1" tabindex="0">{{ immobilisation.getId() }}</td>
+                    <td>{{ immobilisation.getArticle().getDesArticle() }}</td>
+                    <td style="text-align:right">{{ immobilisation.getTauxAmortissement()|number_format('2', '.', ',') }} %</td>
+                    <td style="text-align:center">
+                        <a href="{{ path('app_immobilisation_details_new', {'id': immobilisation.getId()}) }}"><button class="btn btn-info">Valeur actuelle</button></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

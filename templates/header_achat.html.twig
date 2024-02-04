@@ -201,11 +201,37 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ path('app_bon_commande_attente_livraison') }}" class="nav-link {{ app.request.get('_route') == 'app_proformat_article_index' ? 'active' }}">
+                <a href="{{ path('app_bon_commande_attente_livraison') }}" class="nav-link {{ app.request.get('_route') == 'app_bon_commande_attente_livraison' ? 'active' }}">
                   <ion-icon name="bag-add-sharp"></ion-icon>
                   <p>En attente de livraison</p>
                 </a>
               </li>
+
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ path('app_annonce') }}" class="nav-link">
+              <ion-icon name="cog-sharp"></ion-icon>
+              <p>
+                Immobilisations
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ path('app_immobilisation_traite') }}" class="nav-link {{ app.request.get('_route') == 'app_immobilisation_traite' ? 'active' }}">
+                  <ion-icon name="bag-add-sharp"></ion-icon>
+                  <p>Traite</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ path('app_immobilisation_non_traite') }}" class="nav-link {{ app.request.get('_route') == 'app_immobilisation_non_traite' ? 'active' }}">
+                  <ion-icon name="bag-add-sharp"></ion-icon>
+                  <p>Non traite</p>
+                </a>
+              </li>
+
 
             </ul>
           </li>

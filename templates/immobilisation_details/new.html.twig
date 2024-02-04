@@ -1,0 +1,67 @@
+{% include 'header_achat.html.twig' %}
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-6">
+<div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title"> {{ immobilisation.getId() }} : {{ immobilisation.getArticle().getDesArticle() }} </h3>
+        </div>
+        <div class="card-body">
+
+            {% block body %}
+
+            {{ form_start(form) }}
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label> Etat de reception </label>
+                            <select name="{{ field_name(form.etatReception) }}" class="form-control">
+                            {% for label, value in field_choices(form.etatReception) %}
+                                <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        {{ form_row(form.date_sortie,
+                            {'attr': {'class':'form-control', 'id': 'exampleInputPassword1'}
+                        }) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label> Description </label>
+                    <textarea name="{{ field_name(form.description) }}" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+                <a href="{{ path('app_article_fournisseur_index') }}"><button  type="button" class="btn btn-info">Voir</button></a>
+            </div>
+
+                {{ form_end(form) }}
+
+                {% endblock %}
+        </div>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}
+

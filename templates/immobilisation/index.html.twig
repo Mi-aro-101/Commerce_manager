@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Immobilisation index{% endblock %}
+
+{% block body %}
+    <h1>Immobilisation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Etat_avance</th>
+                <th>Taux_amortissement</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for immobilisation in immobilisations %}
+            <tr>
+                <td>{{ immobilisation.id }}</td>
+                <td>{{ immobilisation.etatAvance }}</td>
+                <td>{{ immobilisation.tauxAmortissement }}</td>
+                <td>
+                    <a href="{{ path('app_immobilisation_show', {'id': immobilisation.id}) }}">show</a>
+                    <a href="{{ path('app_immobilisation_edit', {'id': immobilisation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_immobilisation_new') }}">Create new</a>
+{% endblock %}

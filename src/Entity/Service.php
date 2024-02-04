@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\ArticleRepository;
+use App\Repository\BonReceptionRepository;
 use App\Repository\ServiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
@@ -139,5 +142,44 @@ class Service
         }
 
         return $this;
+    }
+
+    public function getImmobilisationDemandes(EntityManagerInterface $entityManager, ArticleRepository $articleRepository, BonReceptionRepository $bonReceptionRepository) : Collection
+    {
+        $connextion = $entityManager->getConnection();
+        $response = new ArrayCollection();
+
+        $articlesAsString = $this->convertDemandeArticleToString();
+
+        $query = "SELECT * FROM v_immobilisation_traite where article_id in ('".$articlesAsString."') order by id";
+        $statement = $connextion->prepare($query);
+        $stmt = $statement->executeQuery();
+
+        while($row = $stmt->fetchAssociative()){
+            $immobilisation = new Immobilisation();
+
+            $immobilisation->setId($row["id"]);
+            $immobilisation->setArticle($articleRepository->find($row["article_id"]));
+            $immobilisation->setBonReception($bonReceptionRepository->find($row["bon_reception_id"]));
+            $immobilisation->setEtatAvance($row["etat_avance"]);
+            $immobilisation->setTauxAmortissement($row["taux_amortissement"]);
+
+            $response->add($immobilisation);
+        }
+
+        return $response;
+    }
+
+    public function convertDemandeArticleToString() : string
+    {
+        $response = "";
+
+        foreach($this->getDemandeDepartements() as $demande){
+            $response = $response.$demande->getArticle()->getId().",";
+        }
+
+        $response = substr_replace($response ,"", -1);
+
+        return $response;
     }
 }

@@ -8,6 +8,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Utilisateur;
+use App\Repository\ImmobilisationRepository;
+use App\Repository\UtilisateurRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[ORM\Entity(repositoryClass: EmployeRepository::class)]
 class Employe
@@ -22,7 +25,7 @@ class Employe
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_embauche = null;
+    private $date_embauche = null;
 
     #[ORM\Column]
     private ?bool $cnaps = null;
@@ -43,6 +46,7 @@ class Employe
     #[ORM\OneToMany(mappedBy: 'employe', targetEntity: Conge::class)]
     private Collection $conges;
 
+    private Collection $employes;
 
     #[ORM\Column]
     private ?int $statut = null;
@@ -96,7 +100,7 @@ class Employe
      */
     public function getMontantOsti(){
         $cnaps = ($this->getSalaire())/100;
-    
+
         return $cnaps;
     }
 
@@ -111,6 +115,9 @@ class Employe
     #[ORM\OneToMany(mappedBy: 'employe', targetEntity: HeureSuplementaire::class)]
     private Collection $heuresuplementaire;
 
+    #[ORM\OneToMany(mappedBy: 'employe', targetEntity: ImmobilisationPermission::class)]
+    private Collection $immobilisationPermissions;
+
 
 
     public function __construct()
@@ -118,11 +125,19 @@ class Employe
         $this->historiqueSalaires = new ArrayCollection();
         $this->conges = new ArrayCollection();
         $this->heuresuplementaire = new ArrayCollection();
+        $this->immobilisationPermissions = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id) : static
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getUtilisateur(): ?Utilisateur
@@ -137,12 +152,12 @@ class Employe
         return $this;
     }
 
-    public function getDateEmbauche(): ?\DateTimeInterface
+    public function getDateEmbauche()
     {
         return $this->date_embauche;
     }
 
-    public function setDateEmbauche(\DateTimeInterface $date_embauche): static
+    public function setDateEmbauche($date_embauche): static
     {
         $this->date_embauche = $date_embauche;
 
@@ -334,16 +349,105 @@ class Employe
         return $this;
     }
 
-    public function getDepartement(): ?Departement
+    /**
+     * @return Collection<int, ImmobilisationPermission>
+     */
+    public function getImmobilisationPermissions(): Collection
     {
-        return $this->departement;
+        return $this->immobilisationPermissions;
     }
 
-    public function setDepartement(?Departement $departement): static
+    public function addImmobilisationPermission(ImmobilisationPermission $immobilisationPermission): static
     {
-        $this->departement = $departement;
+        if (!$this->immobilisationPermissions->contains($immobilisationPermission)) {
+            $this->immobilisationPermissions->add($immobilisationPermission);
+            $immobilisationPermission->setEmploye($this);
+        }
 
         return $this;
+    }
+
+    public function removeImmobilisationPermission(ImmobilisationPermission $immobilisationPermission): static
+    {
+        if ($this->immobilisationPermissions->removeElement($immobilisationPermission)) {
+            // set the owning side to null (unless already changed)
+            if ($immobilisationPermission->getEmploye() === $this) {
+                $immobilisationPermission->setEmploye(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEmployes(EntityManagerInterface $entityManager, UtilisateurRepository $utilisateurRepository) : Collection
+    {
+
+        $response = new ArrayCollection();
+
+        $connection = $entityManager->getConnection();
+        $query = "SELECT * FROM employe WHERE superieur_id = ".$this->getId()." order by id";
+        $statment = $connection->prepare($query);
+        $stmt = $statment->executeQuery();
+
+        while($row = $stmt->fetchAssociative()){
+
+            $employe = new Employe();
+            $employe->setId($row["id"]);
+            $employe->setUtilisateur($utilisateurRepository->find($row["utilisateur_id"]));
+            $employe->setDateEmbauche($row["date_embauche"]);
+            $employe->setCnaps($row["cnaps"]);
+            $employe->setOsti($row["osti"]);
+            $employe->setSalaire($row["salaire"]);
+            $employe->setService($this->getService());
+            $employe->setStatut($row["statut"]);
+            $employe->setPoste($row["poste"]);
+
+            $response->add($employe);
+
+        }
+
+        return $response;
+    }
+
+    public function getDemandeImmobilisationEmployee(EntityManagerInterface $entityManager, ImmobilisationRepository $immobilisationRepository, UtilisateurRepository $utilisateurRepository, EmployeRepository $employeRepository) : Collection
+    {
+        $response = new ArrayCollection();
+        $connection = $entityManager->getConnection();
+        $employes = $this->getEmployes($entityManager, $utilisateurRepository);
+        $i = 0;
+        $employeIdAsString = $this->convertDemandeEmployeToString($employes);
+        $query = "SELECT * FROM immobilisation_permission WHERE employe_id in (".$employeIdAsString.") Order by employe_id";
+        $statment = $connection->prepare($query);
+        $stmt = $statment->executeQuery();
+        while($row = $stmt->fetchAssociative()){
+
+            $immobilisationPermission = new ImmobilisationPermission();
+
+            $immobilisationPermission->setId($row["id"]);
+            $immobilisationPermission->setImmobilisation($immobilisationRepository->find($row["immobilisation_id"]));
+            $immobilisationPermission->setDateDebut(($row["date_debut"]));
+            $immobilisationPermission->setDateFin($row["date_fin"]);
+            $immobilisationPermission->setEtat($row["etat"]);
+            $immobilisationPermission->setEmploye($employeRepository->find($employes->get($i)->getId()));
+
+            $response->add($immobilisationPermission);
+            $i++;
+        }
+
+        return $response;
+    }
+
+    public function convertDemandeEmployeToString(Collection $employes) : string
+    {
+        $response = "";
+
+        foreach($employes as $employee){
+            $response = $response.$employee->getId().",";
+        }
+
+        $response = substr_replace($response ,"", -1);
+
+        return $response;
     }
 
 }
