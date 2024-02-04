@@ -25,7 +25,7 @@ class DemandeController extends AbstractController
             'demandes' => $demande -> getArticlesNonTraites($connection,$articleRepository),
         ]);
     }
-    
+
     #[Route('/traiter', name: 'app_demande_traiter', methods: ['GET'])]
     public function traiter(DemandeRepository $demandeRepository,EntityManagerInterface $entityManager,ArticleRepository $articleRepository, ArticleFournisseurRepository $articleFournisseurRepository): Response
     {

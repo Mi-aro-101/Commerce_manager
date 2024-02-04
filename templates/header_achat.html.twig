@@ -191,8 +191,27 @@
             </ul>
           </li>
 
+          <li class="nav-item">
+            <a href="{{ path('app_annonce') }}" class="nav-link">
+              <ion-icon name="cog-sharp"></ion-icon>
+              <p>
+                Bon de commande
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ path('app_bon_commande_attente_livraison') }}" class="nav-link {{ app.request.get('_route') == 'app_proformat_article_index' ? 'active' }}">
+                  <ion-icon name="bag-add-sharp"></ion-icon>
+                  <p>En attente de livraison</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
       </ul>
-        
+
 
 
       <!-- /.sidebar-menu -->

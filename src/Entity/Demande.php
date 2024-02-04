@@ -30,7 +30,7 @@ class Demande
     {
         $this->demandeDepartement = new ArrayCollection();
     }
- 
+
     public function getPrixTotal() {
         return $this-> getQuantiteTotal() * ($this->getArticle);
     }
@@ -58,13 +58,15 @@ class Demande
         $stmt = $connexion->prepare($query);
         $stmt = $stmt->executeQuery();
         $demande = new Demande();
+        $results = new ArrayCollection();
         while ($row = $stmt->fetchAssociative()) {
             $demande -> setQuantiteTotal($row['quantite_total']);
             $demande -> setArticle($articleRepository->find($row['article_id']));
+            $results->add($demande);
         }
         return $demande;
     }
-    
+
     public function getSequenceDemande($connexion,$articleRepository): ?int {
         $query = " select nextval('demande_id_seq') as id";
         $stmt = $connexion->prepare($query);

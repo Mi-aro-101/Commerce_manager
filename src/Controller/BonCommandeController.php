@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\BonCommande;
 use App\Entity\BonCommandeDetail;
+use App\Entity\BonLivraison;
 use App\Entity\Fournisseur;
 use App\Entity\ProformatArticle;
 use App\Form\BonCommandeType;
@@ -27,7 +28,6 @@ class BonCommandeController extends AbstractController
         $id = $_GET['id'];
         $bonCommande = $bonCommandeRepository->find($id);
 
-        // $data = $employe -> getFichePaie();
         $html =  $this->renderView('pdf_generator/bonCommande.html.twig',['bonCommande' => $bonCommande]);
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);
@@ -40,42 +40,6 @@ class BonCommandeController extends AbstractController
         );
     }
 
-    // #[Route('/traiter', name: 'app_bon_commande_traiter', methods: ['GET'])]
-    // public function traiter(Request $request,EntityManagerInterface $entityManager,FournisseurRepository $fournisseurRepository,ProformatArticleRepository $proformatArticleRepository): Response
-    // {
-    //     // $connection = $entityManager->getConnection();
-    //     $id_fournisseur = $_GET['id_fournisseur'];
-    //     $fournisseur = $fournisseurRepository -> find($id_fournisseur);
-    //     // $proformatt = new ProformatArticle();
-    //     // $proformats = $proformatt -> receiveProformat($connection,$id_fournisseur,$proformatArticleRepository);
-    //     $bonCommande = new BonCommande();
-    //     $form = $this->createForm(BonCommandeType::class, $bonCommande);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $bonCommande -> setFournisseur($fournisseur);
-    //         $entityManager->persist($bonCommande);
-    //         // foreach ($proformats as $proformat ) {
-    //         //     $proformat -> updradeStatut($connection,20);
-    //         //     $detail = new BonCommandeDetail();
-    //         //     $detail -> setId($detail -> getSequenceBonCommandeDetail($connection));
-    //         //     $detail -> setBonCommande($bonCommande);
-    //         //     $detail -> setProformatArticle($proformat);
-    //         //     $entityManager->persist($detail);
-    //         //     # code...
-    //         // }
-
-    //         $entityManager->flush();
-
-    //         return $this->redirectToRoute('app_bon_commande_index', [], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->render('bon_commande/new.html.twig', [
-    //         'bon_commande' => $bonCommande,
-    //         'form' => $form,
-    //     ]);
-    // }
-    
     #[Route('/recu', name: 'app_bon_commande_recu', methods: ['GET'])]
     public function recu(EntityManagerInterface $entityManager, FournisseurRepository $fournisseurRepository,BonCommandeRepository $bonCommandeRepository): Response
     {
@@ -92,7 +56,6 @@ class BonCommandeController extends AbstractController
     {
         $connection = $entityManager->getConnection();
         $id_fournisseur = $_GET['id_fournisseur'];
-        $fournisseur = $fournisseurRepository -> find($id_fournisseur);
         $proformatt = new ProformatArticle();
         $proformats = $proformatt -> receiveProformat($connection,$id_fournisseur,$proformatArticleRepository);
         $total = 0 ;
@@ -113,7 +76,11 @@ class BonCommandeController extends AbstractController
     public function index(BonCommandeRepository $bonCommandeRepository): Response
     {
         return $this->render('bon_commande/index.html.twig', [
-            'bonCommandes' => $bonCommandeRepository->findAll(),
+            'bonCommandes' => $bonCommandeRepository->findBy(
+                [
+                    'statut' => strval(5)
+                ]
+            ),
         ]);
     }
 
@@ -131,6 +98,8 @@ class BonCommandeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $bonCommande -> setFournisseur($fournisseur);
+            // Statut = 5 -> bon de commande envoyee
+            $bonCommande -> setStatut(5);
             $entityManager->persist($bonCommande);
             foreach ($proformats as $proformat ) {
                 $article_fournisseur = $articleFournisseurRepository -> findby(
@@ -193,5 +162,28 @@ class BonCommandeController extends AbstractController
         }
 
         return $this->redirectToRoute('app_bon_commande_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/livraison/attente', name:'app_bon_commande_attente_livraison')]
+    public function enAttenteLivraison(BonCommandeRepository $bonCommandeRepository){
+        return $this->render('bon_commande/attente.html.twig', [
+            'bonCommandes' => $bonCommandeRepository->findBy(
+                [
+                    'statut' => strval(5)
+                ]
+            )
+        ]);
+    }
+
+    #[Route('/livraison/confirmer/{id}', name:'app_bon_commande_livrer')]
+    public function confirmerLivraison(BonCommande $bonCommande, ArticleFournisseurRepository $articleFournisseurRepository){
+        $bonLivraison = new BonLivraison();
+        $bonLivraison->setBonCommande($bonCommande);
+        $bonLivraison->setDateLivraison($bonCommande->getDateLivraison());
+
+        return $this->render('bon_commande/confirmation_livraison.html.twig',[
+            'bonCommande' => $bonCommande,
+            'bonLivraison' => $bonLivraison
+        ]);
     }
 }

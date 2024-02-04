@@ -5,6 +5,7 @@ insert into employe values
 (4,4,null,'2022-03-01',true,true,3500000,4,5,'Directeur des achats'),
 (5,5,null,'2022-03-01',true,true,3500000,2,1,'Chef Departement informatique'),
 (6,6,null,'2022-03-01',true,true,3500000,1,5,'Chef Service Securite');
+(7,7,null,'2020-03-03', true, true, 4500000, 5, 5, 'Cheffe de departement financer');
 
 select article_id, sum(quantite) from demande_departement where statut = 1 
 group by article_id;

@@ -1,0 +1,1 @@
+update utilisateur set role='["ROLE_FINANCE"]' where id = 7

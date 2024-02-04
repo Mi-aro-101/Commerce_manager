@@ -1,0 +1,1 @@
+insert into service values(5,'Finance');

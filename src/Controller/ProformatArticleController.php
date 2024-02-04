@@ -21,18 +21,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProformatArticleController extends AbstractController
 {
 
-    #[Route('/envoyer', name: 'app_proformat_article_envoyer', methods: ['GET', 'POST'])]
-    public function envoyer(Request $request, EntityManagerInterface $entityManager,ProformatArticleRepository $proformatArticleRepository): Response
+    #[Route('/envoyer/{id}', name: 'app_proformat_article_envoyer', methods: ['GET', 'POST'])]
+    public function envoyer(string $id, Request $request, EntityManagerInterface $entityManager,ProformatArticleRepository $proformatArticleRepository): Response
     {
-        $id_fournisseur = $_GET['id_fournisseur'];
         $connection = $entityManager->getConnection();
 
         $proformatArticle = new ProformatArticle();
-        $proformatArticle -> sendProformat($connection,$id_fournisseur,$proformatArticleRepository);
-        // return $this->render('proformat_article/ok.html.twig', [
-        //     // 'proformats' => $proformatArticle -> getProformatNotSend($connection,$id_fournisseur,$proformatArticleRepository)
-        // ]);
-        return $this->redirectToRoute('app_proformat_article_envoyer', [], Response::HTTP_SEE_OTHER);
+        $proformatArticle -> sendProformat($connection,$id,$proformatArticleRepository);
+        return $this->render('proformat_article/ok.html.twig', [
+            'proformats' => $proformatArticle -> getProformatNotSend($connection,$id,$proformatArticleRepository)
+        ]);
+        // return $this->redirectToRoute('app_proformat_article_envoyer', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/commander', name: 'app_proformat_article_commander', methods: ['GET'])]
@@ -71,7 +70,7 @@ class ProformatArticleController extends AbstractController
 
     #[Route('/', name: 'app_proformat_article_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager,ProformatArticleRepository $proformatArticleRepository,FournisseurRepository $fournisseurRepository): Response
-    {   
+    {
         $connection = $entityManager->getConnection();
         $fournisseur = new Fournisseur();
 
