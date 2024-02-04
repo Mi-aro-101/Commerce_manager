@@ -81,15 +81,14 @@ class FournisseurController extends AbstractController
     }
 
     #[Route('/article/{id}', name: 'app_fournisseur_article_view', methods: ['GET'])]
-    public function viewArticle(int $id, FournisseurRepository $fournisseurRepository, ArticleFournisseurRepository $articleFournisseurRepository): Response
+    public function viewArticle(Fournisseur $fournisseur, FournisseurRepository $fournisseurRepository, ArticleFournisseurRepository $articleFournisseurRepository): Response
     {
 
         $articles = $articleFournisseurRepository->findBy(
             [
-                'fournisseur' => strval($id)
+                'fournisseur' => strval($fournisseur->getId())
             ]
         );
-        $fournisseur = $fournisseurRepository->find($id);
 
         return $this->render('article_fournisseur/article_fournisseur.html.twig', [
             'articlefournisseurs' => $articles,

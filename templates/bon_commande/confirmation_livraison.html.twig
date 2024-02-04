@@ -1,0 +1,138 @@
+{% include 'header_achat.html.twig' %}
+
+<style>
+    #valide{
+        margin-left : auto;
+        margin-right : auto;
+    }
+</style>
+
+<div class="content-wrapper" style="min-height: 1302.4px;">
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+    <div class="col-md-6">
+    <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title"> Bon de commande </h3>
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <p> Fournisseur : 
+                            <strong>{{ bonCommande.getFournisseur().getDesFournisseur() }}</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            {# <label> Articles </label> #}
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Article</th>
+                                        <th>PU</th>
+                                        <th>Quantite</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for details in bonCommande.getBonCommandeDetails %}
+                                        <tr>
+                                            <td>{{ details.getProformatArticle().getDemande().getArticle().getDesArticle() }}</td>
+                                            <td>{{ details.getPrixActuel()|number_format('2', '.', ',')  }}</td>
+                                            <td>{{ details.getProformatArticle().getDemande().getQuantiteTotal() }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                </ul>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+    </div>
+    </div>
+
+    <div class="col-md-6">
+    <div class="card card-warning">
+            <div class="card-header">
+                <h3 class="card-title"> Bon de livraison </h3>
+            </div>
+            <div class="card-body">
+
+                {% block body %}
+
+                <form method="post" action="{{ path('app_bon_livraison_confirmer') }}">
+
+                <input type="hidden" name="bonCommande" value="{{ bonCommande.getId() }}">
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label> Reference de bon de reception : </label>
+                            <input type="text" name="reference">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <p> Fournisseur :
+                            <strong>{{ bonCommande.getFournisseur().getDesFournisseur() }}</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            {# <label> Articles </label> #}
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Article</th>
+                                        <th>PU</th>
+                                        <th>Quantite</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for details in bonCommande.getBonCommandeDetails %}
+                                        <tr>
+                                            <td>{{ details.getProformatArticle().getDemande().getArticle().getDesArticle() }}</td>
+                                            <td>{{ details.getPrixActuel()|number_format('2', '.', ',') }}</td>
+                                            <td>{{ details.getProformatArticle().getDemande().getQuantiteTotal() }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                </ul>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                {% endblock %}
+            </div>
+
+    </div>
+    </div>
+
+        <span id="valide"> <button type="button" class="btn btn-block btn-danger btn-lg">Declarer une anomalie</button> </span>
+        <span id="valide" > <button type="submit" class="btn btn-block btn-success btn-lg">Confirmer bon de livraison</button></a> </span>
+    </form>
+
+
+</div>
+</div>
+</section>
+</div>
+
+{% include 'footer_template.html.twig' %}

@@ -20,20 +20,26 @@
             <tr>
                 <th>Fournisseur</th>
                 <th>Article</th>
-                <th>Prix</th>
-                <th> Actions </th>
+                <th>Prix unitaire</th>
+                <th>Quantite total</th>
+                <th>Prix total</th>
+                <th style="text-align:center"> Actions </th>
             </tr>
         </thead>
         <tbody>
+        {% set i = 0 %}
         {% for articleFournisseur in articleFournisseurs %}
             <tr>
                 <td>{{ articleFournisseur.getFournisseur().getDesFournisseur() }}</td>
                 <td>{{ articleFournisseur.getArticle().getDesArticle() }}</td>
-                <td>{{ articleFournisseur.getPrixActuel()|number_format(2, '.', ' ')  }} MDG </td>
+                <td style="text-align:right">{{ articleFournisseur.getPrixActuel()|number_format(2, '.', ' ')  }} MGA </td>
+                <td style="text-align:right">{{ demande.getQuantiteTotal() }}</td>
+                <td style="text-align:right">{{ (articleFournisseur.getPrixActuel()*demande.getQuantiteTotal()) | number_format(2, '.', ' ') }} MGA</td>
                 <td style="text-align:center">
                      <a href="{{ path('app_proformat_article_commander', {'id_article':  articleFournisseur.getArticle().getId(),'id_fournisseur' : articleFournisseur.getFournisseur().getId() }) }}"><button class="btn btn-info">commander</button></a>
                 </td>
             </tr>
+            {% set i = i + 1 %}
         {% else %}
             <tr>
                 <td colspan="3">no records found</td>

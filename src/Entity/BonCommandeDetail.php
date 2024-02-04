@@ -30,14 +30,13 @@ class BonCommandeDetail
         $prix = $this -> getPrixActuel();
         return $qte_total * $prix;
     }
-    
+
     public function getSequenceBonCommandeDetail($connexion): ?int {
         $query = " select nextval('bon_commande_detail_id_seq') as id";
         $stmt = $connexion->prepare($query);
         $stmt = $stmt->executeQuery();
         $row = $stmt ->fetchAssociative();
-        $id = $row['id'];
-        return $id;
+        return $row['id'];
     }
 
     public function getId(): ?int

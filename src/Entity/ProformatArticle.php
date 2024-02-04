@@ -27,7 +27,7 @@ class ProformatArticle
     #[ORM\Column]
     private ?int $statut = null;
 
-    private ?float $prixActuel; 
+    private ?float $prixActuel;
 
     /**
      * get les proformats envoyés
@@ -45,7 +45,7 @@ class ProformatArticle
         }
         return $proformats;
     }
-        
+
     /**
      * Send a proformat => change the statut of proformat to 10
      */

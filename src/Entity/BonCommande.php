@@ -29,9 +29,16 @@ class BonCommande
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateEnvoi = null;
 
+    #[ORM\Column]
+    private ?int $statut = null;
+
+    #[ORM\OneToMany(mappedBy: 'bonCommande', targetEntity: BonLivraison::class)]
+    private Collection $bonLivraisons;
+
     public function __construct()
     {
         $this->bonCommandeDetails = new ArrayCollection();
+        $this->bonLivraisons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -72,11 +79,11 @@ class BonCommande
     }
 
     public function getMontantTotalHT(){
-        return $this -> getMontantTotal() - $this -> getMontantTotalTVA(); 
+        return $this -> getMontantTotal() - $this -> getMontantTotalTVA();
     }
 
     public function getMontantTotalTVA(){
-        return $this -> getMontantTotal() * 0.2; 
+        return $this -> getMontantTotal() * 0.2;
     }
 
     public function getMontantTotal(){
@@ -118,6 +125,48 @@ class BonCommande
     public function setDateEnvoi(\DateTimeInterface $dateEnvoi): static
     {
         $this->dateEnvoi = $dateEnvoi;
+
+        return $this;
+    }
+
+    public function getStatut(): ?int
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(int $statut): static
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BonLivraison>
+     */
+    public function getBonLivraisons(): Collection
+    {
+        return $this->bonLivraisons;
+    }
+
+    public function addBonLivraison(BonLivraison $bonLivraison): static
+    {
+        if (!$this->bonLivraisons->contains($bonLivraison)) {
+            $this->bonLivraisons->add($bonLivraison);
+            $bonLivraison->setBonCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBonLivraison(BonLivraison $bonLivraison): static
+    {
+        if ($this->bonLivraisons->removeElement($bonLivraison)) {
+            // set the owning side to null (unless already changed)
+            if ($bonLivraison->getBonCommande() === $this) {
+                $bonLivraison->setBonCommande(null);
+            }
+        }
 
         return $this;
     }
