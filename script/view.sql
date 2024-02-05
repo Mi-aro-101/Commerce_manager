@@ -18,3 +18,15 @@ create or replace view  v_get_proformat_send as select * from proformat_article 
 
 --get les  fournisseurs des proformats envoyes
 create or replace view  v_get_fournisseur_proformat_send as select distinct(fournisseur_id) from v_get_proformat_send
+
+create or replace view v_immobilisation_non_traite as
+select i.*
+    from immobilisation i 
+    left join immobilisation_details di on di.immobilisation_id=i.id
+    where di.id is null
+
+create or replace view v_immobilisation_traite as
+select i.*
+    from immobilisation i 
+    left join immobilisation_details di on di.immobilisation_id=i.id
+    where di.id is not null

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BonLivraisonRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,6 +25,14 @@ class BonLivraison
 
     #[ORM\Column(length: 50)]
     private ?string $bonReceptionRef = null;
+
+    #[ORM\OneToMany(mappedBy: 'bonLivraison', targetEntity: BonReception::class)]
+    private Collection $bonReceptions;
+
+    public function __construct()
+    {
+        $this->bonReceptions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -80,5 +90,35 @@ class BonLivraison
         $row = $stmt->fetchassociative();
 
         return $row["id"];
+    }
+
+    /**
+     * @return Collection<int, BonReception>
+     */
+    public function getBonReceptions(): Collection
+    {
+        return $this->bonReceptions;
+    }
+
+    public function addBonReception(BonReception $bonReception): static
+    {
+        if (!$this->bonReceptions->contains($bonReception)) {
+            $this->bonReceptions->add($bonReception);
+            $bonReception->setBonLivraison($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBonReception(BonReception $bonReception): static
+    {
+        if ($this->bonReceptions->removeElement($bonReception)) {
+            // set the owning side to null (unless already changed)
+            if ($bonReception->getBonLivraison() === $this) {
+                $bonReception->setBonLivraison(null);
+            }
+        }
+
+        return $this;
     }
 }

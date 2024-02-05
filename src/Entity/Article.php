@@ -23,10 +23,14 @@ class Article
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: DemandeDepartement::class)]
     private Collection $demandeDepartements;
 
+    #[ORM\OneToMany(mappedBy: 'article', targetEntity: Immobilisation::class)]
+    private Collection $immobilisations;
+
     public function __construct()
     {
         $this->articleFournisseurs = new ArrayCollection();
         $this->demandeDepartements = new ArrayCollection();
+        $this->immobilisations = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -106,6 +110,36 @@ class Article
             // set the owning side to null (unless already changed)
             if ($demandeDepartement->getArticle() === $this) {
                 $demandeDepartement->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Immobilisation>
+     */
+    public function getImmobilisations(): Collection
+    {
+        return $this->immobilisations;
+    }
+
+    public function addImmobilisation(Immobilisation $immobilisation): static
+    {
+        if (!$this->immobilisations->contains($immobilisation)) {
+            $this->immobilisations->add($immobilisation);
+            $immobilisation->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImmobilisation(Immobilisation $immobilisation): static
+    {
+        if ($this->immobilisations->removeElement($immobilisation)) {
+            // set the owning side to null (unless already changed)
+            if ($immobilisation->getArticle() === $this) {
+                $immobilisation->setArticle(null);
             }
         }
 

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ImmobilisationDetails{% endblock %}
+
+{% block body %}
+    <h1>ImmobilisationDetails</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ immobilisation_detail.id }}</td>
+            </tr>
+            <tr>
+                <th>Date_sortie</th>
+                <td>{{ immobilisation_detail.dateSortie ? immobilisation_detail.dateSortie|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ immobilisation_detail.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_immobilisation_details_index') }}">back to list</a>
+
+    <a href="{{ path('app_immobilisation_details_edit', {'id': immobilisation_detail.id}) }}">edit</a>
+
+    {{ include('immobilisation_details/_delete_form.html.twig') }}
+{% endblock %}

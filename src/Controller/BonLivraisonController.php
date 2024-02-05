@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\BonLivraison;
+use App\Entity\BonReception;
+use App\Entity\Immobilisation;
 use App\Form\BonLivraisonType;
 use App\Repository\BonCommandeRepository;
 use App\Repository\BonLivraisonRepository;
@@ -95,8 +97,22 @@ class BonLivraisonController extends AbstractController
         $bonLivraison->setBonCommande($bonCommande);
         $bonLivraison->setBonReceptionRef($ref);
 
+        $bonReception = new BonReception();
+        $bonReception->setBonLivraison($bonLivraison);
+        $bonReception->setReference($ref);
+
+        $taux_ammortissement = $_POST["taux"];
+        $taux_ammortissement = doubleval($taux_ammortissement);
+
+        $immobilisation = new Immobilisation();
+        $immobilisationArray = $immobilisation->getImmobilisations($bonReception, $taux_ammortissement);
+
         $entityManager->persist(($bonLivraison));
         $entityManager->persist($bonCommande);
+        $entityManager->persist($bonReception);
+        foreach ($immobilisationArray as $immobilisation){
+            $entityManager->persist($immobilisation);
+        }
         $entityManager->flush();
 
         return $this->redirectToRoute('app_bon_commande_attente_livraison', [], Response::HTTP_SEE_OTHER);

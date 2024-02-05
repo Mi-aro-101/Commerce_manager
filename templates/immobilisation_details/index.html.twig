@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ImmobilisationDetails index{% endblock %}
+
+{% block body %}
+    <h1>ImmobilisationDetails index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date_sortie</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for immobilisation_detail in immobilisation_details %}
+            <tr>
+                <td>{{ immobilisation_detail.id }}</td>
+                <td>{{ immobilisation_detail.dateSortie ? immobilisation_detail.dateSortie|date('Y-m-d') : '' }}</td>
+                <td>{{ immobilisation_detail.description }}</td>
+                <td>
+                    <a href="{{ path('app_immobilisation_details_show', {'id': immobilisation_detail.id}) }}">show</a>
+                    <a href="{{ path('app_immobilisation_details_edit', {'id': immobilisation_detail.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_immobilisation_details_new') }}">Create new</a>
+{% endblock %}

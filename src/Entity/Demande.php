@@ -31,9 +31,10 @@ class Demande
         $this->demandeDepartement = new ArrayCollection();
     }
 
-    public function getPrixTotal() {
-        return $this-> getQuantiteTotal() * ($this->getArticle);
-    }
+    // public function getPrixTotal() {
+    //     return $this-> getQuantiteTotal() * ($this->getArticle);
+    // }
+
     public function getArticlesNonTraites($connexion, $articleRepository) : Collection {
         $query = "select * from v_get_articles_non_traite_groupe";
         $stmt = $connexion->prepare($query);
