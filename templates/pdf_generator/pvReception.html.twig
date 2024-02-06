@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Bon Commande</title>
+</head>
+<body>
+    <center> Proces verbal de reception </center>
+    <div style="display: block;width: 700px;">
+        <div style= "width: 250px;" >
+           Article  : <strong>{{ immobilisation.getArticle().getDesArticle()}} </strong>
+            </br><hr>
+            Fournisseur: <strong>{{ immobilisation.getBonReception().getBonLivraison().getBonCommande().getFournisseur().getDesFournisseur() }}</strong>
+            </br><hr>
+            Date de livraison: <strong> {{immobilisation.getBonReception().getBonLivraison().getDateLivraison() |date('Y-m-d') }}</strong>
+            </br><hr>
+             Etat: <strong> {{immobilisation.getImmobilisationsDetails().get(0).getEtatReception().getDesignation() }}</strong>
+            </br><hr>
+           
+    </div><br>
+    
+        
+
+</body>
+</html>
+
+

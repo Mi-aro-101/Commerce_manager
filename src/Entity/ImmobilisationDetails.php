@@ -32,6 +32,8 @@ class ImmobilisationDetails
     #[ORM\JoinColumn(nullable: false)]
     private ?EtatReception $etatReception = null;
 
+  
+
     public function getId(): ?int
     {
         return $this->id;
@@ -96,4 +98,6 @@ class ImmobilisationDetails
 
         return $this;
     }
+
+  
 }

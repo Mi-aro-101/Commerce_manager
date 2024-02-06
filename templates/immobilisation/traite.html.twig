@@ -31,8 +31,11 @@
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">
                     Taux d'ammortissement
                 </th>
-                <th  style="text-align:center" class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
+                {# <th  style="text-align:center" class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
                     Voir
+                </th> #}
+                <th  style="text-align:center" class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
+                    PV Reception
                 </th>
             </tr>
         </thead>
@@ -43,8 +46,11 @@
                     <td class="dtr-control sorting_1" tabindex="0">{{ immobilisation.getId() }}</td>
                     <td>{{ immobilisation.getArticle().getDesArticle() }}</td>
                     <td style="text-align:right">{{ immobilisation.getTauxAmortissement()|number_format('2', '.', ',') }} %</td>
-                    <td style="text-align:center">
+                    {# <td style="text-align:center">
                         <a href="{{ path('app_immobilisation_details_new', {'id': immobilisation.getId()}) }}"><button class="btn btn-info">Valeur actuelle</button></a>
+                    </td> #}
+                    <td style="text-align:center">
+                        <a href="{{ path('app_immobilisation_details_pv_reception', {'id': immobilisation.getId()}) }}"><button class="btn btn-info">Voir</button></a>
                     </td>
                 </tr>
             {% endfor %}

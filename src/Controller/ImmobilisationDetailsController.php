@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Dompdf\Dompdf;
+
 #[Route('/immobilisation/details')]
 class ImmobilisationDetailsController extends AbstractController
 {
@@ -43,6 +45,22 @@ class ImmobilisationDetailsController extends AbstractController
             'form' => $form,
             'immobilisation' => $immobilisation
         ]);
+    }
+    // app_immobilisation_details_pv_reception
+    #[Route('/{id}', name: 'app_immobilisation_details_pv_reception', methods: ['GET'])]
+    public function pdfPvReception(Immobilisation $immobilisation): Response
+    {
+
+        $html =  $this->renderView('pdf_generator/pvReception.html.twig',['immobilisation' => $immobilisation]);
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+
+        return new Response (
+            $dompdf->stream('resume', ["Attachment" => false]),
+            Response::HTTP_OK,
+            ['Content-Type' => 'application/pdf']
+        );
     }
 
     #[Route('/{id}', name: 'app_immobilisation_details_show', methods: ['GET'])]

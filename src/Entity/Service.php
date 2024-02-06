@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ArticleRepository;
 use App\Repository\BonReceptionRepository;
+use App\Repository\EmployeRepository;
+use App\Repository\ImmobilisationRepository;
 use App\Repository\ServiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -151,7 +153,8 @@ class Service
 
         $articlesAsString = $this->convertDemandeArticleToString();
 
-        $query = "SELECT * FROM v_immobilisation_traite where article_id in ('".$articlesAsString."') order by id";
+        $query = "SELECT * FROM v_immobilisation_traite where article_id in ('$articlesAsString') order by id";
+            // echo $query;
         $statement = $connextion->prepare($query);
         $stmt = $statement->executeQuery();
 
@@ -170,15 +173,45 @@ class Service
         return $response;
     }
 
+    public function getImmobilisationEnUtilisation(EntityManagerInterface $entityManager, EmployeRepository $employeRepository, ImmobilisationRepository $immobilisationRepository) : Collection
+    {
+        $connextion = $entityManager->getConnection();
+        $response = new ArrayCollection();
+
+        $articlesAsString = $this->convertDemandeArticleToString();
+
+        $query = "SELECT * FROM v_immobilisation_permission where article_id in ('.$articlesAsString.') and etat=10 order by id";
+        echo $query;
+        $statement = $connextion->prepare($query);
+        $stmt = $statement->executeQuery();
+
+        while($row = $stmt->fetchAssociative()){
+            $immobilisation = new ImmobilisationPermission();
+
+            $immobilisation->setId($row["id"]);
+            $immobilisation->setEmploye($employeRepository->find($row["employe_id"]));
+            $immobilisation->setImmobilisation($immobilisationRepository->find($row["immobilisation_id"]));
+            $immobilisation->setDateDebut($row["date_debut"]);
+            $immobilisation->setDateFin($row["date_fin"]);
+            $immobilisation->setEtat($row["etat"]);
+
+            $response->add($immobilisation);
+        }
+
+        return $response;
+    }
+
     public function convertDemandeArticleToString() : string
     {
         $response = "";
 
         foreach($this->getDemandeDepartements() as $demande){
-            $response = $response.$demande->getArticle()->getId().",";
+            $id = $response.$demande->getArticle()->getId();
+            // $response = $quote . $id . $quote;
+            $response = $id."','";
         }
 
-        $response = substr_replace($response ,"", -1);
+        $response = substr_replace($response ,"", -3);
 
         return $response;
     }

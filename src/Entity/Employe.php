@@ -63,21 +63,22 @@ class Employe
      * of one employe
      * @return array of data
      */
-    public function getFichePaie(){
+    public function getFichePaie()
+    {
         $data = [
             'name' => $this->getUtilisateur()->getNomUtilisateur(),
             'firstname' => $this->getUtilisateur()->getPrenomUtilisateur(),
             'fonction' => $this->getPoste(),
             'embauche' => $this->getDateEmbauche(),
             'salaire' => $this->getSalaire(),
-            'journalier' => ($this->getSalaire())/30,
-            'horaire' => ($this->getSalaire())/173.33,
+            'journalier' => ($this->getSalaire()) / 30,
+            'horaire' => ($this->getSalaire()) / 173.33,
             'indice' => $this->getIndice(),
-            'trente' => $this->getIndice()/1.3,
-            'quarante' => $this->getIndice()/1.4,
-            'cinquante' => $this->getIndice()/1.5,
-            'cent' => $this->getIndice()/2.0,
-            'nuit' => $this->getIndice()/0.3,
+            'trente' => $this->getIndice() / 1.3,
+            'quarante' => $this->getIndice() / 1.4,
+            'cinquante' => $this->getIndice() / 1.5,
+            'cent' => $this->getIndice() / 2.0,
+            'nuit' => $this->getIndice() / 0.3,
             'cnaps' => $this->getMontantCnaps(),
             'osti' => $this->getMontantOsti()
         ];
@@ -87,10 +88,11 @@ class Employe
     /**
      * Return la somme a payer pour le cnaps selon le salaire
      */
-    public function getMontantCnaps(){
-        $cnaps = ($this->getSalaire())/100;
-        if($this->getSalaire()>(250000*8)){
-            $cnaps = (250000*8)/100;
+    public function getMontantCnaps()
+    {
+        $cnaps = ($this->getSalaire()) / 100;
+        if ($this->getSalaire() > (250000 * 8)) {
+            $cnaps = (250000 * 8) / 100;
         }
         return $cnaps;
     }
@@ -98,8 +100,9 @@ class Employe
     /**
      * Return la somme a payer pour la retenue sanitaire selon le salaire
      */
-    public function getMontantOsti(){
-        $cnaps = ($this->getSalaire())/100;
+    public function getMontantOsti()
+    {
+        $cnaps = ($this->getSalaire()) / 100;
 
         return $cnaps;
     }
@@ -108,8 +111,9 @@ class Employe
      * indice de majoration
      * @return int indice de majoration
      */
-    public function getIndice(){
-        return (($this->getSalaire())/173.33)/1.334;
+    public function getIndice()
+    {
+        return (($this->getSalaire()) / 173.33) / 1.334;
     }
 
     #[ORM\OneToMany(mappedBy: 'employe', targetEntity: HeureSuplementaire::class)]
@@ -133,7 +137,7 @@ class Employe
         return $this->id;
     }
 
-    public function setId(int $id) : static
+    public function setId(int $id): static
     {
         $this->id = $id;
 
@@ -273,8 +277,8 @@ class Employe
     {
         $result = "Pas de superieur";
 
-        if($this->getSuperieur() != null){
-            $result = $this->getSuperieur()->getUtilisateur()->getNomUtilisateur()." ".$this->getSuperieur()->getUtilisateur()->getPrenomUtilisateur();
+        if ($this->getSuperieur() != null) {
+            $result = $this->getSuperieur()->getUtilisateur()->getNomUtilisateur() . " " . $this->getSuperieur()->getUtilisateur()->getPrenomUtilisateur();
         }
 
         return $result;
@@ -379,17 +383,17 @@ class Employe
         return $this;
     }
 
-    public function getEmployes(EntityManagerInterface $entityManager, UtilisateurRepository $utilisateurRepository) : Collection
+    public function getEmployes(EntityManagerInterface $entityManager, UtilisateurRepository $utilisateurRepository): Collection
     {
 
         $response = new ArrayCollection();
 
         $connection = $entityManager->getConnection();
-        $query = "SELECT * FROM employe WHERE superieur_id = ".$this->getId()." order by id";
+        $query = "SELECT * FROM employe WHERE superieur_id = " . $this->getId() . " order by id";
         $statment = $connection->prepare($query);
         $stmt = $statment->executeQuery();
 
-        while($row = $stmt->fetchAssociative()){
+        while ($row = $stmt->fetchAssociative()) {
 
             $employe = new Employe();
             $employe->setId($row["id"]);
@@ -409,17 +413,17 @@ class Employe
         return $response;
     }
 
-    public function getDemandeImmobilisationEmployee(EntityManagerInterface $entityManager, ImmobilisationRepository $immobilisationRepository, UtilisateurRepository $utilisateurRepository, EmployeRepository $employeRepository) : Collection
+    public function getDemandeImmobilisationEmployee(EntityManagerInterface $entityManager, ImmobilisationRepository $immobilisationRepository, UtilisateurRepository $utilisateurRepository, EmployeRepository $employeRepository): Collection
     {
         $response = new ArrayCollection();
         $connection = $entityManager->getConnection();
         $employes = $this->getEmployes($entityManager, $utilisateurRepository);
         $i = 0;
         $employeIdAsString = $this->convertDemandeEmployeToString($employes);
-        $query = "SELECT * FROM immobilisation_permission WHERE employe_id in (".$employeIdAsString.") Order by employe_id";
+        $query = "SELECT * FROM immobilisation_permission WHERE employe_id in (" . $employeIdAsString . ") and etat=5 Order by employe_id";
         $statment = $connection->prepare($query);
         $stmt = $statment->executeQuery();
-        while($row = $stmt->fetchAssociative()){
+        while ($row = $stmt->fetchAssociative()) {
 
             $immobilisationPermission = new ImmobilisationPermission();
 
@@ -437,15 +441,15 @@ class Employe
         return $response;
     }
 
-    public function convertDemandeEmployeToString(Collection $employes) : string
+    public function convertDemandeEmployeToString(Collection $employes): string
     {
         $response = "";
 
-        foreach($employes as $employee){
-            $response = $response.$employee->getId().",";
+        foreach ($employes as $employee) {
+            $response = $response . $employee->getId() . ",";
         }
 
-        $response = substr_replace($response ,"", -1);
+        $response = substr_replace($response, "", -1);
 
         return $response;
     }

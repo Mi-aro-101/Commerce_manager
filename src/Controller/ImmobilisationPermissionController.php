@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\BonReception;
 use App\Entity\Immobilisation;
 use App\Entity\ImmobilisationPermission;
+use App\Entity\PVUtilisation;
 use App\Form\ImmobilisationPermissionType;
 use App\Repository\ArticleRepository;
 use App\Repository\BonReceptionRepository;
@@ -132,7 +133,11 @@ class ImmobilisationPermissionController extends AbstractController
 
         if($immobilisationPermission->getImmobilisation()->getEtatAvance() < 10){
             $immobilisationPermission->getImmobilisation()->setEtatAvance(10);
+            $pvUtilisation = new PVUtilisation();
+            $pvUtilisation ->setImmobilisation($immobilisationPermission->getImmobilisation());
+            $pvUtilisation -> setFirstUtilisation($immobilisationPermission->getDateDebut());
             $entityManager->persist($immobilisationPermission->getImmobilisation());
+            $entityManager -> persist($pvUtilisation);
         }
 
         $entityManager->persist($immobilisationPermission);
@@ -157,6 +162,20 @@ class ImmobilisationPermissionController extends AbstractController
 
         return $this->render("immobilisation_permission/demande_employe.html.twig",[
             'immobilisationsPermission' => $immobilisations
+        ]);
+    }
+
+    #[IsGranted("ROLE_ADMIN_DEPARTEMENT", statusCode:404, message:"Error 404 Page not found")]
+    #[Route('/calendrier/immobilisation/utilisation', name:'app_immobilisation_calendrier_activite')]
+    public function getImmobilisationUtilisationCalendrier(EntityManagerInterface $entityManager, EmployeRepository $employeRepository, ImmobilisationRepository $immobilisationRepository) : Response
+    {
+
+        $employe = $employeRepository->findOneByUtilisateur($this->getUser()->getId());
+        $empService = $employe->getService();
+        $immobilisationUtilises = $empService->getImmobilisationEnUtilisation($entityManager, $employeRepository, $immobilisationRepository);
+
+        return $this->render('immobilisation_permission/immobilisation_calendrier_utilisation.html.twig', [
+            'immobilisations' => $immobilisationUtilises
         ]);
     }
 

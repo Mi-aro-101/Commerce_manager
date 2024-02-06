@@ -30,3 +30,9 @@ select i.*
     from immobilisation i 
     left join immobilisation_details di on di.immobilisation_id=i.id
     where di.id is not null
+
+create or replace view v_immobilisation_permission as
+select
+    i.article_id, p.* 
+    from immobilisation i
+    join immobilisation_permission p on i.id = p.immobilisation_id

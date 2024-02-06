@@ -36,9 +36,17 @@ class Immobilisation
     #[ORM\OneToMany(mappedBy: 'immobilisation', targetEntity: ImmobilisationPermission::class)]
     private Collection $immobilisationPermissions;
 
+    #[ORM\Column]
+    private ?float $prixAchat = null;
+
+    #[ORM\OneToMany(mappedBy: 'immobilisation', targetEntity: ImmobilisationDetails::class)]
+    private Collection $immobilisationsDetails;
+
+
     public function __construct()
     {
         $this->immobilisationPermissions = new ArrayCollection();
+        $this->immobilisationsDetails = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,7 +121,8 @@ class Immobilisation
                 $immobilisation->setTauxAmortissement($taux_amortissement);
                 $immobilisation->setEtatAvance(0);
                 $immobilisation->setBonReception($bonReception);
-
+                // $bonCommandeDetails = $bonReception->getBonLivraison()->getBonCommande()->getBonCommandeDetails();
+                $immobilisation->setPrixAchat($details->getPrixActuel());
                 $collection->add($immobilisation);
                 $bonReception->addImmobilisation($immobilisation);
             }
@@ -195,4 +204,48 @@ class Immobilisation
 
         return $this;
     }
+
+    public function getPrixAchat(): ?float
+    {
+        return $this->prixAchat;
+    }
+
+    public function setPrixAchat(float $prixAchat): static
+    {
+        $this->prixAchat = $prixAchat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ImmobilisationDetails>
+     */
+    public function getImmobilisationsDetails(): Collection
+    {
+        return $this->immobilisationsDetails;
+    }
+
+    public function addImmobilisationsDetail(ImmobilisationDetails $immobilisationsDetail): static
+    {
+        if (!$this->immobilisationsDetails->contains($immobilisationsDetail)) {
+            $this->immobilisationsDetails->add($immobilisationsDetail);
+            $immobilisationsDetail->setImmobilisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImmobilisationsDetail(ImmobilisationDetails $immobilisationsDetail): static
+    {
+        if ($this->immobilisationsDetails->removeElement($immobilisationsDetail)) {
+            // set the owning side to null (unless already changed)
+            if ($immobilisationsDetail->getImmobilisation() === $this) {
+                $immobilisationsDetail->setImmobilisation(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }
